@@ -1,0 +1,940 @@
+<h1
+id="full-stack-ai-llm-agentic-engineering---python-engineering-for-ai">1.
+Full-Stack AI, LLM &amp; Agentic Engineering - Python engineering for
+AI</h1>
+<p><em>Part 1 of the Full-Stack AI, LLM &amp; Agentic Engineering
+course</em></p>
+<p>If you prefer to learn in more detail or in a visual way, watch the
+video for this lesson on YouTube. [VIDEO LINK, to be added when the
+video is published]</p>
+<p>In this tutorial, we will build a small Python program that asks
+several model providers the same question at the same time, checks every
+reply, retries temporary failures safely and ships with tests. We call
+it the CareDesk fan-out client, the first piece of CareDesk, a clinical
+operations copilot for a fictional hospital that we grow across the
+whole course.</p>
+<p>Modern AI applications spend most of their time calling other
+programs: model APIs, databases and tools. Doing this well takes a
+handful of habits. The project runs the same way on every machine, data
+crossing a border is checked, waiting overlaps, failures are handled
+politely, and tests prove the behaviour. These habits sit underneath
+every later lesson, so we build them first.</p>
+<p>This course assumes basic coding skills and a little familiarity with
+machine learning. Every important idea is introduced before we use it,
+so you can follow along even when a word is new today. All patient data
+in the course is synthetic, and this lesson runs entirely for free on a
+laptop, with three local stand-in providers that also make our timings
+repeatable.</p>
+<p>Here is the roadmap for this article:</p>
+<ol type="1">
+<li>Why Python Engineering Comes First</li>
+<li>Projects with uv</li>
+<li>Type Hints and Pydantic</li>
+<li>Async Python</li>
+<li>Reliable Clients</li>
+<li>Testing, Logging and Settings</li>
+<li>A SQL Refresher</li>
+<li>Putting It All Together, and the Lab</li>
+</ol>
+<p>This article follows the first video of the course. The code is on
+GitHub with comments that explain each step: <a
+href="https://github.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/tree/main/part-01-python-engineering-for-ai">part-01-python-engineering-for-ai</a>.
+We read the code in pieces below, and the folder also holds
+<code>worked_examples.py</code>, which reproduces every number we
+calculate by hand.</p>
+<h2 id="why-python-engineering-comes-first">Why Python Engineering Comes
+First</h2>
+<h3 id="three-calls-nine-seconds-or-three">Three Calls, Nine Seconds or
+Three</h3>
+<p>Imagine our hospital copilot needs second opinions from three
+different model providers. Each call takes about three seconds. If we
+ask them one after another, we wait nine seconds. If we ask all three at
+the same time, we wait three. The same work finishes in a third of the
+time.</p>
+<p>We measured exactly that on a Mac, with three local stand-in
+providers that each take three seconds. One after another took 9.11
+seconds. All at once took 3.02 seconds.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig01.jpg" alt="Figure 1: One after another, three calls take nine seconds. All at once, they take three.">
+<figcaption>
+Figure 1. The idea behind the whole lesson. Source: frame from the
+lesson video, created by author.
+</figcaption>
+</figure>
+<p>The difference comes from one idea, called async programming. By the
+end of this article, we will have turned that idea into a real program:
+a small, typed, concurrent, retried and tested client.</p>
+<h3 id="what-we-build">What We Build</h3>
+<p>The CareDesk fan-out client has a simple job. It takes one question,
+sends it to every provider at once, checks every reply and returns the
+answers together with any failures and the wall-clock time. Each habit
+in this lesson earns its place in that code, and the sections below add
+them one at a time.</p>
+<h2 id="projects-with-uv">Projects with uv</h2>
+<h3 id="why-code-works-on-one-laptop-and-fails-on-another">Why Code
+Works on One Laptop and Fails on Another</h3>
+<p>Let's start with a question every programmer meets: why does my code
+work on my laptop and fail on yours? Very often the answer is the
+libraries. One laptop has one version of a library, another has a
+different one, and a small difference can change behaviour.</p>
+<h3 id="the-recipe-card">The Recipe Card</h3>
+<p>Think of a recipe card. A list of ingredients such as flour and eggs
+leaves room for interpretation, while a card with exact brands, exact
+weights and exact steps lets any kitchen cook the same dish. In Python,
+two files play these roles:</p>
+<ul>
+<li><code>pyproject.toml</code> is the ingredient list. It names our
+libraries and the Python version we need, with ranges such as
+<code>httpx&gt;=0.28</code>.</li>
+<li><code>uv.lock</code> is the recipe card. It records the exact
+version of every library, with checksums, including the libraries our
+libraries depend on.</li>
+</ul>
+<p>The virtual environment, a folder called <code>.venv</code>, is the
+kitchen where everything gets cooked.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig02.jpg" alt="Figure 2: pyproject.toml as the ingredient list, uv.lock as the recipe card and .venv as the kitchen.">
+<figcaption>
+Figure 2. A project is a recipe. Source: frame from the lesson video,
+created by author.
+</figcaption>
+</figure>
+<p>The tool uv is a fast project manager for Python. When a teammate
+runs <code>uv sync</code>, uv reads the recipe card and builds the same
+kitchen on their machine, with the same versions every time. That is
+what makes a project reproducible.</p>
+<h3 id="uv-in-action">uv in Action</h3>
+<p>Let's watch uv build a project from an empty folder and read what it
+prints. First, <code>uv init</code> with a project name creates a
+project folder with a starter program, a <code>pyproject.toml</code>
+file and a readme.</p>
+<p>Now, we'll add two libraries:</p>
+<pre class="text"><code>$ uv add httpx pydantic
+Using CPython 3.13.9
+Creating virtual environment at: .venv
+Resolved 12 packages in 316ms
+...
+Installed 11 packages in 12ms
+ + annotated-types==0.8.0
+ + anyio==4.16.0
+ + certifi==2026.10.23
+ + httpx==0.28.1
+ + pydantic==2.14.3
+ + pydantic-core==2.50.4
+ ...</code></pre>
+<p>We asked for two libraries, and uv resolved twelve packages and
+installed eleven, because libraries stand on other libraries. Pydantic
+needs its core engine, written in Rust, and HTTPX needs anyio, httpcore
+and certifi, among others. uv found one compatible set of all of
+them.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig03.jpg" alt="Figure 3: A real terminal: uv add resolves twelve packages and installs eleven.">
+<figcaption>
+Figure 3. uv add in a real terminal. Source: frame from the lesson
+video, created by author.
+</figcaption>
+</figure>
+<p>In <code>pyproject.toml</code>, uv wrote our two libraries with a
+minimum version each. The lock file lists twelve entries, eleven
+libraries and our project itself, each with an exact version and
+checksums, so everyone receives byte-for-byte the same packages.</p>
+<p>Finally, <code>uv run python</code> runs a command inside the
+project's environment, and we print the versions we got: HTTPX 0.28.1
+and Pydantic 2.14.3. In automated builds, <code>uv sync --locked</code>
+stops with an error when the lock file is out of date.</p>
+<h3 id="our-lab-project">Our Lab Project</h3>
+<p>The CareDesk lab is set up the same way. Now, we'll look at its
+<code>pyproject.toml</code>:</p>
+<pre class="toml"><code>[project]
+name = &quot;caredesk-fanout&quot;
+requires-python = &quot;&gt;=3.12&quot;
+dependencies = [
+    &quot;httpx&gt;=0.28&quot;,             # async HTTP client
+    &quot;pydantic&gt;=2.9&quot;,           # typed data and validation
+    &quot;pydantic-settings&gt;=2.6&quot;,  # settings from environment variables
+]
+
+[dependency-groups]
+dev = [
+    &quot;pytest&gt;=8&quot;,               # test runner (async tests via anyio)
+]</code></pre>
+<p>It lists three libraries: HTTPX for network calls, Pydantic for
+validation and pydantic-settings for configuration, plus pytest, the
+test runner, in a development group. On our Mac, <code>uv sync</code>
+installed eighteen packages in a little over half a second.</p>
+<p>The takeaway: commit both files to Git. The ingredient list says what
+you want, and the recipe card says exactly what you got. Anyone who
+clones the repository runs one command, <code>uv sync</code>, and gets
+the same kitchen.</p>
+<h2 id="type-hints-and-pydantic">Type Hints and Pydantic</h2>
+<h3 id="type-hints-are-labels">Type Hints Are Labels</h3>
+<p>Next, type hints. When we read a function, how do we know what it
+expects and what it returns? A type hint answers right in the code:</p>
+<pre class="python"><code>def total(prompt_tokens: int, completion_tokens: int) -&gt; int:
+    return prompt_tokens + completion_tokens</code></pre>
+<p>Here <code>total</code> takes two whole numbers and returns a whole
+number. A token is a small piece of text that a language model reads or
+writes, and providers count tokens to measure usage and cost.</p>
+<p>Type hints work like labels on boxes in a storeroom. They help the
+people who read the code, and they help tools: the editor can underline
+a mistake before we run anything, and a checker such as mypy can scan
+the whole project.</p>
+<p>There is one catch. At runtime, Python treats these labels as notes
+for humans and tools. If a provider sends the text <code>"twelve"</code>
+where a number belongs, Python carries on until something breaks far
+from the real cause. For data from outside our program, we want a guard
+that checks the contents of the box. That guard is Pydantic.</p>
+<h3 id="pydantic-as-a-customs-desk">Pydantic as a Customs Desk</h3>
+<p>How do we trust data that comes from outside our service, such as a
+provider's reply, a user's request or a settings file? Our picture is a
+customs desk at a country's border. Parcels arrive with a label that
+says what is inside. The officer opens each parcel, checks it against
+the rules, and only then lets it through.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig04.jpg" alt="Figure 4: Pydantic as the officer at a customs desk, opening each parcel and checking it against the rules.">
+<figcaption>
+Figure 4. Pydantic checks every parcel at the border. Source: frame from
+the lesson video, created by author.
+</figcaption>
+</figure>
+<p>Pydantic is that officer. We describe a parcel once, as a class.
+<code>Usage</code> has two whole numbers, prompt tokens and completion
+tokens, and both must be zero or higher. Pydantic checks every field the
+moment the object is built. A good parcel becomes a typed Python object.
+A broken parcel is stopped at the border, with a report of every problem
+found.</p>
+<p>A tiny example with numbers. A reply says <code>prompt_tokens</code>
+is 5 and <code>completion_tokens</code> is 7. Both are whole numbers of
+at least zero, so the parcel passes, and the total is 5 + 7 = 12. If
+<code>completion_tokens</code> had been -3, the officer would stop the
+parcel and say which field and why.</p>
+<p>The mechanism has a proper name. A Pydantic model is a class that
+inherits from <code>BaseModel</code>. Each field has a type, and
+<code>Field</code> can add rules, such as <code>ge=0</code> (greater
+than or equal to zero) or <code>min_length=1</code>. Calling
+<code>model_validate_json</code> on raw bytes parses and checks in one
+step, with a checking engine written in Rust.</p>
+<h3 id="seeing-the-officer-work">Seeing the Officer Work</h3>
+<p>Let's watch the officer with real output from our demo. The good
+parcel, with five prompt tokens and seven completion tokens, is accepted
+with a total of twelve. Now a broken parcel with three problems at
+once:</p>
+<pre class="text"><code>$ uv run python demos/02_validation.py
+--- a good parcel
+accepted: total tokens = 12, prompt_tokens = 5
+--- a broken parcel
+rejected with 3 problems:
+  text                       String should have at least 1 character
+  usage.prompt_tokens        Input should be greater than or equal to 0
+  usage.completion_tokens    Input should be a valid integer, unable to parse string as an integer
+--- a parcel with &quot;5&quot; where 5 is expected
+accepted: total tokens = 12, prompt_tokens = 5</code></pre>
+<p>The text is empty, the prompt token count is -3, and the completion
+token count is the word twelve, spelled with letters. Pydantic lists all
+three problems together, so a developer can repair everything in one
+pass.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig05.jpg" alt="Figure 5: Real output of the validation demo: one accepted parcel and one rejected parcel with three problems.">
+<figcaption>
+Figure 5. The customs desk, real output. Source: frame from the lesson
+video, created by author.
+</figcaption>
+</figure>
+<p>The last case is a surprise worth knowing about. A parcel arrives
+with the prompt token count written as the text <code>"5"</code>, in
+quotes. By default, Pydantic works in lax mode, so it converts the text
+to the whole number 5 and accepts the parcel. Lax mode is friendly to
+real-world JSON, where numbers sometimes arrive as text. When a field
+needs exact types, Pydantic also offers strict mode.</p>
+<h3 id="our-models-in-code">Our Models in Code</h3>
+<p>Now, we'll define the shapes that cross the borders of our service in
+<code>models.py</code>:</p>
+<pre class="python"><code>class ChatRequest(BaseModel):
+    &quot;&quot;&quot;The question we send to a provider.&quot;&quot;&quot;
+    prompt: str = Field(min_length=1, max_length=2000)
+    max_tokens: int = Field(default=64, ge=1, le=512)
+
+class Usage(BaseModel):
+    &quot;&quot;&quot;How many tokens a call used (a token is a small piece of text the model reads or writes).&quot;&quot;&quot;
+    prompt_tokens: int = Field(ge=0)
+    completion_tokens: int = Field(ge=0)
+
+    @computed_field
+    @property
+    def total(self) -&gt; int:
+        return self.prompt_tokens + self.completion_tokens
+
+class ModelReply(BaseModel):
+    &quot;&quot;&quot;What a provider sends back. We check it before trusting it.&quot;&quot;&quot;
+    model: str = Field(min_length=1)
+    text: str = Field(min_length=1)
+    usage: Usage</code></pre>
+<p><code>ChatRequest</code> holds the question we send, with a prompt of
+one to two thousand characters and a maximum token count between one and
+512. <code>Usage</code> holds the two counts, and a computed field adds
+them up, so the total always agrees with its parts.
+<code>ModelReply</code> is what a provider sends back.
+<code>Answer</code>, <code>Failure</code> and <code>FanOutResult</code>
+are what we hand back to our own callers. These classes are tiny, but
+they carry a lot of safety: every border of our service has a
+description and a guard.</p>
+<h3 id="where-does-validation-live">Where Does Validation Live?</h3>
+<p>Here is a question for you to try before reading on. Our service has
+several places where data changes hands: a request arriving from a user,
+a reply coming back from a model provider, a settings file read at
+start-up, and the results passed from one function to the next inside
+our own code. Where should validation live?</p>
+<p>A good answer: put a customs desk at every border where data enters
+from outside, which means the incoming request, the provider's reply and
+the settings file. Inside the service, once an object has passed the
+desk, functions can trust its type, so they stay short and clean. One
+more border returns later in the course: data we read back from a
+database.</p>
+<h2 id="async-python">Async Python</h2>
+<p>Now we come to the idea behind the nine seconds versus three seconds
+from the start of the lesson. We begin with a waiter.</p>
+<h3 id="waiting-is-the-slow-part">Waiting Is the Slow Part</h3>
+<p>Why does a model call take three seconds? Mostly because our program
+is waiting. It sends a request over the network, then waits while the
+provider's computer does the heavy work. That waiting is called I/O,
+short for input and output, and a program that spends most of its time
+waiting on I/O is called I/O-bound.</p>
+<p>Picture a restaurant with three tables and one waiter. A synchronous
+waiter takes an order at table one, walks to the kitchen and stands
+there until the dish is ready, serves it, and only then visits table
+two. Three dishes of three minutes each mean nine minutes at the last
+table.</p>
+<p>An asynchronous waiter takes the order at table one, hands it to the
+kitchen, and goes straight to table two, then table three. When a dish
+is ready, the waiter serves it. All three dishes cook at the same time,
+and the last table waits only three minutes. The waiter works at the
+same speed and simply keeps moving.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig06.jpg" alt="Figure 6: The asynchronous waiter keeps moving, so the last table waits only three minutes.">
+<figcaption>
+Figure 6. The waiter keeps moving. Source: frame from the lesson video,
+created by author.
+</figcaption>
+</figure>
+<p>Python has this waiter built in, called the event loop, and it runs
+in a single thread. Our three tables are three model calls, and the
+kitchens are the providers' servers.</p>
+<h3 id="async-and-await">async and await</h3>
+<p>Now the words. A function declared with <code>async def</code> is a
+coroutine function. Calling it creates a coroutine, a recipe for work
+that the event loop can run. The word <code>await</code> marks a point
+where the function says: I am waiting for something, so event loop,
+please serve someone else, and resume me when my result is ready.</p>
+<p>In our code, <code>fetch_one</code> sends a request with
+<code>await client.post(...)</code>. At that moment the function pauses,
+and the event loop is free to start the next call. When the provider
+answers, the loop wakes the function at the very same line, with the
+response in hand.</p>
+<p>Two rules keep you safe. First, <code>await</code> works inside an
+async function. Second, a call written without <code>await</code> only
+creates the coroutine, and Python prints a runtime warning that names
+it. To start a whole program, we call <code>asyncio.run</code> once, at
+the top.</p>
+<h3 id="inside-the-event-loop">Inside the Event Loop</h3>
+<p>Let's slow the event loop down and watch three tasks. The loop keeps
+a list of tasks that are ready to run and a list of tasks that are
+waiting. It picks one ready task and runs it until that task reaches an
+<code>await</code>.</p>
+<p>Task one sends its request and reaches <code>await</code>, so it
+moves to the waiting list. Tasks two and three do the same. Now all
+three requests are travelling, and the loop rests. After three seconds,
+the replies arrive. Each reply moves its task back to the ready list,
+the loop resumes it right after its <code>await</code>, and the answer
+is stored. One thread, three tasks, and the only cost was a little
+bookkeeping.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig07.jpg" alt="Figure 7: The event loop with a ready list and a waiting list, shown step by step with three tasks.">
+<figcaption>
+Figure 7. Inside the event loop. Source: frame from the lesson video,
+created by author.
+</figcaption>
+</figure>
+<p>This also shows what to avoid: a blocking call such as
+<code>time.sleep</code> holds the single thread, and every other task
+freezes. In an async program, waiting is always done with
+<code>await</code>.</p>
+<h3 id="gather-start-all-wait-for-all">gather: Start All, Wait for
+All</h3>
+<p>To run many coroutines together, we use <code>asyncio.gather</code>.
+Gather starts all of them, waits until every one has finished, and
+returns the results in the same order as the inputs. In our fan-out
+function, one line does it: <code>gather</code> over a generator that
+makes one <code>fetch_one</code> coroutine per provider.</p>
+<p>Now the arithmetic, which you can repeat on a calculator. One after
+another, the waits add up: 3 + 3 + 3 = 9 seconds. All at once, the waits
+overlap, and the slowest call decides the total: max(3, 3, 3) = 3
+seconds.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig08.jpg" alt="Figure 8: Three waits stacked end to end give nine seconds, three waits side by side give three.">
+<figcaption>
+Figure 8. gather overlaps the waits. Source: frame from the lesson
+video, created by author.
+</figcaption>
+</figure>
+<p>A note on words. This is concurrency: many tasks making progress
+during overlapping time, in one thread. Parallelism means several things
+running at the exact same instant on several processor cores. For
+I/O-bound work such as model calls, concurrency is the right tool.</p>
+<h3 id="real-timings-from-our-command-line">Real Timings from Our
+Command Line</h3>
+<p>Here is our small command line, running for real, asking three
+providers to summarise a referral:</p>
+<pre class="text"><code>$ uv run python -m caredesk_fanout.cli Summarise this referral alpha beta gamma
+alpha     3.02 s   15 tokens  [alpha] The discharge summary is complete and ready for sign-off.
+beta      3.01 s   15 tokens  [beta] Suggest a medication reconciliation at the next visit.
+gamma     3.01 s   15 tokens  [gamma] Suggest a medication reconciliation at the next visit.
+wall-clock time: 3.03 s</code></pre>
+<p>Each line shows a provider, its time, its token count and its answer.
+The wall-clock time was 3.03 seconds, and with the
+<code>--sequential</code> flag it becomes 9.04 seconds. The answers
+differ between runs, because the mock providers pick from a few
+sentences at random, which will matter when we test.</p>
+<h3 id="semaphore-the-door-host">Semaphore: The Door Host</h3>
+<p>What happens with a hundred providers, or a thousand requests?
+Starting everything at once can overload our own computer or run into a
+provider's rate limit, the number of requests a provider allows in a
+period. We need a limit on how many calls are in flight.</p>
+<p>Our picture is a restaurant door host. Ten guests arrive, but the
+host lets only five inside at a time. The others wait at the door, and
+whenever a guest leaves, the host lets the next one in. In Python, this
+host is a semaphore, created with the number five.</p>
+<p>A tiny example: ten calls of three seconds each, with a door that
+lets five in. The first five run together and finish at three seconds.
+The next five then run together and finish at six seconds. That makes
+two rounds, six seconds in total, compared with thirty seconds one by
+one.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig09.jpg" alt="Figure 9: A door host lets five of ten guests inside at a time.">
+<figcaption>
+Figure 9. The semaphore as a door host. Source: frame from the lesson
+video, created by author.
+</figcaption>
+</figure>
+<p>Now, we'll look at how the semaphore sits in our code. We create it
+once in <code>fan_out</code>, and each call wraps its network request in
+<code>async with</code>:</p>
+<pre class="python"><code>sem = asyncio.Semaphore(max_concurrency)        # the door host: lets N in at a time
+...
+async def send() -&gt; httpx.Response:
+    ...
+    async with sem:                                   # wait here when too many calls are in flight
+        response = await client.post(
+            f&quot;{base_url}/v1/{provider}/chat&quot;,
+            json=request.model_dump(),
+            headers=headers,
+            timeout=timeout_s,                        # never wait forever for one call
+        )
+    response.raise_for_status()                       # turn 4xx/5xx into an exception
+    return response</code></pre>
+<p>Inside the block, the call holds one of the places, and when the
+block ends, the place returns to the host. Our tests measure the peak
+number of calls inside at once, and the peak stays at the limit.</p>
+<h3 id="three-async-traps">Three Async Traps</h3>
+<ul>
+<li><strong>Trap one: forgetting <code>await</code>.</strong> The
+coroutine is created and the work stays undone. Python warns you, so
+read the warning.</li>
+<li><strong>Trap two: blocking the loop.</strong>
+<code>time.sleep</code>, a heavy loop or a blocking library freezes the
+single thread. Use the async versions, such as
+<code>asyncio.sleep</code> and the async client from HTTPX.</li>
+<li><strong>Trap three: creating a new client for every call.</strong> A
+client keeps connections open and reuses them, like a taxi rank with
+cars waiting. Create one async client, share it among all tasks, and
+close it when you are done.</li>
+</ul>
+<h2 id="reliable-clients">Reliable Clients</h2>
+<p>Real networks sometimes fail, so we teach our client to cope, and
+then we prove with tests that it does.</p>
+<h3 id="when-calls-go-wrong">When Calls Go Wrong</h3>
+<p>What should our client do when a call goes wrong? Three kinds of
+trouble are common: a timeout, when the answer takes too long; a server
+error such as 503, which means try again later; and a rate limit, 429,
+which means too many requests.</p>
+<p>Three rules cover most of what we need:</p>
+<ol type="1">
+<li><strong>Every call gets a timeout.</strong> A single stuck call
+could hold a place at the door forever. Our client gives every call ten
+seconds by default.</li>
+<li><strong>Retry what is temporary.</strong> Timeouts, connection
+errors and the status codes 408, 429, 500, 502, 503 and 504 are worth
+another try. A 400, 401 or 404 will fail the same way next time, so
+those are reported at once.</li>
+<li><strong>Stop after a few tries.</strong> Our policy allows three
+extra attempts. After that, the client returns a failure result for that
+provider, and the other providers still deliver their answers.</li>
+</ol>
+<h3 id="backoff-and-jitter">Backoff and Jitter</h3>
+<p>How long should we wait before trying again? Retrying immediately
+adds load to a server that is already struggling. A good habit is
+exponential backoff: wait one second, then two, then four, doubling each
+time, up to a cap of thirty seconds.</p>
+<p>The doubling gives a struggling server room to recover. As a formula
+in plain text:</p>
+<p>wait = min(cap, base × 2^attempt)</p>
+<p>Here <code>attempt</code> counts from zero, <code>base</code> is the
+first wait and <code>cap</code> is the longest single wait. With base 1
+and cap 30, the waits are 1, 2, 4, 8, 16 and then 30 seconds.</p>
+<p>Now a problem. Imagine a thousand clients that all failed at the same
+moment. With exact doubling, all thousand retry after four seconds
+together, and the server receives a thousand requests in the same
+instant. This pile-up is called a thundering herd.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig10.jpg" alt="Figure 10: Jitter spreads the retries of a thousand clients over two seconds.">
+<figcaption>
+Figure 10. Jitter spreads the herd. Source: frame from the lesson video,
+created by author.
+</figcaption>
+</figure>
+<p>The cure is jitter, a random extra wait. We add a random amount
+between zero and half of the wait. After a four-second wait, each client
+adds between zero and two seconds, so the thousand requests spread over
+two seconds, roughly five hundred per second, instead of a thousand at
+once.</p>
+<p>With a seed of 7, one possible run waits 1.16, 2.15 and 5.30 seconds.
+That is 8.61 seconds before the fourth try, compared with seven seconds
+for plain doubling. A little patience buys a calmer server.</p>
+<h3 id="retries-in-our-code">Retries in Our Code</h3>
+<p>Now, we'll define the retry policy and the backoff function in
+<code>reliability.py</code>:</p>
+<pre class="python"><code>@dataclass(frozen=True)
+class RetryPolicy:
+    max_retries: int = 3      # extra attempts after the first one
+    base_s: float = 1.0       # first wait, in seconds
+    cap_s: float = 30.0       # the longest single wait
+    jitter: float = 0.5       # random extra of up to this fraction of the wait
+
+def backoff_delay(attempt: int, policy: RetryPolicy, rng: random.Random) -&gt; float:
+    wait = min(policy.cap_s, policy.base_s * 2**attempt)
+    return wait + rng.uniform(0, wait * policy.jitter)</code></pre>
+<p><code>RetryPolicy</code> collects the knobs in one frozen object, so
+one policy can be shared safely. <code>backoff_delay</code> is the
+formula above in code, plus the jitter. The helper
+<code>call_with_retries</code> runs the call and, for a temporary
+failure, logs a warning, computes the delay and sleeps. On the last
+attempt, or for a permanent failure, it raises the error.</p>
+<p>In the real demo, a flaky provider fails twice with a 503 and then
+answers. To keep the demo short, we scale the base wait down to a
+quarter of a second:</p>
+<pre class="text"><code>$ uv run python demos/03_retries.py
+asking the flaky provider (fails twice, then answers)
+planned waits (s): 0.29, 0.54, 1.33
+    91 ms  flaky: attempt 1 failed (HTTP 503); retrying in 0.29 s
+   386 ms  flaky: attempt 2 failed (HTTP 503); retrying in 0.54 s
+success after 0.86 s: [flaky] Prioritise the chest pain referral before the routine review.</code></pre>
+<p>Logging acts as the narrator of the program. Each retry leaves a
+clear line with the provider's name, the attempt number, the reason and
+the wait, so when something goes wrong in production, the story is
+already written.</p>
+<h3 id="the-double-charge">The Double Charge</h3>
+<p>Retries bring a new danger, so let's tell a story. Our client asks a
+billing service to charge a patient's fee, once. The server charges the
+card, and then the reply gets lost on the way back. Our client reaches
+the timeout and sends the same request again. The server sees a request
+that looks brand new and charges the card a second time. The patient
+pays twice, and our retry logic caused it.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig11.jpg" alt="Figure 11: The reply is lost, the client times out and sends the same request again.">
+<figcaption>
+Figure 11. A lost reply, a timeout and a retry. Source: frame from the
+lesson video, created by author.
+</figcaption>
+</figure>
+<p>The fix is an idempotency key. Idempotent means that doing something
+twice has the same effect as doing it once. Before the first attempt,
+the client creates a random unique key and sends it in a header. The
+server remembers each key together with its reply.</p>
+<p>Now replay the story. The first request carries key <code>k</code>,
+the server charges the card once and stores the reply under
+<code>k</code>. The reply gets lost, the client retries with the same
+key <code>k</code>, and the server answers: I already did this one, here
+is the saved reply. One charge, and the client still gets its
+answer.</p>
+<p>The rule for our code: create the key once for each logical request,
+outside the retry loop, and send the same key on every attempt. Payment
+services such as Stripe accept an idempotency key header for exactly
+this reason.</p>
+<h3 id="idempotency-measured">Idempotency, Measured</h3>
+<p>Let's measure it with the mock billing provider, which counts every
+charge and loses its first reply. The client times out after half a
+second and retries:</p>
+<pre class="text"><code>$ uv run python demos/04_idempotency.py
+The first reply is lost, so the client times out after 0.5 s and retries.
+    log: billing: attempt 1 failed (ReadTimeout); retrying in 0.10 s
+without an idempotency key: work done 2x, charged 2x  (client result: Answer)
+    log: billing: attempt 1 failed (ReadTimeout); retrying in 0.10 s
+with an idempotency key   : work done 1x, charged 1x  (client result: Answer)</code></pre>
+<p>Without a key, the ledger shows the work done twice and the card
+charged twice. With a key, the same story ends with work done once and
+one charge. The client received an answer both times, which is why this
+bug is easy to miss: the result looks fine, while the bill is wrong.</p>
+<p>Now, we'll look at the top of <code>fetch_one</code>, where the key
+is created:</p>
+<pre class="python"><code># One key per logical request, reused by every retry, so the server can spot repeats.
+key = new_idempotency_key() if use_idempotency else None
+
+async def send() -&gt; httpx.Response:
+    headers = {&quot;Idempotency-Key&quot;: key} if key else {}
+    ...</code></pre>
+<p>Because the key is made outside <code>send</code>, every retry reuses
+it.</p>
+<h2 id="testing-logging-and-settings">Testing, Logging and Settings</h2>
+<h3 id="pytest-basics">pytest Basics</h3>
+<p>How do we know our reliable client really works, and keeps working
+next month? We write tests, small programs that check our code and run
+in seconds. The standard tool is pytest.</p>
+<p>A pytest test is a function whose name starts with <code>test</code>.
+Inside it, we call our code and use <code>assert</code>, a statement
+that says this must be true. When every assert holds, the test passes;
+when one fails, pytest shows exactly which line and which values. Our
+lab has twenty-one tests.</p>
+<p>pytest also offers fixtures, small helpers that prepare something the
+tests need. In our lab, one fixture tells the async tests to run on
+asyncio. And <code>parametrize</code> lets one test run with several
+inputs, which we use to check four different broken replies with a
+single test function.</p>
+<h3 id="mocking-the-network">Mocking the Network</h3>
+<p>How do we test network code while staying offline and free of
+charges? We replace the network with a mock. HTTPX has a built-in mock
+transport, so we give it a small function that plays the provider, and
+the client talks to our function instead of the internet. The fake
+provider answers instantly, so the tests are fast and free, and we can
+make it misbehave on purpose: return a 500, return an empty text, or
+fail twice and then succeed.</p>
+<p>Now, we'll write a test that proves concurrency pays off. Each fake
+provider thinks for 0.2 seconds:</p>
+<pre class="python"><code>async def test_concurrent_is_faster_than_sequential() -&gt; None:
+    async def handler(request: httpx.Request) -&gt; httpx.Response:
+        await asyncio.sleep(0.2)                  # each provider &quot;thinks&quot; for 0.2 s
+        return httpx.Response(200, json=reply(provider_of(request)))
+
+    names = [&quot;alpha&quot;, &quot;beta&quot;, &quot;gamma&quot;]
+    async with client_for(handler) as c:
+        fast = await fan_out(BASE, names, REQUEST, client=c)
+        slow = await fan_out_sequential(BASE, names, REQUEST, client=c)
+    assert fast.wall_s &lt; 0.45                     # about 0.2 s: all at once
+    assert slow.wall_s &gt;= 0.6                     # about 0.6 s: one after another</code></pre>
+<p>Three calls of two tenths of a second finish in under 0.45 seconds
+when concurrent, and take at least 0.6 seconds when sequential. A second
+test proves that with a limit of three, the peak number of calls in
+flight is exactly three, even with ten providers.</p>
+<p>For retries we use a second trick. The sleep function is a parameter,
+so a test passes in a fake sleep that records the wait instead of
+waiting:</p>
+<pre class="python"><code>async def test_retries_then_succeeds_without_real_waiting() -&gt; None:
+    waits: list[float] = []
+
+    async def fake_sleep(seconds: float) -&gt; None:   # records the wait instead of waiting
+        waits.append(seconds)
+
+    ...
+    policy = RetryPolicy(max_retries=3, base_s=1.0, jitter=0.0)
+    assert await call_with_retries(flaky, policy, sleep=fake_sleep) == &quot;ok&quot;
+    assert calls[&quot;n&quot;] == 3 and waits == [1.0, 2.0]</code></pre>
+<p>The test checks that the waits were one second and two seconds, and
+the test itself takes a few milliseconds.</p>
+<h3 id="testing-output-that-varies">Testing Output That Varies</h3>
+<p>Model text changes from run to run, so how can a test compare it with
+an expected answer? Exact-match tests would fail at random. Three
+techniques solve this.</p>
+<p><strong>The contract.</strong> The first answer is to test what must
+always hold. Every answer has some text, a token count of seventeen and
+a source from our list of providers, and every provider is accounted
+for: answers plus failures equal the number of providers we asked.</p>
+<p><strong>The property check.</strong> Instead of one example, we try
+many random cases and check a rule. For jitter, two thousand random
+seeds each confirm that the delay lies between the wait and one and a
+half times the wait:</p>
+<pre class="python"><code>for seed in range(2000):
+    rng = random.Random(seed)
+    attempt = rng.randrange(0, 8)
+    wait = min(30.0, 2**attempt)
+    delay = backoff_delay(attempt, policy, rng)
+    assert wait &lt;= delay &lt;= wait * 1.5</code></pre>
+<p><strong>The snapshot test.</strong> We save the shape of a result in
+a file, and compare future runs with the file. We snapshot the
+structure, the sources and the token counts, and leave out the wording
+and the timing, which change.</p>
+<p>Together, these three let us test systems whose exact words change,
+which is the situation with language models.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig12.jpg" alt="Figure 12: Three ways to test output that varies: a contract, a property check and a snapshot.">
+<figcaption>
+Figure 12. Testing output that varies. Source: frame from the lesson
+video, created by author.
+</figcaption>
+</figure>
+<h3 id="the-real-run">The Real Run</h3>
+<p>Here is the real run. pytest collected twenty-one tests, grouped by
+file: seven for the fan-out client, seven for the models and seven for
+reliability.</p>
+<pre class="text"><code>$ uv run pytest -v
+...
+collected 21 items
+
+tests/test_fanout.py::test_concurrent_is_faster_than_sequential PASSED   [  4%]
+tests/test_fanout.py::test_semaphore_never_allows_more_than_the_limit PASSED [  9%]
+tests/test_fanout.py::test_one_failing_provider_does_not_sink_the_others PASSED [ 14%]
+...
+tests/test_reliability.py::test_idempotency_keys_are_unique PASSED       [100%]
+
+============================== 21 passed in 1.13s ==============================</code></pre>
+<p>All twenty-one passed in 1.13 seconds. A fast test suite gets run
+often, which is how bugs get caught early. The full output is saved in
+the repository as <code>data/expected_output/pytest.txt</code>.</p>
+<h3 id="logging-settings-and-a-small-cli">Logging, Settings and a Small
+CLI</h3>
+<p>Three small habits finish the foundation.</p>
+<p><strong>Logging.</strong> A log is the program's diary: each line has
+a time, a level such as info, warning or error, the name of the part
+that wrote it, and a message. We already saw our retry warnings. Use
+logging instead of <code>print</code>, because a setting can raise or
+lower the detail.</p>
+<p><strong>Settings.</strong> Our service reads its knobs from
+environment variables that start with <code>CAREDESK_</code>, using
+pydantic-settings: the base address, the maximum concurrency, the
+timeout, the retry limit and the backoff base. It is the customs desk
+again, this time for configuration. Now, we'll look at the class:</p>
+<pre class="python"><code>class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix=&quot;CAREDESK_&quot;, env_file=&quot;.env&quot;, extra=&quot;ignore&quot;)
+
+    base_url: str = &quot;http://127.0.0.1:8765&quot;
+    max_concurrency: int = Field(default=5, ge=1, le=64)
+    timeout_s: float = Field(default=10.0, gt=0)
+    max_retries: int = Field(default=3, ge=0, le=8)
+    backoff_base_s: float = Field(default=1.0, gt=0)
+    backoff_cap_s: float = Field(default=30.0, gt=0)</code></pre>
+<p>If someone sets the maximum concurrency to the word
+<code>zero</code>, the program stops at start-up with a clear message
+instead of failing in a confusing way later:</p>
+<pre class="text"><code>pydantic_core._pydantic_core.ValidationError: 1 validation error for Settings
+max_concurrency
+  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value=&#39;zero&#39;, input_type=str]</code></pre>
+<p>The file <code>.env.example</code> lists the names, and real secrets
+always stay out of Git.</p>
+<p><strong>A small command line.</strong> With a few lines of
+<code>argparse</code>, one command runs the whole fan-out: the question,
+the providers and an optional <code>--sequential</code> flag. A command
+line is the simplest user interface, and it makes our code easy to try
+and to run in automated jobs.</p>
+<h2 id="a-sql-refresher">A SQL Refresher</h2>
+<p>Many AI applications store their data in a relational database, and
+SQL is the language for asking questions. Later we build the app
+database and a text-to-SQL agent, so a quick refresher pays off.</p>
+<h3 id="our-tables">Our Tables</h3>
+<p>A table is a grid: rows are records and columns are fields. Our lab
+has two tables of synthetic data. <code>departments</code> has an
+<code>id</code> and a <code>name</code>, and <code>appointments</code>
+has an <code>id</code>, a patient code such as <code>SYN-0001</code>,
+the <code>department_id</code>, a scheduled time and the wait in
+minutes.</p>
+<p>The question for this refresher: which department keeps patients
+waiting the longest? We answer it in three steps: a join, a GROUP BY and
+a window function. We run the statements in SQLite, which ships with
+Python. They are standard SQL, and we use PostgreSQL for the app
+database later in the course.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig13.jpg" alt="Figure 13: The departments and appointments tables of the CareDesk lab, with synthetic patient codes.">
+<figcaption>
+Figure 13. Our two tables. Source: frame from the lesson video, created
+by author.
+</figcaption>
+</figure>
+<h3 id="join-connect-two-tables">JOIN: Connect Two Tables</h3>
+<p>A join connects the rows of two tables through a shared value.
+Appointments carry a department id, but people prefer names, so for each
+appointment we find the department whose id matches and put its name
+beside it. Picture two lists with a thread from each appointment to its
+department: appointments one to four lead to Emergency, and appointments
+five and six to Cardiology.</p>
+<p>Now, we'll write the join:</p>
+<pre class="sql"><code>SELECT a.id, d.name AS department, a.patient_code, a.wait_minutes
+FROM appointments AS a
+JOIN departments AS d ON d.id = a.department_id
+WHERE a.id &lt;= 6
+ORDER BY a.id;</code></pre>
+<p>The result shows six rows. The first four are Emergency, with waits
+of 35, 50, 20 and 65 minutes, followed by two Cardiology rows.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig14.jpg" alt="Figure 14: Threads connect each appointment to its department.">
+<figcaption>
+Figure 14. A join connects two tables. Source: frame from the lesson
+video, created by author.
+</figcaption>
+</figure>
+<h3 id="group-by-one-row-per-group">GROUP BY: One Row per Group</h3>
+<p>A join keeps one row per appointment. A GROUP BY collapses rows that
+share a value into one row per group, and aggregate functions summarise
+each group: count, average and maximum.</p>
+<pre class="sql"><code>SELECT d.name AS department,
+       COUNT(*)                      AS appointments,
+       ROUND(AVG(a.wait_minutes), 1) AS avg_wait,
+       MAX(a.wait_minutes)           AS longest_wait
+FROM appointments AS a
+JOIN departments AS d ON d.id = a.department_id
+GROUP BY d.name
+ORDER BY avg_wait DESC;</code></pre>
+<p>Worked numbers, ready for a calculator. Emergency has four waits: 35,
+50, 20 and 65. They add up to 170, and 170 / 4 = 42.5 minutes on
+average, with 65 the longest. Cardiology's three waits add up to 70, an
+average of 23.3. Radiology's five waits add up to 125, an average of
+25.0. Sorted by average wait, Emergency comes first: it keeps patients
+waiting longest.</p>
+<pre class="text"><code>department | appointments | avg_wait | longest_wait
+Emergency | 4 | 42.5 | 65
+Radiology | 5 | 25.0 | 40
+Cardiology | 3 | 23.3 | 30</code></pre>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig15.jpg" alt="Figure 15: One bar per department, sorted by average wait, with Emergency on top.">
+<figcaption>
+Figure 15. GROUP BY gives one row per department. Source: frame from the
+lesson video, created by author.
+</figcaption>
+</figure>
+<h3 id="window-functions-keep-the-rows">Window Functions: Keep the
+Rows</h3>
+<p>A GROUP BY gives one row per department, but sometimes we want every
+row, plus something computed across a group of rows. That is the job of
+a window function: it keeps all the rows and adds a new column,
+calculated over a window of related rows.</p>
+<p>We ask for two things in Radiology. First, a rank for each wait
+within the department, where 1 means the longest wait:
+<code>PARTITION BY</code> defines the group and <code>ORDER BY</code>
+decides the ranking. Second, a running average in time order:</p>
+<pre class="sql"><code>SELECT d.name AS department, a.scheduled_for, a.wait_minutes,
+       RANK() OVER (PARTITION BY a.department_id
+                    ORDER BY a.wait_minutes DESC) AS wait_rank,
+       ROUND(AVG(a.wait_minutes) OVER (
+             PARTITION BY a.department_id
+             ORDER BY a.scheduled_for
+             ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW), 1) AS running_avg
+FROM appointments AS a
+JOIN departments AS d ON d.id = a.department_id
+WHERE d.name = &#39;Radiology&#39;
+ORDER BY a.scheduled_for;</code></pre>
+<p>The waits 40, 30, 25, 20 and 10 receive ranks 1 to 5. For the running
+average, after the first appointment it is 40. After the second it is
+25, because (40 + 10) / 2 = 25. After the third it is 23.3, and then 25
+and 25:</p>
+<pre class="text"><code>department | scheduled_for | wait_minutes | wait_rank | running_avg
+Radiology | 2026-03-02 08:15 | 40 | 1 | 40.0
+Radiology | 2026-03-02 09:15 | 10 | 5 | 25.0
+Radiology | 2026-03-02 10:15 | 20 | 4 | 23.3
+Radiology | 2026-03-02 11:15 | 30 | 2 | 25.0
+Radiology | 2026-03-02 12:15 | 25 | 3 | 25.0</code></pre>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig16.jpg" alt="Figure 16: A window function keeps every Radiology row and adds a running average.">
+<figcaption>
+Figure 16. A window function keeps the rows. Source: frame from the
+lesson video, created by author.
+</figcaption>
+</figure>
+<p>Window functions power rankings, moving averages and comparisons of
+each row with the row before it, and they return when we build
+text-to-SQL agents.</p>
+<h2 id="putting-it-all-together-and-the-lab">Putting It All Together,
+and the Lab</h2>
+<h3 id="a-tour-of-the-finished-code">A Tour of the Finished Code</h3>
+<p>Now we can see the whole program at work. Instead of a line-by-line
+reading, which the comments in the code on GitHub already provide, we
+tour the main moves.</p>
+<p>The <code>fan_out</code> function creates the door host, a semaphore
+with the limit from our settings, opens one shared async client, and
+builds one <code>fetch_one</code> coroutine per provider. Then
+<code>gather</code> starts them all and waits. Inside
+<code>fetch_one</code>, the key is created once, and a <code>send</code>
+function wraps a single attempt: take a place at the door, post the
+request with a timeout, and raise an error for a bad status code.
+<code>call_with_retries</code> runs <code>send</code> and retries
+temporary failures with backoff and jitter.</p>
+<p>When the reply arrives, <code>model_validate_json</code> is the
+customs desk. Good replies become answers, and any trouble, a timeout
+after all retries or a malformed reply, becomes a failure.
+<code>fetch_one</code> reports provider trouble as a result, so one bad
+provider leaves the others untouched, and a test proves it.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig17.jpg" alt="Figure 17: Every idea from the lesson in one small program: uv, types and Pydantic, async and gather, a semaphore, timeouts, backoff and keys, tests, settings, logging and a command line.">
+<figcaption>
+Figure 17. Every idea from the lesson in one program. Source: frame from
+the lesson video, created by author.
+</figcaption>
+</figure>
+<h3 id="lab-twelve-calls">Lab: Twelve Calls</h3>
+<p>Here is a small challenge to try yourself. Suppose we ask twelve
+providers, each taking three seconds, and the door host lets four in at
+a time. How long will the whole fan-out take? Count the rounds, then the
+length of each round.</p>
+<p>The answer: twelve calls with four places make 12 / 4 = 3 rounds.
+Each round takes three seconds, so the total is 3 × 3 = 9 seconds,
+compared with 36 seconds one by one. The file
+<code>worked_examples.py</code> prints this calculation too:</p>
+<pre class="text"><code>== 2b. Twelve calls of 3 s, door lets 4 in at a time
+rounds: 3 (12 / 4)
+each round takes 3 s -&gt; total 9 s   versus one by one: 36 s</code></pre>
+<h3 id="your-lab-in-four-steps">Your Lab in Four Steps</h3>
+<ol type="1">
+<li>Clone the repository and run <code>uv sync</code> in the
+<code>code/</code> folder.</li>
+<li>Run the demos and the tests, and compare your timings with
+ours.</li>
+<li>Add a fourth provider and a limit of two, and predict the time
+before you run it.</li>
+<li>Make the flaky provider fail five times, and watch the retry give up
+and return a failure.</li>
+</ol>
+<p>The README of the part folder lists the exact commands and the
+expected output of every step.</p>
+<h2 id="recap-and-what-comes-next">Recap and What Comes Next</h2>
+<p>Let's recap with the pictures we used.</p>
+<ul>
+<li>A recipe card, the lock file, makes a project reproducible.</li>
+<li>A customs desk, Pydantic, checks data at every border.</li>
+<li>One waiter serving many tables, the event loop, turns waiting into
+overlap, so nine seconds became three.</li>
+<li>A door host, the semaphore, limits how many are inside.</li>
+<li>Timeouts, backoff with jitter and an idempotency key make retries
+safe.</li>
+<li>Tests with mocks, properties and snapshots prove it.</li>
+<li>A join, a GROUP BY and a window function answer questions about our
+data.</li>
+</ul>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/full-stack-ai-llm-agentic-engineering/medium-assets/part-01-python-engineering-for-ai/article/images/fig18.jpg" alt="Figure 18: The pictures of the lesson: recipe card, customs desk, waiter and door host.">
+<figcaption>
+Figure 18. The lesson in pictures. Source: frame from the lesson video,
+created by author.
+</figcaption>
+</figure>
+<p>A few items were an overview. The async client returns in video 14,
+when we compare the big model APIs, and in video 34, when we build the
+backend and stream answers. Pydantic returns for structured outputs in
+video 16, and SQL returns in video 22, with text-to-SQL.</p>
+<p>The next lesson is a deep learning refresher with PyTorch: tensors,
+gradients and a training loop, the toolkit behind every model we meet.
+Before you go, one question to think about: which border in your own
+projects would you guard first?</p>
+<p>Hope this article helps you build a solid Python foundation for AI
+engineering. See you in the next lesson.</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Astral. uv documentation. https://docs.astral.sh/uv/</li>
+<li>Pydantic. Pydantic documentation.
+https://docs.pydantic.dev/latest/</li>
+<li>Python Software Foundation. asyncio: Asynchronous I/O.
+https://docs.python.org/3/library/asyncio.html</li>
+<li>Encode. HTTPX documentation. https://www.python-httpx.org/</li>
+<li>pytest development team. pytest documentation.
+https://docs.pytest.org/</li>
+<li>SQLite. Window Functions.
+https://www.sqlite.org/windowfunctions.html</li>
+<li>Brooker, M. Exponential Backoff And Jitter. AWS Architecture Blog,
+2015.
+https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/</li>
+<li>Stripe. Idempotent requests. Stripe API documentation.
+https://docs.stripe.com/api/idempotent_requests</li>
+</ol>
