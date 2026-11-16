@@ -1,6 +1,6 @@
 # Full-Stack AI, LLM & Agentic Engineering
 
-Code for the **Full-Stack AI, LLM & Agentic Engineering** video course by WhiskerBrief: a step-by-step path from Python engineering and how LLMs work, through retrieval, agents, protocols and serving, to deployment, evaluation, safety and a capstone. The guided project is **CareDesk**, a clinical-operations copilot for a fictional hospital, built only on synthetic data (nothing here is medical advice).
+Code for the **Full-Stack AI, LLM & Agentic Engineering** video course by WhiskerBrief. The course shows how to build a complete AI application from start to finish: one that understands questions, looks up the right information, uses tools, takes actions and keeps working for real users. It starts with the Python skills every AI project needs, then follows one guided project, **CareDesk**, an assistant for a fictional hospital, built only on invented data (nothing here is medical advice).
 
 Each video has one folder, `part-NN-<topic>/`, with:
 
