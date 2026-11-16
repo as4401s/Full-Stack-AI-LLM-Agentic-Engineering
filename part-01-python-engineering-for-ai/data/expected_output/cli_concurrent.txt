@@ -1,0 +1,6 @@
+$ uv run python -m caredesk_fanout.cli Summarise this referral alpha beta gamma
+alpha     3.02 s   15 tokens  [alpha] The discharge summary is complete and ready for sign-off.
+beta      3.01 s   15 tokens  [beta] Suggest a medication reconciliation at the next visit.
+gamma     3.01 s   15 tokens  [gamma] Suggest a medication reconciliation at the next visit.
+wall-clock time: 3.03 s
+[exit 0]

@@ -1,0 +1,27 @@
+# Full-Stack AI, LLM & Agentic Engineering
+
+Code for the **Full-Stack AI, LLM & Agentic Engineering** video course by WhiskerBrief: a step-by-step path from Python engineering and how LLMs work, through retrieval, agents, protocols and serving, to deployment, evaluation, safety and a capstone. The guided project is **CareDesk**, a clinical-operations copilot for a fictional hospital, built only on synthetic data (nothing here is medical advice).
+
+Each video has one folder, `part-NN-<topic>/`, with:
+
+- `README.md` - the learning goal, a map of the files, exact commands, expected output and honest notes;
+- `code/` - the runnable scripts and tests, with plain-language headers, step-by-step comments and docstrings;
+- `data/` - small synthetic inputs and the real saved outputs of the recorded run.
+
+Only code lives here: no slides, animations, images or videos.
+
+## Parts
+
+| # | Video | Code | Article |
+|---|---|---|---|
+| 1 | Python engineering for AI | [part-01-python-engineering-for-ai](part-01-python-engineering-for-ai) | Medium article: link added when published |
+
+More folders are added as each video is released.
+
+## How the code is run
+
+Everything runs for free. Code runs on a laptop first, then on free Google Colab where a GPU helps. Steps that need rented GPUs or paid services are shown as code and are marked in their README ("shown, not run") so anyone with a capable GPU or a cloud account can run them. Secrets never go into this repository: copy `.env.example` to `.env` and keep your own keys there.
+
+## Prerequisites
+
+Basic coding skills and a little familiarity with machine learning. Every important idea is introduced before it is used.

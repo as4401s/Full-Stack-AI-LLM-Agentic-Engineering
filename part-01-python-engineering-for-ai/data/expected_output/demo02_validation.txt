@@ -1,0 +1,11 @@
+$ uv run python demos/02_validation.py
+--- a good parcel
+accepted: total tokens = 12, prompt_tokens = 5
+--- a broken parcel
+rejected with 3 problems:
+  text                       String should have at least 1 character
+  usage.prompt_tokens        Input should be greater than or equal to 0
+  usage.completion_tokens    Input should be a valid integer, unable to parse string as an integer
+--- a parcel with "5" where 5 is expected
+accepted: total tokens = 12, prompt_tokens = 5
+[exit 0]

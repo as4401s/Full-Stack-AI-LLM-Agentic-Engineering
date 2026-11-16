@@ -1,0 +1,13 @@
+{
+  "answers": [
+    {
+      "source": "alpha",
+      "tokens": 17
+    },
+    {
+      "source": "beta",
+      "tokens": 17
+    }
+  ],
+  "failures": []
+}

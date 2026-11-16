@@ -1,0 +1,28 @@
+$ uv sync
+Using CPython 3.13.9
+Creating virtual environment at: .venv
+Resolved 20 packages in 95ms
+Prepared 2 packages in 117ms
+warning: Failed to clone files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, reflinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 18 packages in 621ms
+ + annotated-types==0.8.0
+ + anyio==4.16.0
+ + certifi==2026.10.23
+ + h11==0.16.0
+ + httpcore==1.0.9
+ + httpx==0.28.1
+ + idna==3.20
+ + iniconfig==2.3.1
+ + packaging==26.3
+ + pluggy==1.7.0
+ + pydantic==2.14.3
+ + pydantic-core==2.50.4
+ + pydantic-settings==2.16.3
+ + pygments==2.21.0
+ + pytest==9.2.0
+ + python-dotenv==1.2.4
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.5
+[exit 0]

@@ -1,0 +1,22 @@
+$ uv run python run_sql.py
+--- query 1
+id | department | patient_code | wait_minutes
+1 | Emergency | SYN-0001 | 35
+2 | Emergency | SYN-0002 | 50
+3 | Emergency | SYN-0003 | 20
+4 | Emergency | SYN-0004 | 65
+5 | Cardiology | SYN-0005 | 15
+6 | Cardiology | SYN-0006 | 30
+--- query 2
+department | appointments | avg_wait | longest_wait
+Emergency | 4 | 42.5 | 65
+Radiology | 5 | 25.0 | 40
+Cardiology | 3 | 23.3 | 30
+--- query 3
+department | scheduled_for | wait_minutes | wait_rank | running_avg
+Radiology | 2026-03-02 08:15 | 40 | 1 | 40.0
+Radiology | 2026-03-02 09:15 | 10 | 5 | 25.0
+Radiology | 2026-03-02 10:15 | 20 | 4 | 23.3
+Radiology | 2026-03-02 11:15 | 30 | 2 | 25.0
+Radiology | 2026-03-02 12:15 | 25 | 3 | 25.0
+[exit 0]

@@ -1,0 +1,6 @@
+$ uv run python -m caredesk_fanout.cli Summarise this referral alpha beta gamma --sequential
+alpha     3.02 s   15 tokens  [alpha] Prioritise the chest pain referral before the routine review.
+beta      3.00 s   15 tokens  [beta] Suggest a medication reconciliation at the next visit.
+gamma     3.01 s   15 tokens  [gamma] Suggest a medication reconciliation at the next visit.
+wall-clock time: 9.04 s
+[exit 0]

@@ -1,0 +1,7 @@
+$ uv run python demos/04_idempotency.py
+The first reply is lost, so the client times out after 0.5 s and retries.
+    log: billing: attempt 1 failed (ReadTimeout); retrying in 0.10 s
+without an idempotency key: work done 2x, charged 2x  (client result: Answer)
+    log: billing: attempt 1 failed (ReadTimeout); retrying in 0.10 s
+with an idempotency key   : work done 1x, charged 1x  (client result: Answer)
+[exit 0]

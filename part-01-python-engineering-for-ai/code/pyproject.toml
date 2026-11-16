@@ -1,0 +1,22 @@
+[project]
+name = "caredesk-fanout"
+version = "0.1.0"
+description = "CareDesk lesson 1: an async fan-out client that is typed, concurrent, retried and tested"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28",             # async HTTP client
+    "pydantic>=2.9",           # typed data and validation
+    "pydantic-settings>=2.6",  # settings from environment variables
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",               # test runner (httpx already brings anyio, which gives pytest async support)
+]
+
+[tool.uv]
+package = false               # an application, not a library: run it from this folder
+
+[tool.pytest.ini_options]
+pythonpath = ["."]            # lets the tests import the caredesk_fanout package from this folder
+testpaths = ["tests"]

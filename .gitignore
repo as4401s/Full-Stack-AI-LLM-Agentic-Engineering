@@ -1,0 +1,21 @@
+# Only runnable code, small data and READMEs belong in this repository.
+*.mp4
+*.mov
+*.wav
+*.m4a
+*.mp3
+*.html
+*.png
+*.jpg
+*.jpeg
+*.gif
+animation/
+article/
+shared/animation-kit/
+__pycache__/
+*.pyc
+.venv/
+.env
+.pytest_cache/
+out/
+.DS_Store

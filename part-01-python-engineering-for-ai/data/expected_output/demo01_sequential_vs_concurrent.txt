@@ -1,0 +1,9 @@
+$ uv run python demos/01_sequential_vs_concurrent.py
+Three model calls, 3.0 s each (local mock server)
+one after another :  9.11 s
+all at once       :  3.02 s
+
+alpha  3.01 s  17 tokens  [alpha] Prioritise the chest pain referral before the routine review.
+beta   3.01 s  17 tokens  [beta] The discharge summary is complete and ready for sign-off.
+gamma  3.01 s  17 tokens  [gamma] The discharge summary is complete and ready for sign-off.
+[exit 0]

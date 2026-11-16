@@ -1,0 +1,75 @@
+$ uv init caredesk-demo
+Initialized project `caredesk-demo` at `/tmp/lesson1-demo/caredesk-demo`
+[exit 0]
+
+$ uv add httpx pydantic
+Using CPython 3.13.9
+Creating virtual environment at: .venv
+Resolved 12 packages in 316ms
+Downloading pydantic-core (2.0MiB)
+ Downloading pydantic-core
+Prepared 4 packages in 334ms
+Installed 11 packages in 12ms
+ + annotated-types==0.8.0
+ + anyio==4.16.0
+ + certifi==2026.10.23
+ + h11==0.16.0
+ + httpcore==1.0.9
+ + httpx==0.28.1
+ + idna==3.20
+ + pydantic==2.14.3
+ + pydantic-core==2.50.4
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.5
+[exit 0]
+
+$ ls
+main.py
+pyproject.toml
+README.md
+uv.lock
+[exit 0]
+
+$ cat pyproject.toml
+[project]
+name = "caredesk-demo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "pydantic>=2.14.3",
+]
+[exit 0]
+
+$ head -14 uv.lock
+version = 1
+revision = 3
+requires-python = ">=3.13"
+
+[[package]]
+name = "annotated-types"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/56/a8120250d128bed162cd73c76d45f6ef9991f3e068f62a8ee060afa3104a/annotated_types-0.8.0.tar.gz", hash = "sha256:13b2beaad985e05e2d6407ee4c4f35590b11f8d693a258a561055cac8f64cab7", size = 15893, upload-time = "2026-07-23T20:16:13.995Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/99/91/8acff4f5e50511b911bbccb72b8628a49c68ce14148cd9f6431094859a90/annotated_types-0.8.0-py3-none-any.whl", hash = "sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0", size = 13427, upload-time = "2026-07-23T20:16:12.938Z" },
+]
+
+[[package]]
+[exit 0]
+
+$ grep -c ^\[\[package\]\] uv.lock
+12
+[exit 0]
+
+$ uv run python -c import httpx, pydantic; print('httpx', httpx.__version__, '| pydantic', pydantic.__version__)
+httpx 0.28.1 | pydantic 2.14.3
+[exit 0]
+
+$ uv sync --locked
+Resolved 12 packages in 1ms
+Audited 11 packages in 0.20ms
+[exit 0]
+

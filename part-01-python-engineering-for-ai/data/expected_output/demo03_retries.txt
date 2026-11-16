@@ -1,0 +1,7 @@
+$ uv run python demos/03_retries.py
+asking the flaky provider (fails twice, then answers)
+planned waits (s): 0.29, 0.54, 1.33
+    91 ms  flaky: attempt 1 failed (HTTP 503); retrying in 0.29 s
+   386 ms  flaky: attempt 2 failed (HTTP 503); retrying in 0.54 s
+success after 0.86 s: [flaky] Prioritise the chest pain referral before the routine review.
+[exit 0]
