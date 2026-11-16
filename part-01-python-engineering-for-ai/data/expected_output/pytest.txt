@@ -1,6 +1,6 @@
 $ uv run pytest -v
 ============================= test session starts ==============================
-platform darwin -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- /path/to/caredesk-fanout/.venv/bin/python
+platform <your-os> -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- /path/to/caredesk-fanout/.venv/bin/python
 cachedir: .pytest_cache
 rootdir: /path/to/caredesk-fanout
 configfile: pyproject.toml

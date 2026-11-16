@@ -39,11 +39,11 @@ This lesson assumes basic coding skills and a little familiarity with machine le
 
 | Mode | What | Cost |
 |---|---|---|
-| Laptop (Mac, Linux or Windows with Python 3.12+) | every script, demo, test and query in this folder | free |
+| Any laptop or desktop with Python 3.12+ | every script, demo, test and query in this folder | free |
 | Free Colab | not needed in this video | - |
 | Shown, not run | nothing: the mock server stands in for paid model APIs | - |
 
-The recorded run used an Apple M4 Pro (24 GB), macOS 27.2.1, uv 0.9.7 and CPython 3.13.9 (see `data/expected_output/environment.txt`).
+The recorded run used uv 0.9.7 and CPython 3.13.9 (see `data/expected_output/environment.txt`). Your timings will differ a little, and the numbers in the lesson come from our recorded run.
 
 ## Setup
 
