@@ -121,11 +121,23 @@ all at once      : 3 s   (the slowest call decides)
 == 2. Ten calls of 3 s, door lets 5 in at a time
 rounds: 2 -> total 6 s   versus one by one: 30 s
 
+== 2b. Twelve calls of 3 s, door lets 4 in at a time
+rounds: 3 (12 / 4)
+each round takes 3 s -> total 9 s   versus one by one: 36 s
+
 == 3. Backoff: base 1 s, doubling, cap 30 s, jitter up to 50 % of the wait
 after failure 1: wait    1 s, plus 0 to  0.5 s random -> between 1.0 and 1.5 s
 after failure 2: wait    2 s, plus 0 to  1.0 s random -> between 2.0 and 3.0 s
 after failure 3: wait    4 s, plus 0 to  2.0 s random -> between 4.0 and 6.0 s
-...
+after failure 4: wait    8 s, plus 0 to  4.0 s random -> between 8.0 and 12.0 s
+after failure 5: wait   16 s, plus 0 to  8.0 s random -> between 16.0 and 24.0 s
+after failure 6: wait   30 s, plus 0 to 15.0 s random -> between 30.0 and 45.0 s
+one possible run with seed 7:
+  wait 1: 1 s + 0.16 s extra = 1.16 s
+  wait 2: 2 s + 0.15 s extra = 2.15 s
+  wait 3: 4 s + 1.30 s extra = 5.30 s
+  total waiting before the fourth try: 8.61 s   (without jitter it would be 7 s)
+
 == 4. 1000 clients all fail at the same moment and retry after 4 s
 no jitter  : 1000 requests arrive in the same instant
 with jitter: spread over 2 s -> about 500 requests per second
@@ -138,9 +150,43 @@ with a key   : charges = 1
 Emergency  count 4  sum 170  average 42.5  longest 65
 Cardiology count 3  sum  70  average 23.3  longest 30
 Radiology  count 5  sum 125  average 25.0  longest 40
+Radiology running average, in time order:
+  after appointment 1: 40.0
+  after appointment 2: 25.0
+  after appointment 3: 23.3
+  after appointment 4: 25.0
+  after appointment 5: 25.0
+Radiology rank by wait (1 = longest): {40: 1, 10: 5, 20: 4, 30: 2, 25: 3}
 ```
 
-Run the file to see every line, including the seeded jitter example.
+The same text is saved in `data/expected_output/worked_examples.txt`.
+
+## Lab: check and extend
+
+The exercise at the end of the video: twelve providers, each taking 3 s, with a door that lets 4 in at a time. Twelve divided by four is 3 rounds, and 3 rounds of 3 s make 9 s in total. `worked_examples.py` prints this as section 2b.
+
+Your lab has four steps:
+
+1. **Clone and install.** Clone the repository, open this part's `code/` folder and run `uv sync`.
+2. **Run the demos and the tests.** Use the commands in "Run it" above and compare your timings with the files in `data/expected_output/`.
+3. **Add a fourth provider and a limit of two, and predict the time before you run it.** Start the mock server in one terminal, then ask four providers with a limit of two in another:
+
+   ```bash
+   uv run python -m caredesk_fanout.mock_server          # terminal 1: every normal call takes 3 s
+   CAREDESK_MAX_CONCURRENCY=2 uv run python -m caredesk_fanout.cli "Summarise this referral" alpha beta gamma delta   # terminal 2
+   ```
+
+   Work out the rounds first (four calls, two places at the door), then check the "wall-clock time" line. Expect about 6 s: 2 rounds of 3 s.
+4. **Make the flaky provider fail five times and watch the retry give up.** The provider named `flaky` answers with HTTP 503 a set number of times per request. With the default of 3 retries (4 attempts in total), five failures end in a `FAILED` line instead of an answer:
+
+   ```bash
+   uv run python -m caredesk_fanout.mock_server --flaky-failures 5     # terminal 1
+   uv run python -m caredesk_fanout.cli "Summarise this referral" flaky  # terminal 2: gives up and returns a failure
+   ```
+
+   For a faster second try, allow 5 retries and shorten the first wait: `CAREDESK_MAX_RETRIES=5 CAREDESK_BACKOFF_BASE_S=0.25` in front of the same command. The sixth attempt succeeds.
+
+Settings come from `CAREDESK_*` environment variables (see `code/caredesk_fanout/settings.py` and `code/.env.example`).
 
 ## Honest notes
 

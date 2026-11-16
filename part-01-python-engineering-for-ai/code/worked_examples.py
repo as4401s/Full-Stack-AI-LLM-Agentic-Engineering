@@ -29,6 +29,13 @@ calls, limit, seconds_each = 10, 5, 3
 waves = math.ceil(calls / limit)       # how many rounds of five are needed
 print("rounds:", waves, "-> total", waves * seconds_each, "s   versus one by one:", calls * seconds_each, "s")
 
+# 2b. The lab question: twelve calls, four places at the door --------------------------------------
+section("2b. Twelve calls of 3 s, door lets 4 in at a time")
+calls, limit, seconds_each = 12, 4, 3
+rounds = math.ceil(calls / limit)      # 12 divided by 4 is 3 rounds
+print("rounds:", rounds, "(12 / 4)")
+print("each round takes", seconds_each, "s -> total", rounds * seconds_each, "s   versus one by one:", calls * seconds_each, "s")
+
 # 3. Exponential backoff with jitter -------------------------------------------------------------
 section("3. Backoff: base 1 s, doubling, cap 30 s, jitter up to 50 % of the wait")
 base, cap, jitter = 1.0, 30.0, 0.5

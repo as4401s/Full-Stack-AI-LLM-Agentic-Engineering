@@ -11,7 +11,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pytest>=8",               # test runner (httpx already brings anyio, which gives pytest async support)
+    "pytest>=8",               # test runner (async tests via anyio)
 ]
 
 [tool.uv]

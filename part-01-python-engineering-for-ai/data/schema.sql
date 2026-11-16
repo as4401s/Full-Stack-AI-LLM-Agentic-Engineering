@@ -1,5 +1,5 @@
 -- schema.sql - two small CareDesk tables for the SQL refresher (synthetic data only).
--- Works in PostgreSQL and in SQLite (the lab falls back to SQLite when PostgreSQL is not running).
+-- Standard SQL that SQLite runs as it is (SQLite ships with Python, so the lab needs no database server).
 DROP TABLE IF EXISTS appointments;
 DROP TABLE IF EXISTS departments;
 

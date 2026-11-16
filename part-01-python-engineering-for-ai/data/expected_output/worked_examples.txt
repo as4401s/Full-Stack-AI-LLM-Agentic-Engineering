@@ -1,0 +1,44 @@
+
+== 1. Three calls of 3 s
+one after another: 9 s   (3 + 3 + 3)
+all at once      : 3 s   (the slowest call decides)
+
+== 2. Ten calls of 3 s, door lets 5 in at a time
+rounds: 2 -> total 6 s   versus one by one: 30 s
+
+== 2b. Twelve calls of 3 s, door lets 4 in at a time
+rounds: 3 (12 / 4)
+each round takes 3 s -> total 9 s   versus one by one: 36 s
+
+== 3. Backoff: base 1 s, doubling, cap 30 s, jitter up to 50 % of the wait
+after failure 1: wait    1 s, plus 0 to  0.5 s random -> between 1.0 and 1.5 s
+after failure 2: wait    2 s, plus 0 to  1.0 s random -> between 2.0 and 3.0 s
+after failure 3: wait    4 s, plus 0 to  2.0 s random -> between 4.0 and 6.0 s
+after failure 4: wait    8 s, plus 0 to  4.0 s random -> between 8.0 and 12.0 s
+after failure 5: wait   16 s, plus 0 to  8.0 s random -> between 16.0 and 24.0 s
+after failure 6: wait   30 s, plus 0 to 15.0 s random -> between 30.0 and 45.0 s
+one possible run with seed 7:
+  wait 1: 1 s + 0.16 s extra = 1.16 s
+  wait 2: 2 s + 0.15 s extra = 2.15 s
+  wait 3: 4 s + 1.30 s extra = 5.30 s
+  total waiting before the fourth try: 8.61 s   (without jitter it would be 7 s)
+
+== 4. 1000 clients all fail at the same moment and retry after 4 s
+no jitter  : 1000 requests arrive in the same instant
+with jitter: spread over 2 s -> about 500 requests per second
+
+== 5. The first reply is lost, so the client retries
+without a key: charges = 2
+with a key   : charges = 1
+
+== 6. CareDesk waits (minutes)
+Emergency  count 4  sum 170  average 42.5  longest 65
+Cardiology count 3  sum  70  average 23.3  longest 30
+Radiology  count 5  sum 125  average 25.0  longest 40
+Radiology running average, in time order:
+  after appointment 1: 40.0
+  after appointment 2: 25.0
+  after appointment 3: 23.3
+  after appointment 4: 25.0
+  after appointment 5: 25.0
+Radiology rank by wait (1 = longest): {40: 1, 10: 5, 20: 4, 30: 2, 25: 3}

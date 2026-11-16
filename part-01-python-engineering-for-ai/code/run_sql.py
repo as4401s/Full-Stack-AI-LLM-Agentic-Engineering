@@ -1,8 +1,8 @@
 """run_sql.py - run the schema, seed and queries from ../data and print the results.
 
 What it does: builds the CareDesk tables, inserts the synthetic rows and prints each query result.
-It uses SQLite (built into Python), so it runs anywhere with nothing to install. The statements are
-standard SQL (join, GROUP BY, window function); the part README shows how to run the same files in PostgreSQL.
+It uses SQLite (built into Python), so there is no database server to install. The statements stay
+close to standard SQL, which is why the same ideas carry over to PostgreSQL and other databases.
 What it needs: nothing beyond Python.
 What to expect: three result tables (join, group by, window).
 Run it:  uv run python run_sql.py
