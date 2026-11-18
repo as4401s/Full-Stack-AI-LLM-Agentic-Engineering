@@ -1,7 +1,7 @@
 hidden units: how many does the spiral job need? (AdamW, learning rate 0.01, 500 steps)
- hidden  knobs  train loss  train acc  val acc
-      2     12      0.5606      0.618    0.553
-      4     22      0.4149      0.800    0.755
-      8     42      0.1990      0.897    0.910
-     16     82      0.0819      0.970    0.980
-     64    322      0.0473      0.993    0.993
+ hidden  parameters  train loss  train acc  val acc
+      2          12      0.5606      0.618    0.553
+      4          22      0.4149      0.800    0.755
+      8          42      0.1990      0.897    0.910
+     16          82      0.0819      0.970    0.980
+     64         322      0.0473      0.993    0.993

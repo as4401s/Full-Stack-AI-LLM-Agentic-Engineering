@@ -1,4 +1,5 @@
-knobs: layer 1 = 48, layer 2 = 34, total = 82
+$ uv run python worked_examples.py
+parameters: layer 1 = 48, layer 2 = 34, total = 82
 layer, unit A: 2.0 * 0.5 + 1.0 * -1.0 + 0.5 = 0.5  ->  ReLU keeps 0.5
 layer, unit B: -2.0 * 0.5 + 1.0 * -1.0 + 0.5 = -1.5  ->  ReLU keeps 0.0
 gradient descent, learning rate 0.1: [0.0, 0.4, 0.72, 0.976, 1.1808, 1.3446, 1.4757]
@@ -16,3 +17,4 @@ each unit is kept half the time and doubled, so on average it stays the same: [2
 weight decay: weight 2.0, learning rate 0.1, decay 0.1 -> factor 0.99 -> new weight 1.98
 schedule (base 0.1, warmup 2, total 10): [0.05, 0.1, 0.1, 0.0962, 0.0854, 0.0691, 0.05, 0.0309, 0.0146, 0.0038, 0.0]
 pi in bfloat16 = 3.140625, 1.001 in bfloat16 = 1.0, 1000.7 in bfloat16 = 1000.0
+[exit 0]

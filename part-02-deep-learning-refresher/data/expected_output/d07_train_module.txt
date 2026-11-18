@@ -1,4 +1,4 @@
-nn.Module network with 82 knobs, AdamW, learning rate 0.01
+nn.Module network with 82 parameters, AdamW, learning rate 0.01
  step  train loss  train acc  val loss  val acc
     0      0.7102      0.500    0.7054    0.500
    10      0.6316      0.620    0.6308    0.623

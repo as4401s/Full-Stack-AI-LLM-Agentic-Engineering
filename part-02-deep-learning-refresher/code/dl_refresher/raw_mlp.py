@@ -2,7 +2,7 @@
 
 What it does: builds the smallest useful network (2 numbers in, 16 hidden units, 2 class scores out) from
 four loose tensors, and trains it by hand: forward pass, loss, backward pass, then a manual step that
-nudges every knob downhill. Everything is built from plain tensors, so every line of the learning loop
+nudges every parameter downhill. Everything is built from plain tensors, so every line of the learning loop
 is visible.
 What it needs: torch.
 What to expect: the loss falls from about 0.7 to about 0.06 and the accuracy rises to about 98 percent.
@@ -14,10 +14,10 @@ import torch
 
 
 def init_params(hidden: int = 16, seed: int = 0):
-    """Make the four knob tensors: W1, b1 (first layer) and W2, b2 (second layer).
+    """Make the four parameter tensors: W1, b1 (first layer) and W2, b2 (second layer).
 
-    requires_grad=True tells PyTorch to remember how each knob was used, so it can work out
-    how the loss changes when the knob moves.
+    requires_grad=True tells PyTorch to remember how each parameter was used, so it can work out
+    how the loss changes when the parameter moves.
     """
     gen = torch.Generator().manual_seed(seed)              # a seeded generator keeps every run identical
     w1 = (torch.randn(2, hidden, generator=gen) * math.sqrt(2 / 2)).requires_grad_()       # 2 inputs -> hidden units
@@ -80,10 +80,10 @@ def train_raw(train, val, hidden: int = 16, lr: float = 1.0, steps: int = 1000, 
     for step in range(1, steps + 1):
         logits = forward(params, Xtr)                      # 1. forward: make predictions
         loss = softmax_cross_entropy(logits, ytr)          # 2. loss: how far from the targets?
-        loss.backward()                                    # 3. backward: a gradient for every knob
-        with torch.no_grad():                              # 4. step: nudge every knob downhill
+        loss.backward()                                    # 3. backward: a gradient for every parameter
+        with torch.no_grad():                              # 4. step: nudge every parameter downhill
             for p in params:
-                p -= lr * p.grad                           # new knob = old knob - learning rate * gradient
+                p -= lr * p.grad                           # new parameter = old parameter - learning rate * gradient
                 p.grad = None                              # clear the gradient before the next round
         record(step)
     seconds = time.perf_counter() - start

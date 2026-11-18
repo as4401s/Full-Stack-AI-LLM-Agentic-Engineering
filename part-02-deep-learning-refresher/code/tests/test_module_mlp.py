@@ -1,4 +1,4 @@
-"""Tests for the nn.Module network: knob count, dropout modes, schedule and a short training run."""
+"""Tests for the nn.Module network: parameter count, dropout modes, schedule and a short training run."""
 import torch
 
 from dl_refresher.data import make_datasets

@@ -2,7 +2,7 @@
 
 Video: [VIDEO LINK, to be added when the video is published]
 
-**Learning goal:** train a small neural network by hand and explain every line of the training loop. Every language model in this course is a neural network, so this lesson opens the box: what the knobs are, how a score for the mistakes guides them, how PyTorch works out every slope, and how to keep a network honest while it learns. We write the network twice on the same data: first with plain tensors, so every line of the learning loop is visible, then with PyTorch's building blocks (`nn.Module` and an optimizer), so we see what they save us.
+**Learning goal:** train a small neural network by hand and explain every line of the training loop. Every language model in this course is a neural network, so this lesson opens the box: what the parameters are (the adjustable numbers inside a network), how a score for the mistakes (the loss) guides them, how PyTorch works out every slope, and how to keep a network honest while it learns. We write the network twice on the same data: first with plain tensors, so every line of the learning loop is visible, then with PyTorch's building blocks (`nn.Module` and an optimizer), so we see what they save us.
 
 This lesson assumes basic coding skills and a little familiarity with machine learning. Every idea is introduced before it is used, with a small example you can repeat on a calculator.
 
@@ -10,7 +10,7 @@ This lesson assumes basic coding skills and a little familiarity with machine le
 
 The video has four parts:
 
-1. **How a network learns.** Watch a small network learn two spirals; meet the knobs (the mixing desk), the score for the mistakes (the loss), gradient descent as walking downhill in fog, the learning rate as the size of a step, and backpropagation as tracing a dish back through its recipe, worked with real numbers and then in PyTorch's autograd.
+1. **How a network learns.** Watch a small network learn two spirals; meet the parameters (pictured as knobs on a mixing desk), the score for the mistakes (the loss), gradient descent as walking downhill in fog, the learning rate as the size of a step, and backpropagation as tracing a dish back through its recipe, worked with real numbers and then in PyTorch's autograd.
 2. **The building blocks in PyTorch.** Tensors and their shapes (and how to read a shape error), softmax (scores into probabilities), cross-entropy (how surprised were we?) and the four-move learning loop: forward, loss, backward, step.
 3. **Learning well.** Training versus validation (studying versus sitting the exam), overfitting, dropout, weight decay, optimizers (SGD, momentum, AdamW), a learning-rate sweep, warmup and cosine schedules, number formats (float32, bfloat16, float16) and where the numbers are computed (CPU, CUDA, MPS).
 4. **The code and the lab.** Two versions of the same network side by side, the tests, and an exercise: how many hidden units does the spiral job need?
@@ -53,11 +53,11 @@ uv sync                 # creates .venv and installs the exact versions from uv.
 ## Run it
 
 ```bash
-uv run python -m demos.d01_one_weight          # gradient descent on one knob: 0 -> 0.4 -> 0.72 -> 0.976, and a step size of 1.1 that overshoots
-uv run python -m demos.d02_backprop            # the recipe traced backwards: slopes -12, -6, -18, -6, checked by nudging each knob
+uv run python -m demos.d01_one_weight          # gradient descent on one parameter: 0 -> 0.4 -> 0.72 -> 0.976, and a step size of 1.1 that overshoots
+uv run python -m demos.d02_backprop            # the recipe traced backwards: slopes -12, -6, -18, -6, checked by nudging each parameter
 uv run python -m demos.d03_tensors_shapes      # shapes, broadcasting and three shape mistakes caught on purpose
 uv run python -m demos.d04_softmax             # scores 2.0, 1.0, 0.1 -> probabilities 0.659, 0.242, 0.099 and the loss 0.417
-uv run python -m demos.d05_parameters          # counting the knobs: 82 in the small network, 17,154 in a wide one
+uv run python -m demos.d05_parameters          # counting the parameters: 82 in the small network, 17,154 in a wide one
 uv run python -m demos.d06_train_raw           # training with plain tensors, 1000 steps
 uv run python -m demos.d07_train_module        # training with nn.Module and AdamW, 500 steps
 uv run python -m demos.d08_overfit             # memorizing 50 points; dropout and weight decay calm it down
@@ -89,7 +89,7 @@ raw tensors, 2 -> 16 -> 2, plain gradient descent, learning rate 1.0
 
 ```text
 $ uv run python -m demos.d07_train_module
-nn.Module network with 82 knobs, AdamW, learning rate 0.01
+nn.Module network with 82 parameters, AdamW, learning rate 0.01
  step  train loss  train acc  val loss  val acc
     0      0.7102      0.500    0.7054    0.500
    10      0.6316      0.620    0.6308    0.623
@@ -119,7 +119,7 @@ Timings and the CPU-versus-GPU lines of `d10_precision_device` depend on your ma
 The video calculates small numbers by hand. `worked_examples.py` prints exactly those numbers using plain Python:
 
 ```text
-knobs: layer 1 = 48, layer 2 = 34, total = 82
+parameters: layer 1 = 48, layer 2 = 34, total = 82
 layer, unit A: 2.0 * 0.5 + 1.0 * -1.0 + 0.5 = 0.5  ->  ReLU keeps 0.5
 layer, unit B: -2.0 * 0.5 + 1.0 * -1.0 + 0.5 = -1.5  ->  ReLU keeps 0.0
 gradient descent, learning rate 0.1: [0.0, 0.4, 0.72, 0.976, 1.1808, 1.3446, 1.4757]
@@ -143,7 +143,7 @@ The same text is saved in `data/expected_output/worked_examples.txt`.
 
 ## Lab: check and extend
 
-The exercise at the end of the video: our network has 16 hidden units and reaches about 98 percent on the validation points. Predict what happens with 2, 4, 8 and 64 hidden units, and think about how many knobs each size has. Then run:
+The exercise at the end of the video: our network has 16 hidden units and reaches about 98 percent on the validation points. Predict what happens with 2, 4, 8 and 64 hidden units, and think about how many parameters each size has. Then run:
 
 ```bash
 uv run python -m demos.d11_lab_width
@@ -152,12 +152,12 @@ uv run python -m demos.d11_lab_width
 The recorded run:
 
 ```text
- hidden  knobs  train loss  train acc  val acc
-      2     12      0.5606      0.618    0.553
-      4     22      0.4149      0.800    0.755
-      8     42      0.1990      0.897    0.910
-     16     82      0.0819      0.970    0.980
-     64    322      0.0473      0.993    0.993
+ hidden  parameters  train loss  train acc  val acc
+      2          12      0.5606      0.618    0.553
+      4          22      0.4149      0.800    0.755
+      8          42      0.1990      0.897    0.910
+     16          82      0.0819      0.970    0.980
+     64         322      0.0473      0.993    0.993
 ```
 
 Two hidden units have too few bends to follow a spiral. Sixteen is enough, and 64 adds only a little. To extend the lab, change one setting at a time (the learning rate, the number of steps, the noise level or the dropout share), predict the result first, then run the demo and compare. Predicting before running turns experiments into understanding.
@@ -165,7 +165,7 @@ Two hidden units have too few bends to follow a spiral. Sixteen is enough, and 6
 ## Honest notes
 
 - **The data is synthetic.** The two spirals are drawn by `data.py` from a seed, so everyone gets the same points.
-- **The network is small on purpose.** 82 knobs, one hidden layer, a couple of seconds per run. The same four moves train every network in the course, from this one to a language model.
+- **The network is small on purpose.** 82 parameters, one hidden layer, a couple of seconds per run. The same four moves train every network in the course, from this one to a language model.
 - **Timings are examples.** The speed lines in `d06`, `d07` and `d10` come from the recorded run. Yours will differ; the loss and accuracy numbers are the ones to compare.
 - **Everything is free.** The whole lesson runs on a laptop CPU.
 

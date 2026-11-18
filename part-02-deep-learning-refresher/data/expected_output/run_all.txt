@@ -1,24 +1,24 @@
 $ uv run python run_all.py
 learning rate 0.1
   gradient at the start: -4.0  (the loss falls fastest by moving up)
-  step 1: knob =   0.4000   loss =    2.5600
-  step 2: knob =   0.7200   loss =    1.6384
-  step 3: knob =   0.9760   loss =    1.0486
-  step 4: knob =   1.1808   loss =    0.6711
-  step 5: knob =   1.3446   loss =    0.4295
-  step 6: knob =   1.4757   loss =    0.2749
+  step 1: w =   0.4000   loss =    2.5600
+  step 2: w =   0.7200   loss =    1.6384
+  step 3: w =   0.9760   loss =    1.0486
+  step 4: w =   1.1808   loss =    0.6711
+  step 5: w =   1.3446   loss =    0.4295
+  step 6: w =   1.4757   loss =    0.2749
 learning rate 1.1
   gradient at the start: -4.0  (the loss falls fastest by moving up)
-  step 1: knob =   4.4000   loss =    5.7600
-  step 2: knob =  -0.8800   loss =    8.2944
-  step 3: knob =   5.4560   loss =   11.9439
-  step 4: knob =  -2.1472   loss =   17.1993
-  step 5: knob =   6.9766   loss =   24.7670
-  step 6: knob =  -3.9720   loss =   35.6644
+  step 1: w =   4.4000   loss =    5.7600
+  step 2: w =  -0.8800   loss =    8.2944
+  step 3: w =   5.4560   loss =   11.9439
+  step 4: w =  -2.1472   loss =   17.1993
+  step 5: w =   6.9766   loss =   24.7670
+  step 6: w =  -3.9720   loss =   35.6644
 -- d01_one_weight finished in 0.0 s
 
 loss = 9.0   (prediction 3, target 6, miss 3, squared 9)
-the recorded chain, from the loss back to the knobs:
+the recorded chain, from the loss back to the parameters:
 PowBackward0
   SubBackward0
     AddBackward0
@@ -35,7 +35,7 @@ gradients from backward():
   d loss / d b1 =   -6.0
   d loss / d w2 =  -18.0
   d loss / d b2 =   -6.0
-nudge check: move one knob by 0.001 and see how the loss changes
+nudge check: move one parameter by 0.001 and see how the loss changes
   w1: (new loss - old loss) / 0.001 =  -12.00   gradient =  -12.0
   b1: (new loss - old loss) / 0.001 =   -6.00   gradient =   -6.0
   w2: (new loss - old loss) / 0.001 =  -17.99   gradient =  -18.0
@@ -66,19 +66,19 @@ stable softmax         : [0.269, 0.731]
 -- d04_softmax finished in 0.0 s
 
 small network, 2 -> 16 -> 2
-  net.0.weight shape (16, 2)          32 knobs
-  net.0.bias   shape (16,)            16 knobs
-  net.2.weight shape (2, 16)          32 knobs
-  net.2.bias   shape (2,)              2 knobs
-  total: 82 knobs
+  net.0.weight shape (16, 2)          32 parameters
+  net.0.bias   shape (16,)            16 parameters
+  net.2.weight shape (2, 16)          32 parameters
+  net.2.bias   shape (2,)              2 parameters
+  total: 82 parameters
 wide network, 2 -> 128 -> 128 -> 2
-  net.0.weight shape (128, 2)        256 knobs
-  net.0.bias   shape (128,)          128 knobs
-  net.2.weight shape (128, 128)    16384 knobs
-  net.2.bias   shape (128,)          128 knobs
-  net.4.weight shape (2, 128)        256 knobs
-  net.4.bias   shape (2,)              2 knobs
-  total: 17154 knobs
+  net.0.weight shape (128, 2)        256 parameters
+  net.0.bias   shape (128,)          128 parameters
+  net.2.weight shape (128, 128)    16384 parameters
+  net.2.bias   shape (128,)          128 parameters
+  net.4.weight shape (2, 128)        256 parameters
+  net.4.bias   shape (2,)              2 parameters
+  total: 17154 parameters
 -- d05_parameters finished in 0.0 s
 
 raw tensors, 2 -> 16 -> 2, plain gradient descent, learning rate 1.0
@@ -92,7 +92,7 @@ raw tensors, 2 -> 16 -> 2, plain gradient descent, learning rate 1.0
 time: 0.2 seconds for 1000 steps
 -- d06_train_raw finished in 0.7 s
 
-nn.Module network with 82 knobs, AdamW, learning rate 0.01
+nn.Module network with 82 parameters, AdamW, learning rate 0.01
  step  train loss  train acc  val loss  val acc
     0      0.7102      0.500    0.7054    0.500
    10      0.6316      0.620    0.6308    0.623
@@ -166,12 +166,12 @@ best available device: mps
 -- d10_precision_device finished in 1.4 s
 
 hidden units: how many does the spiral job need? (AdamW, learning rate 0.01, 500 steps)
- hidden  knobs  train loss  train acc  val acc
-      2     12      0.5606      0.618    0.553
-      4     22      0.4149      0.800    0.755
-      8     42      0.1990      0.897    0.910
-     16     82      0.0819      0.970    0.980
-     64    322      0.0473      0.993    0.993
+ hidden  parameters  train loss  train acc  val acc
+      2          12      0.5606      0.618    0.553
+      4          22      0.4149      0.800    0.755
+      8          42      0.1990      0.897    0.910
+     16          82      0.0819      0.970    0.980
+     64         322      0.0473      0.993    0.993
 -- d11_lab_width finished in 0.9 s
 
 [exit 0]

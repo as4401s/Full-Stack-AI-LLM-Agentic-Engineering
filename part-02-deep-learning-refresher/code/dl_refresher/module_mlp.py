@@ -1,10 +1,10 @@
 """module_mlp.py - the same kind of network, written with PyTorch's building blocks.
 
-What it does: wraps the layers in an nn.Module (so PyTorch finds all knobs for us), then trains it with
+What it does: wraps the layers in an nn.Module (so PyTorch finds all parameters for us), then trains it with
 the standard five-line loop: zero the gradients, forward, loss, backward, optimizer step. The optimizer
 (plain SGD, SGD with momentum, or AdamW) and the learning-rate schedule are chosen with plain arguments.
 What it needs: torch.
-What to expect: with 2 inputs, 16 hidden units and 2 outputs the network has 82 knobs; AdamW at a
+What to expect: with 2 inputs, 16 hidden units and 2 outputs the network has 82 parameters; AdamW at a
 learning rate of 0.01 reaches about 98 percent accuracy on the spirals within a few hundred steps.
 """
 import copy
@@ -42,16 +42,16 @@ class MLP(nn.Module):
 
 
 def count_parameters(model: nn.Module) -> int:
-    """Total number of knobs (every number that learning may change)."""
+    """Total number of parameters (every number that learning may change)."""
     return sum(p.numel() for p in model.parameters())
 
 
 def make_optimizer(name: str, params, lr: float, weight_decay: float = 0.0, momentum: float = 0.9):
-    """Pick the rule that turns gradients into knob changes.
+    """Pick the rule that turns gradients into parameter changes.
 
-    sgd      - new knob = old knob - lr * gradient
+    sgd      - new parameter = old parameter - lr * gradient
     momentum - the same, but remembers the direction of recent steps (a rolling ball)
-    adamw    - scales each knob's step by how large its recent gradients were, plus clean weight decay
+    adamw    - scales each parameter's step by how large its recent gradients were, plus clean weight decay
     """
     if name == "sgd":
         return torch.optim.SGD(params, lr=lr)
@@ -89,7 +89,7 @@ def train_module(train, val, model: nn.Module, optimizer: str = "adamw", lr: flo
     """Train `model` on the training points and watch the validation points after every step.
 
     Returns a dict with the history (loss, accuracy and learning rate per step), the model, the
-    requested snapshots (copies of the knobs at chosen steps) and the training time in seconds.
+    requested snapshots (copies of the parameters at chosen steps) and the training time in seconds.
     """
     (Xtr, ytr), (Xva, yva) = train, val
     Xtr, ytr, Xva, yva = (t.to(device) for t in (Xtr, ytr, Xva, yva))
@@ -115,8 +115,8 @@ def train_module(train, val, model: nn.Module, optimizer: str = "adamw", lr: flo
         opt.zero_grad()                                # 1. clear the gradients left from the last round
         logits = model(Xtr)                            # 2. forward: predictions
         loss = F.cross_entropy(logits, ytr)            # 3. loss: how far from the targets?
-        loss.backward()                                # 4. backward: a gradient for every knob
-        opt.step()                                     # 5. step: the optimizer changes every knob
+        loss.backward()                                # 4. backward: a gradient for every parameter
+        opt.step()                                     # 5. step: the optimizer changes every parameter
         if scheduler is not None:
             scheduler.step()                           # move to the next learning rate
         record(step)

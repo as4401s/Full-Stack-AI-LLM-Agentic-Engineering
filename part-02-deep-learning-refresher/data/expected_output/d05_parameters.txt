@@ -1,14 +1,14 @@
 small network, 2 -> 16 -> 2
-  net.0.weight shape (16, 2)          32 knobs
-  net.0.bias   shape (16,)            16 knobs
-  net.2.weight shape (2, 16)          32 knobs
-  net.2.bias   shape (2,)              2 knobs
-  total: 82 knobs
+  net.0.weight shape (16, 2)          32 parameters
+  net.0.bias   shape (16,)            16 parameters
+  net.2.weight shape (2, 16)          32 parameters
+  net.2.bias   shape (2,)              2 parameters
+  total: 82 parameters
 wide network, 2 -> 128 -> 128 -> 2
-  net.0.weight shape (128, 2)        256 knobs
-  net.0.bias   shape (128,)          128 knobs
-  net.2.weight shape (128, 128)    16384 knobs
-  net.2.bias   shape (128,)          128 knobs
-  net.4.weight shape (2, 128)        256 knobs
-  net.4.bias   shape (2,)              2 knobs
-  total: 17154 knobs
+  net.0.weight shape (128, 2)        256 parameters
+  net.0.bias   shape (128,)          128 parameters
+  net.2.weight shape (128, 128)    16384 parameters
+  net.2.bias   shape (128,)          128 parameters
+  net.4.weight shape (2, 128)        256 parameters
+  net.4.bias   shape (2,)              2 parameters
+  total: 17154 parameters

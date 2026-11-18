@@ -1,7 +1,7 @@
 """worked_examples.py - every small number from the lesson, reproduced with plain Python (no libraries needed).
 
-What it does: repeats the by-hand examples from the video one by one: counting knobs, one layer, gradient descent on one
-knob (and a learning rate that is too big), the backpropagation example, softmax and cross-entropy, momentum,
+What it does: repeats the by-hand examples from the video one by one: counting parameters, one layer, gradient descent on one
+parameter (and a learning rate that is too big), the backpropagation example, softmax and cross-entropy, momentum,
 dropout, the warmup-then-cosine schedule and rounding to bfloat16.
 What it needs: only Python 3.12 or newer.
 What to expect: the numbers printed below, the same ones shown on the slides (see the part README).
@@ -11,11 +11,11 @@ import math
 import struct
 
 
-def knobs():
-    """Count the knobs of a 2 -> 16 -> 2 network."""
+def parameters():
+    """Count the parameters of a 2 -> 16 -> 2 network."""
     first = 2 * 16 + 16                                   # weights and biases of layer 1
     second = 16 * 2 + 2                                   # weights and biases of layer 2
-    print(f"knobs: layer 1 = {first}, layer 2 = {second}, total = {first + second}")
+    print(f"parameters: layer 1 = {first}, layer 2 = {second}, total = {first + second}")
 
 
 def layer():
@@ -30,7 +30,7 @@ def descent(lr: float, steps: int = 6):
     """Fit y = 2x from one example (x = 1, y = 2): loss = (w - 2) ** 2, whose gradient is 2 * (w - 2)."""
     w, path = 0.0, [0.0]
     for _ in range(steps):
-        w = w - lr * 2 * (w - 2)                          # new knob = old knob - learning rate * gradient
+        w = w - lr * 2 * (w - 2)                          # new parameter = old parameter - learning rate * gradient
         path.append(round(w, 4))
     print(f"gradient descent, learning rate {lr}: {path}")
 
@@ -107,7 +107,7 @@ def precision():
 
 
 if __name__ == "__main__":
-    knobs()
+    parameters()
     layer()
     descent(0.1)
     descent(1.1)

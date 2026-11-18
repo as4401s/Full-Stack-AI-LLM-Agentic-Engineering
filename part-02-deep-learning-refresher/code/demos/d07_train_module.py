@@ -3,7 +3,7 @@
 What it does: trains MLP(16) on the spirals with AdamW, shows the five lines of the loop at work, and keeps
 the loss curve and decision-boundary snapshots.
 What it needs: torch.
-What to expect: 82 knobs, loss falling from about 0.7 to about 0.08 and accuracy near 98 percent within 500 steps.
+What to expect: 82 parameters, loss falling from about 0.7 to about 0.08 and accuracy near 98 percent within 500 steps.
 Run it: uv run python -m demos.d07_train_module
 """
 import torch
@@ -19,7 +19,7 @@ def main():
     train, val = make_datasets()
     torch.manual_seed(0)
     model = MLP((16,))
-    print(f"nn.Module network with {count_parameters(model)} knobs, AdamW, learning rate 0.01")
+    print(f"nn.Module network with {count_parameters(model)} parameters, AdamW, learning rate 0.01")
     out = train_module(train, val, model, optimizer="adamw", lr=0.01, steps=500, snapshot_steps=SNAPSHOT_STEPS)
     h = out["history"]
     print(f"{'step':>5} {'train loss':>11} {'train acc':>10} {'val loss':>9} {'val acc':>8}")
