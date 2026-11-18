@@ -1,0 +1,23 @@
+$ uv run pytest -v --no-header -p no:cacheprovider -p no:warnings
+============================= test session starts ==============================
+collecting ... collected 16 items
+
+tests/test_autograd_and_basics.py::test_backprop_numbers_match_hand_calculation PASSED [  6%]
+tests/test_autograd_and_basics.py::test_gradient_descent_sequence PASSED [ 12%]
+tests/test_autograd_and_basics.py::test_large_learning_rate_overshoots PASSED [ 18%]
+tests/test_autograd_and_basics.py::test_shape_mistakes_are_caught PASSED [ 25%]
+tests/test_autograd_and_basics.py::test_softmax_sums_to_one_and_matches_hand_numbers PASSED [ 31%]
+tests/test_autograd_and_basics.py::test_bfloat16_rounds_pi PASSED        [ 37%]
+tests/test_data.py::test_same_seed_gives_same_points PASSED              [ 43%]
+tests/test_data.py::test_shapes_and_balance PASSED                       [ 50%]
+tests/test_data.py::test_train_and_validation_differ PASSED              [ 56%]
+tests/test_module_mlp.py::test_parameter_count_is_82 PASSED              [ 62%]
+tests/test_module_mlp.py::test_dropout_changes_outputs_only_in_train_mode PASSED [ 68%]
+tests/test_module_mlp.py::test_warmup_cosine_values PASSED               [ 75%]
+tests/test_module_mlp.py::test_adamw_training_lowers_loss PASSED         [ 81%]
+tests/test_raw_mlp.py::test_forward_shape PASSED                         [ 87%]
+tests/test_raw_mlp.py::test_hand_written_loss_matches_pytorch PASSED     [ 93%]
+tests/test_raw_mlp.py::test_training_lowers_loss PASSED                  [100%]
+
+============================== 16 passed in 0.96s ==============================
+[exit 0]

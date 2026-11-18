@@ -1,0 +1,18 @@
+knobs: layer 1 = 48, layer 2 = 34, total = 82
+layer, unit A: 2.0 * 0.5 + 1.0 * -1.0 + 0.5 = 0.5  ->  ReLU keeps 0.5
+layer, unit B: -2.0 * 0.5 + 1.0 * -1.0 + 0.5 = -1.5  ->  ReLU keeps 0.0
+gradient descent, learning rate 0.1: [0.0, 0.4, 0.72, 0.976, 1.1808, 1.3446, 1.4757]
+gradient descent, learning rate 1.1: [0.0, 4.4, -0.88, 5.456, -2.1472, 6.9766, -3.972]
+forward: hidden = 3.0, prediction = 3.0, loss = 9.0
+backward: dL/dprediction = -6.0, dL/db2 = -6.0, dL/dw2 = -18.0, dL/db1 = -6.0, dL/dw1 = -12.0
+nudge w2 by 0.01: loss goes from 9.0 to 8.8209 (change -0.1791, predicted -0.18)
+exp: [7.389, 2.718, 1.105]  sum: 11.213
+probabilities: [0.659, 0.242, 0.099]  total: 1.0
+cross-entropy for class 0: -ln(0.659) = 0.417
+if the right class were 2: loss = 2.317 (a confident miss costs more)
+momentum 0.9, learning rate 0.1: [0.0, 0.4, 1.08, 1.876, 2.617]  (it rolls past 2, then comes back)
+dropout: hidden [2.0, 4.0, 6.0, 8.0], mask [1, 0, 1, 0] -> [4.0, 0.0, 12.0, 0.0]; in eval mode the values stay [2.0, 4.0, 6.0, 8.0]
+each unit is kept half the time and doubled, so on average it stays the same: [2.0, 4.0, 6.0, 8.0]
+weight decay: weight 2.0, learning rate 0.1, decay 0.1 -> factor 0.99 -> new weight 1.98
+schedule (base 0.1, warmup 2, total 10): [0.05, 0.1, 0.1, 0.0962, 0.0854, 0.0691, 0.05, 0.0309, 0.0146, 0.0038, 0.0]
+pi in bfloat16 = 3.140625, 1.001 in bfloat16 = 1.0, 1000.7 in bfloat16 = 1000.0

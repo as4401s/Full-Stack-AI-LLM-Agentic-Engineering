@@ -1,0 +1,13 @@
+50 training points, 400 validation points, noise 0.12, 600 steps
+setting        train loss  train acc  val loss  val acc  best val loss  at step
+plain              0.0001      1.000    1.1597    0.882         0.2653       25
+weight decay       0.0001      1.000    0.8516    0.882         0.2672       26
+dropout            0.0021      1.000    0.5374    0.923         0.2679      132
+both               0.0036      1.000    0.3743    0.923         0.2672       41
+
+weight decay sweep (AdamW, no dropout): how much is enough?
+weight decay  train loss  val loss  val acc
+         0.0      0.0001    1.1597    0.882
+        0.01      0.0000    1.2863    0.887
+         0.1      0.0001    0.8516    0.882
+         1.0      0.0068    0.4324    0.875

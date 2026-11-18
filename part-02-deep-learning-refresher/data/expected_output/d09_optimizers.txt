@@ -1,0 +1,28 @@
+three optimizers, same network and data, 300 steps (training loss)
+optimizer                        0      10      50     100     200     300
+sgd lr 0.1                   0.710   0.673   0.614   0.569   0.540   0.529
+momentum lr 0.1              0.710   0.634   0.519   0.437   0.243   0.176
+adamw lr 0.01                0.710   0.632   0.502   0.381   0.182   0.117
+
+learning rate sweep with AdamW, 300 steps
+learning rate  train loss  val acc
+       0.0003      0.6334    0.738
+        0.001      0.5369    0.567
+        0.003      0.3842    0.762
+         0.01      0.1171    0.973
+         0.03      0.0688    0.978
+          0.1      0.0610    0.975
+          0.3      0.0586    0.965
+          1.0      0.3744    0.730
+          3.0      0.3050    0.835
+
+warmup 20 steps, then cosine to zero over 300 steps, base learning rate 1.0
+  step   0: learning rate = 0.05000
+  step  10: learning rate = 0.55000
+  step  19: learning rate = 1.00000
+  step  20: learning rate = 1.00000
+  step 100: learning rate = 0.81174
+  step 200: learning rate = 0.28306
+  step 299: learning rate = 0.00003
+final train loss, constant 1.0 : 0.3744   val acc 0.730
+final train loss, with schedule: 0.0471   val acc 0.970

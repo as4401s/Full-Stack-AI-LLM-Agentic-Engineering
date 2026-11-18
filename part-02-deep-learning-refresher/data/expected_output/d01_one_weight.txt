@@ -1,0 +1,16 @@
+learning rate 0.1
+  gradient at the start: -4.0  (the loss falls fastest by moving up)
+  step 1: knob =   0.4000   loss =    2.5600
+  step 2: knob =   0.7200   loss =    1.6384
+  step 3: knob =   0.9760   loss =    1.0486
+  step 4: knob =   1.1808   loss =    0.6711
+  step 5: knob =   1.3446   loss =    0.4295
+  step 6: knob =   1.4757   loss =    0.2749
+learning rate 1.1
+  gradient at the start: -4.0  (the loss falls fastest by moving up)
+  step 1: knob =   4.4000   loss =    5.7600
+  step 2: knob =  -0.8800   loss =    8.2944
+  step 3: knob =   5.4560   loss =   11.9439
+  step 4: knob =  -2.1472   loss =   17.1993
+  step 5: knob =   6.9766   loss =   24.7670
+  step 6: knob =  -3.9720   loss =   35.6644

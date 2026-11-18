@@ -1,0 +1,9 @@
+scores        [2.0, 1.0, 0.1]
+exp(scores)   [7.389, 2.718, 1.105]
+probabilities [0.659, 0.242, 0.099]  sum = 1.0
+loss for class 0 = -ln(0.659) = 0.417
+matches F.softmax      : True
+matches F.cross_entropy: True
+naive exp of 1000      : inf (too large to store)
+log-sum-exp of 1000,1001: 1001.3132 (stays finite)
+stable softmax         : [0.269, 0.731]

@@ -1,0 +1,10 @@
+points       (4, 2)
+w1           (2, 16)
+points @ w1  (4, 16)
+b1           (16,) -> broadcast across 4 rows
+hidden       (4, 16)
+
+three mistakes, caught on purpose
+1) wrong inner size   : RuntimeError - mm: mat1 and mat2 shapes cannot be multiplied (4x2 and 3x5)
+2) wrong feature count: RuntimeError - addmm: mat1 and mat2 shapes cannot be multiplied (4x3 and 2x16)
+3) scores vs labels   : ValueError - Expected input batch_size (4) to match target batch_size (3).

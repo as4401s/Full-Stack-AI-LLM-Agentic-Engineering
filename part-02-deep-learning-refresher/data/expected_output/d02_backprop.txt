@@ -1,0 +1,23 @@
+loss = 9.0   (prediction 3, target 6, miss 3, squared 9)
+the recorded chain, from the loss back to the knobs:
+PowBackward0
+  SubBackward0
+    AddBackward0
+      MulBackward0
+        AccumulateGrad
+        ReluBackward0
+          AddBackward0
+            MulBackward0
+              AccumulateGrad
+            AccumulateGrad
+      AccumulateGrad
+gradients from backward():
+  d loss / d w1 =  -12.0
+  d loss / d b1 =   -6.0
+  d loss / d w2 =  -18.0
+  d loss / d b2 =   -6.0
+nudge check: move one knob by 0.001 and see how the loss changes
+  w1: (new loss - old loss) / 0.001 =  -12.00   gradient =  -12.0
+  b1: (new loss - old loss) / 0.001 =   -6.00   gradient =   -6.0
+  w2: (new loss - old loss) / 0.001 =  -17.99   gradient =  -18.0
+  b2: (new loss - old loss) / 0.001 =   -6.00   gradient =   -6.0
