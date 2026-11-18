@@ -1,169 +1,176 @@
 <h1 id="full-stack-ai-llm-agentic-engineering---deep-learning-refresher-with-pytorch">2. Full-Stack AI, LLM &amp; Agentic Engineering - Deep learning refresher with PyTorch</h1>
 <p><em>Part 2 of the Full-Stack AI, LLM &amp; Agentic Engineering course</em></p>
 <p>If you prefer to learn in more detail or in a visual way, watch the video for this lesson on YouTube. [VIDEO LINK, to be added when the video is published]</p>
-<p>Welcome to Full-Stack AI, LLM &amp; Agentic Engineering, a course where we learn to build real AI applications step by step, from the first idea to a system that people can use every day. The course has sixty lessons in five stages: foundations; working with models and data; agents; running it for real; and putting it to work. New names are fine, because every name gets its own lesson and we explain each new word the first time it appears.</p>
-<p>In this tutorial, we will train a small neural network by hand and explain every line of its training loop. Lesson 1 built dependable Python software that asks three AI services the same question, and now we open the box behind those answers, because every language model is a neural network. We use PyTorch, a free library for neural networks, on one tiny problem: telling two intertwined spirals of points apart. The loop we write today returns in lessons 10 and 36, when we pretrain and fine-tune language models. The course suits anyone with basic coding skills and a little familiarity with machine learning.</p>
+<p>Welcome to Full-Stack AI, LLM &amp; Agentic Engineering, a course where we build real AI applications step by step, from the first idea to a system that people use every day. The course has sixty lessons in five stages: foundations; working with models and data; agents; running it for real; and putting it to work. Every new word is explained the first time it appears, with a small example you can repeat on a calculator.</p>
+<p>In this tutorial, we will train a small neural network and explain every line of its training loop. Lesson 1 built dependable Python software that asks three AI services the same question; now we open the box behind those answers, because every language model is a neural network. We use PyTorch, a free library for neural networks, on one tiny problem: telling two intertwined spirals of points apart. The loop we write today returns in lessons 10 and 36, when we pretrain and fine-tune language models. The course suits anyone with basic coding skills and a little machine learning familiarity.</p>
 <p>Here is the roadmap for this article:</p>
 <ol type="1">
-<li>Knobs and a Score: what a network is and how we grade it</li>
-<li>Walking Downhill: how every knob finds a better setting</li>
-<li>Tracing Mistakes Back: one backwards sweep gives every slope</li>
-<li>Grids, Probabilities and the Loop: the building blocks in PyTorch</li>
-<li>Keeping Learning Honest: studying versus sitting the exam</li>
-<li>Choosing Good Settings: step rules, schedules, number formats and devices</li>
-<li>The Code and the Lab: two versions of one network and an exercise</li>
+<li>Parameters and the Loss</li>
+<li>Walking Downhill</li>
+<li>Tracing Mistakes Back</li>
+<li>Grids, Probabilities and the Loop</li>
+<li>Keeping Learning Honest</li>
+<li>Choosing Good Settings</li>
+<li>The Code and the Lab</li>
 </ol>
-<p>This article follows the second video of the course. The code, with a comment on every step, is on GitHub: <a href="https://github.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/tree/main/part-02-deep-learning-refresher">part-02-deep-learning-refresher</a>. The folder also holds <code>worked_examples.py</code>, which reproduces every small number we calculate by hand. The video holds the long explanations, and this article is the short version.</p>
+<p>This article follows the second video of the course. The code, with a comment on every step, is on GitHub: <a href="https://github.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/tree/main/part-02-deep-learning-refresher">part-02-deep-learning-refresher</a>. The folder also holds <code>worked_examples.py</code>, which reproduces every small number we calculate by hand.</p>
 <p>Earlier articles in this course:</p>
 <ul>
 <li><ol type="1">
 <li>Full-Stack AI, LLM &amp; Agentic Engineering - Python engineering for AI [ARTICLE LINK, to be added when article 1 is published]</li>
 </ol></li>
 </ul>
-<h2 id="knobs-and-a-score">Knobs and a Score</h2>
-<p>Here is the actual thing first. A small network starts with random settings and sees two spirals of points, one arm per class. At first it is right on about half the points, a coin flip. After 1,000 steps it separates the spirals cleanly: accuracy climbed from 49 percent to 98 percent in a fraction of a second. Only 82 numbers moved, a little at a time, in a direction chosen by a rule, and this lesson explains that rule.</p>
+<h2 id="parameters-and-the-loss">Parameters and the Loss</h2>
+<p>Here is the actual thing first. A small network starts with random settings and sees two spirals of points, one arm per class. At first it labels about half of the points correctly, a coin flip. After 1,000 small steps, accuracy, the share of points labeled correctly, climbs from 49 to 98 percent. Only 82 adjustable numbers moved, and this lesson explains the rule that moves them.</p>
 <figure>
 <img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig01.jpg" alt="Figure 1. A network learns two spirals.">
 <figcaption>
 Figure 1. A network learns two spirals. Source: image created by author.
 </figcaption>
 </figure>
-<p>How can a network know anything? Picture a mixing desk in a music studio, where the sound depends on every knob position. A network is a long list of numbers, called parameters, and its answer depends on all of them. Learning means finding good knob positions, and for that we need a score for how far the sound is from the sound we wanted. That score is the loss, and smaller is better. Take one knob w, the rule y = 2x and the example x = 1, target 2. At w = 0 the prediction is 0, the miss is 2, and we square it to get a loss of 4. At w = 2 the loss is 0.</p>
+<p>How can a network know anything? Picture a mixing desk in a music studio, where the sound depends on every knob position. A network takes numbers in, the input, and gives a number out, the prediction. Inside sits a list of adjustable numbers: the knobs of our picture, properly called parameters, and from here on we say parameters. The smallest network has one parameter, w, and the rule prediction = w × x. With w = 3 and the input x = 2 the prediction is 6, and with w = 5 it is 10. The parameter decides the answer.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig02.jpg" alt="Figure 2. Parameters are knobs and the loss is the distance from the wanted sound.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig02.jpg" alt="Figure 2. Parameters: the adjustable numbers inside our network.">
 <figcaption>
-Figure 2. Parameters are knobs and the loss is the distance from the wanted sound. Source: image created by author.
+Figure 2. Parameters: the adjustable numbers inside our network. Source: image created by author.
 </figcaption>
 </figure>
-<p>Each unit in a layer does three small jobs: it multiplies every input by its own weight, adds the products together with one extra number called the bias, and bends the result with ReLU, which keeps a positive number and replaces a negative one with 0. With inputs 0.5 and -1, a unit with weights 2 and 1 and bias 0.5 computes 1 - 1 + 0.5 = 0.5 and keeps it. A unit with weights -2 and 1 computes -1.5, and ReLU turns it into 0. The bend matters, because stacked layers that skip it collapse into one straight-line rule, and spirals need curves.</p>
+<p>How do we tell whether a prediction is good? For each input the data holds the answer we wish for, the target. Let the target be 2 × the input, so the input 1 has the target 2. The miss is the prediction minus the target: at w = 0 the prediction is 0 and the miss is -2. Misses above and below the target are equally bad, so we square the miss, and this squared miss is the loss: one number that says how wrong the prediction is, where smaller is better and zero is perfect. The loss is 4 at w = 0, 1 at w = 1, 0 at w = 2 and 1 at w = 3, a bowl with its bottom at w = 2, where learning wants to go.</p>
+<p>What sits inside a network? Small calculators called units. A unit multiplies each input by its own weight, adds the products, adds one more number, the bias, and bends the result with an activation function. The popular one, ReLU, keeps a positive number and replaces a negative one with 0, and the number a unit hands on is its activation. With inputs 0.5 and -1, weights 2 and 1 and bias 0.5, a unit computes 1 - 1 + 0.5 = 0.5 and ReLU keeps it. With weights -2 and 1 the result is -1.5 and ReLU makes it 0. The bend matters, because stacked layers that keep every number as it is collapse into one straight-line rule, and spirals need curves. Weights and biases are the parameters of a unit.</p>
+<p>Units sit in groups called layers: the input layer holds our data (two numbers per point), the hidden layer between data and answer has 16 units, and the output layer has 2 units, one score for each spiral. We write the shape of the network as 2, 16, 2, and running it from input to output is the forward pass.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig03.jpg" alt="Figure 3. A layer multiplies, adds and bends.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig03.jpg" alt="Figure 3. Units in layers: the 2, 16, 2 network.">
 <figcaption>
-Figure 3. A layer multiplies, adds and bends. Source: image created by author.
+Figure 3. Units in layers: the 2, 16, 2 network. Source: image created by author.
 </figcaption>
 </figure>
-<p>Our network has 2 inputs, 16 hidden units and 2 outputs, one score per spiral. The hidden layer has 2 × 16 weights plus 16 biases: 48 knobs. The output layer has 16 × 2 weights plus 2 biases: 34. Together 48 + 34 = 82, and PyTorch reports the same count.</p>
+<p>How many parameters does our network have? The hidden layer has 2 × 16 weights plus 16 biases: 48. The output layer has 16 × 2 weights plus 2 biases: 34. Together 48 + 34 = 82, and PyTorch reports the same count.</p>
 <h2 id="walking-downhill">Walking Downhill</h2>
-<p>How do we find good positions for 82 knobs? Picture a hiker in thick fog who feels which way the ground slopes underfoot and takes a small step downhill. That is gradient descent. The loss is the height of the ground, the gradient is the slope, and the rule is new knob = old knob - learning rate × gradient, where the learning rate is the step size.</p>
-<p>On our one-knob example the slope is 2w - 4. Start at w = 0 with a learning rate of 0.1: the slope is -4, so the knob moves to 0 + 0.4 = 0.4. At 0.4 the slope is -3.2 and the knob moves to 0.72, then to 0.976. The loss falls 4, 2.56, 1.64, 1.05, and every step is smaller because the slope flattens near the valley.</p>
+<p>How do we find good values for 82 parameters? Trying all combinations takes far too long, so we need a clue for which way to move each parameter. That clue is the slope: how steeply the loss changes when one parameter changes. For our loss (w - 2)² the slope is 2w - 4, which is -4 at w = 0, 0 at w = 2, the bottom of the bowl, and +2 at w = 3. With many parameters, each has its own slope, and the list of all the slopes is called the gradient. A negative slope means that raising the parameter lowers the loss, so walking against the gradient walks downhill.</p>
+<p>Picture a hiker in thick fog who feels the slope underfoot and takes a small step downhill. That is gradient descent. The loss is the height of the ground, the gradient is the slope, and the size of each step is set by a number called the learning rate. The rule is: new parameter = old parameter - learning rate × gradient.</p>
+<p>On our one-parameter example, start at w = 0 with a learning rate of 0.1. The slope is -4, so the parameter moves to 0 + 0.4 = 0.4. At 0.4 the slope is -3.2 and the parameter moves to 0.72, then to 0.976. The loss falls 4, 2.56, 1.64, 1.05, and every step is smaller because the slope flattens near the valley.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig04.jpg" alt="Figure 4. Gradient descent on one knob, step by step.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig04.jpg" alt="Figure 4. Gradient descent on one parameter, step by step.">
 <figcaption>
-Figure 4. Gradient descent on one knob, step by step. Source: image created by author.
+Figure 4. Gradient descent on one parameter, step by step. Source: image created by author.
 </figcaption>
 </figure>
-<p>The learning rate matters a great deal: a tiny step is safe but slow, and a giant step carries the hiker over the valley. With a rate of 1.1 the first step jumps by 4.4, past the target, and the next steps land at -0.88 and 5.456, each swing larger than the last. When a loss curve bounces, a rate that is too large is the first suspect.</p>
+<p>The learning rate matters: a tiny step is safe but slow, and a giant step carries the hiker over the valley. With a rate of 1.1 the first step jumps to 4.4, past the target, and the next steps land at -0.88 and 5.456, each swing larger than the last.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig05.jpg" alt="Figure 5. A step size of 0.1 glides to the target and 1.1 overshoots.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig05.jpg" alt="Figure 5. Reading a loss curve: bouncing points to a learning rate that is too large.">
 <figcaption>
-Figure 5. A step size of 0.1 glides to the target and 1.1 overshoots. Source: image created by author.
+Figure 5. Reading a loss curve: bouncing points to a learning rate that is too large. Source: image created by author.
 </figcaption>
 </figure>
 <h2 id="tracing-mistakes-back">Tracing Mistakes Back</h2>
-<p>Gradient descent needs one slope per knob, and backpropagation delivers all of them in one backwards sweep. Picture a soup that came out too salty: the chef traces backwards from the taste to the broth to the salt, asking how much each step shaped the result. The chain rule of calculus is that tracing: the effect of a knob on the loss is its effect on the prediction times the effect of the prediction on the loss.</p>
-<p>Let us trace a tiny network. The input is x = 2, the knobs are w1 = 1, b1 = 1, w2 = 1, b2 = 0, and the target is 6. Forward: the hidden value is 1 × 2 + 1 = 3, the prediction is 3, and the loss is (3 - 6)² = 9. Backward:</p>
+<p>Gradient descent needs one slope per parameter, and backpropagation delivers all of them in one backwards sweep. Picture a soup that came out too salty: the chef traces backwards from the taste to the broth to the salt. The chain rule of calculus is that tracing: the effect of a parameter on the loss is its effect on the prediction times the effect of the prediction on the loss.</p>
+<p>Let us trace a tiny network by hand: two units in a row. The input is x = 2, the parameters are w1 = 1, b1 = 1, w2 = 1 and b2 = 0, and the target is 6. Forward, the first unit computes 1 × 2 + 1 = 3 and ReLU keeps it; the second computes 3 × 1 + 0 = 3, the prediction. The miss is -3 and the loss is 9.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig06.jpg" alt="Figure 6. The forward pass: prediction 3, loss 9.">
+<figcaption>
+Figure 6. The forward pass: prediction 3, loss 9. Source: image created by author.
+</figcaption>
+</figure>
+<p>Now we go backwards from the loss:</p>
 <ul>
 <li>The slope at the prediction is 2 × (3 - 6) = -6, and b2 adds straight in, so its slope is also -6.</li>
-<li>The weight w2 multiplies the hidden value 3, so its slope is -6 × 3 = -18.</li>
-<li>The slope arriving at the hidden value is -6 × w2 = -6, and ReLU passes it along. The bias b1 gets -6, and w1 multiplies the input 2, so its slope is -12.</li>
+<li>The weight w2 multiplies the activation 3, so its slope is -6 × 3 = -18.</li>
+<li>The slope arriving at the activation is -6 × w2 = -6, and ReLU passes it along. The bias b1 gets -6, and w1 multiplies the input 2, so its slope is -12.</li>
 </ul>
 <p>A quick check: raising w2 by 0.01 drops the loss from 9 to 8.82, which is -18 × 0.01.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig06.jpg" alt="Figure 6. Four slopes from one backwards sweep.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig07.jpg" alt="Figure 7. Four gradients, one backwards sweep.">
 <figcaption>
-Figure 6. Four slopes from one backwards sweep. Source: image created by author.
+Figure 7. Four gradients, one backwards sweep. Source: image created by author.
 </figcaption>
 </figure>
-<p>PyTorch records the chain during the forward run, and one call to <code>loss.backward()</code> walks it in reverse and fills in a gradient for every knob. This bookkeeping is called autograd. Our demo prints -12, -6, -18 and -6, matching the hand calculation, and a brute-force nudge of each knob by one thousandth agrees, though nudging needs one extra run per knob and backpropagation needs one sweep.</p>
+<p>PyTorch records the chain during the forward run, and one call to <code>loss.backward()</code> walks it in reverse and fills in a gradient for every parameter. This bookkeeping is called autograd. Our demo prints -12, -6, -18 and -6, matching the hand calculation, and one sweep replaces a separate trial run for every parameter.</p>
 <h2 id="grids-probabilities-and-the-loop">Grids, Probabilities and the Loop</h2>
-<p>A tensor is a grid of numbers with a shape. Picture an egg tray with four rows and two columns, shape 4 × 2, just like a batch of four points with a horizontal and a vertical position. Multiplying grids follows one rule: the inner sizes must match and the outer sizes survive. A 4 × 2 batch times weights shaped 2 × 16 gives 4 × 16, sixteen hidden values for each point. PyTorch then stretches the bias, shaped 16, across every row, which is called broadcasting. Shape mistakes are the most common error, and the messages are friendly once we read them as two numbers that disagree. We caused three on purpose.</p>
+<p>How does a network handle thousands of points at once? It stores numbers in tensors. A tensor is a grid of numbers with a shape, which says how many numbers sit along each direction. Picture an egg tray with four rows and two columns, shape 4 × 2, just like a batch of four points, each with two features: a horizontal and a vertical position.</p>
+<p>A whole layer works on a whole batch in one line. The weights of the 16 hidden units form a matrix, a table of numbers, shaped 2 × 16. Multiplying matrices follows one rule: the inner sizes must match and the outer sizes survive, so a 4 × 2 batch times 2 × 16 weights gives 4 × 16, sixteen hidden values for each point. PyTorch then stretches the bias, shaped 16, across every row, which is called broadcasting.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig07.jpg" alt="Figure 7. Three shape mistakes and the messages PyTorch prints.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig08.jpg" alt="Figure 8. Matrix multiplication and shapes.">
 <figcaption>
-Figure 7. Three shape mistakes and the messages PyTorch prints. Source: image created by author.
+Figure 8. Matrix multiplication and shapes. Source: image created by author.
 </figcaption>
 </figure>
-<p>The last layer outputs one raw score per class, called logits. Softmax turns them into positive shares that add up to 100 percent: apply the exponential function to each score, then divide by the total. For scores 2, 1 and 0.1 the exponentials are 7.39, 2.72 and 1.11, the total is 11.21, and the shares are 0.659, 0.242 and 0.099.</p>
+<p>Shape mistakes are the most common error, and their messages read well once we see them as two numbers that disagree.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig08.jpg" alt="Figure 8. Softmax turns scores 2, 1 and 0.1 into shares.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig09.jpg" alt="Figure 9. Three shape mistakes and their messages.">
 <figcaption>
-Figure 8. Softmax turns scores 2, 1 and 0.1 into shares. Source: image created by author.
+Figure 9. Three shape mistakes and their messages. Source: image created by author.
 </figcaption>
 </figure>
-<p>To score a prediction we use cross-entropy: minus the natural logarithm of the probability given to the right answer. Picture a weather forecaster: saying 66 percent for rain on a rainy day is a small surprise, and saying 10 percent is a big one. If the first class is right, the loss is -ln(0.659) = 0.417, and if the third is right, it is -ln(0.099) = 2.317. A confident wrong answer costs a lot, and a perfect answer costs zero.</p>
-<p>The learning loop is like practicing free throws: shoot, see where it landed, adjust, repeat. It has four moves: forward, loss, backward, step.</p>
+<p>The last layer outputs one raw score per class, called logits. We want probabilities instead, positive shares that add up to 100 percent, and the tool is softmax: apply the exponential function (the e^x key) to make each score positive, then divide by the total. For scores 2, 1 and 0.1 the exponentials are 7.39, 2.72 and 1.11, the total is 11.21, and the shares are 0.659, 0.242 and 0.099.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig09.jpg" alt="Figure 9. The four moves of the learning loop.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig10.jpg" alt="Figure 10. Softmax turns scores 2, 1 and 0.1 into shares.">
 <figcaption>
-Figure 9. The four moves of the learning loop. Source: image created by author.
+Figure 10. Softmax turns scores 2, 1 and 0.1 into shares. Source: image created by author.
+</figcaption>
+</figure>
+<p>To score a probability we use cross-entropy: minus the natural logarithm of the probability given to the right answer. The logarithm (the ln key) reverses the exponential, so ln(1) = 0 and ln(0.5) = -0.69. If the first class is right, the loss is -ln(0.659) = 0.417, and if the third is right, it is 2.317: a confident wrong answer costs a lot, and a perfect answer costs zero.</p>
+<p>The learning loop is like practicing free throws: shoot, see where it landed, adjust, repeat. It has four moves: forward, loss, backward, step. On our one-parameter example: prediction 0, loss 4, gradient -4, new w = 0.4.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig11.jpg" alt="Figure 11. The four moves of the learning loop.">
+<figcaption>
+Figure 11. The four moves of the learning loop. Source: image created by author.
 </figcaption>
 </figure>
 <p>Here it is in our raw tensor code:</p>
 <pre class="python"><code>for step in range(1, steps + 1):
     logits = forward(params, Xtr)                  # 1. forward: make predictions
     loss = softmax_cross_entropy(logits, ytr)      # 2. loss: how far from the targets?
-    loss.backward()                                # 3. backward: a gradient for every knob
-    with torch.no_grad():                          # 4. step: nudge every knob downhill
+    loss.backward()                                # 3. backward: a gradient for every parameter
+    with torch.no_grad():                          # 4. step: nudge every parameter downhill
         for p in params:
-            p -= lr * p.grad                       # new knob = old knob - learning rate * gradient
+            p -= lr * p.grad                       # new parameter = old parameter - learning rate * gradient
             p.grad = None                          # clear the gradient for the next round</code></pre>
-<p>The update sits inside <code>torch.no_grad()</code> because changing the knobs is bookkeeping we want outside the recorded chain. On the spirals the saved output shows the loss falling from 0.67 at step 0 to 0.37 at step 50, 0.10 at step 300 and 0.06 at step 1,000, with validation accuracy at 98.3 percent, like a hiker reaching the flat valley floor.</p>
+<p>The update sits inside <code>torch.no_grad()</code> because changing the parameters is bookkeeping outside the recorded chain. We train on 200 points per class and keep 200 more per class aside as a separate check. The saved output shows the loss falling from 0.67 at step 0 to 0.37 at step 50, 0.10 at step 300 and 0.06 at step 1,000, with validation accuracy at 98.3 percent.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig10.jpg" alt="Figure 10. Our first real training run on the spirals.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig12.jpg" alt="Figure 12. Our first real training run on the spirals.">
 <figcaption>
-Figure 10. Our first real training run on the spirals. Source: image created by author.
+Figure 12. Our first real training run on the spirals. Source: image created by author.
 </figcaption>
 </figure>
 <h2 id="keeping-learning-honest">Keeping Learning Honest</h2>
-<p>How do we know a network learned something general instead of memorizing its examples? Picture a student. Practice questions are the training points, and the exam is a set of validation points where we only measure and the knobs stay put. A student who memorized the practice answers earns full marks in practice and a poor mark in the exam, and for a network that gap is called overfitting. We call <code>model.eval()</code> for the exam, so training-only features such as dropout step aside.</p>
-<p>To see it, we give a wide network (17,154 knobs) only 50 training points. The plain run memorizes everything, with training accuracy 100 percent. Validation loss is best at step 25, at 0.27, and then climbs to 1.16.</p>
-<p>Dropout is a study group where random members stay home at every session, so the group shares the work: with hidden values 2, 4, 6, 8 and a dropout of one half, one draw keeps the first and third and doubles them, giving 4, 0, 12, 0. Weight decay is a gentle leash pulling every knob towards zero: a weight of 2 shrinks by a factor of 1 - 0.1 × 0.1 = 0.99 to 1.98 at each step, and hundreds of steps add up. The four runs show validation loss 1.16 for plain, 0.85 with weight decay, 0.54 with dropout and 0.37 with both. Training accuracy is 100 percent in all four, so the validation score reveals what the training score hides. Stopping at the best moment, around step 25, is early stopping.</p>
+<p>How do we know a network learned something general instead of memorizing its examples? Picture a student. Practice questions are the training points, and the exam is a set of validation points where we only measure and the parameters stay put. The training loss scores the practice and the validation loss scores the exam. A student who memorized the practice answers earns full marks in practice and a poor mark in the exam, and for a network that gap is called overfitting. We call <code>model.eval()</code> for the exam.</p>
+<p>To see it, we give a wide network (17,154 parameters) only 50 training points. The plain run memorizes them, with training accuracy 100 percent. Validation loss is best at step 25, at 0.27, and then climbs to 1.16.</p>
+<p>Dropout is a study group where random members stay home at every session, so the group shares the work. In a network it switches off a random share of the hidden units at each training step. With activations 2, 4, 6, 8 and a dropout of one half, one draw keeps the first and third and doubles them, giving 4, 0, 12, 0.</p>
+<p>Weight decay is a gentle leash pulling every parameter towards zero. A weight of 2, with a learning rate of 0.1 and a decay setting of 0.1, shrinks by a factor of 1 - 0.1 × 0.1 = 0.99 to 1.98 at each step. The four runs show validation loss 1.16 for plain, 0.85 with weight decay, 0.54 with dropout and 0.37 with both. Training accuracy is 100 percent in all four, so only the validation score reveals the difference. Stopping at the best moment, around step 25, is early stopping.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig11.jpg" alt="Figure 11. Four runs of the same wide network, compared on validation loss.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig13.jpg" alt="Figure 13. Four runs compared on validation loss.">
 <figcaption>
-Figure 11. Four runs of the same wide network, compared on validation loss. Source: image created by author.
+Figure 13. Four runs compared on validation loss. Source: image created by author.
 </figcaption>
 </figure>
 <h2 id="choosing-good-settings">Choosing Good Settings</h2>
-<p>Plain gradient descent is called SGD in PyTorch. Momentum is a ball rolling downhill that remembers recent steps: with momentum 0.9 and rate 0.1 our knob walks 0, 0.4, 1.08, 1.876, 2.617, rolling past the target and back, and arrives sooner overall. AdamW gives every knob its own step size and includes clean weight decay, and most language models train with it. After 300 steps on our network, SGD reaches a loss of 0.53, momentum 0.18 and AdamW 0.12.</p>
+<p>The rule that turns gradients into parameter updates is called the optimizer. Plain gradient descent is called SGD in PyTorch, and smarter optimizers use the same gradients differently. Momentum is a ball rolling downhill that remembers recent steps: new step = 0.9 × previous step + the usual gradient step. With rate 0.1 our parameter walks 0, 0.4, 1.08, 1.876, 2.617, rolling past the target and back. AdamW gives every parameter its own step size and includes clean weight decay, and most language models train with it. After 300 steps on our network, SGD reaches a loss of 0.53, momentum 0.18 and AdamW 0.12.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig12.jpg" alt="Figure 12. Three step rules on the same network and data.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig14.jpg" alt="Figure 14. Three optimizers on the same network and data.">
 <figcaption>
-Figure 12. Three step rules on the same network and data. Source: image created by author.
+Figure 14. Three optimizers on the same network and data. Source: image created by author.
 </figcaption>
 </figure>
-<p>Every optimizer needs a learning rate. A sweep with AdamW over nine values shows a crawl at 0.0003, a plateau from 0.01 to 0.3 with validation accuracy near 97 percent, and bouncing at 1, where it drops to 73 percent. Sweep in factors of ten and choose from the middle of the plateau.</p>
-<p>A schedule changes the rate during training. A good runner warms up and then glides into the finish: the rate climbs in a straight line for a few warmup steps, then follows half a cosine wave down to zero. In PyTorch a small function goes to <code>LambdaLR</code>. With a bold base rate of 1, a constant rate ends with loss 0.37 and 73 percent validation accuracy, while warmup plus cosine ends with loss 0.05 and 97 percent.</p>
+<p>Every optimizer needs a learning rate. A sweep with AdamW over nine values shows a crawl at 0.0003, a plateau from 0.01 to 0.3 with validation accuracy near 97 percent, and bouncing at 1, where accuracy drops to 73 percent. Choose from the middle of the plateau.</p>
+<p>A schedule changes the rate during training. A good runner warms up and then glides into the finish: the rate climbs for a few warmup steps, then follows half a cosine wave down to zero, using PyTorch's <code>LambdaLR</code>. With a bold base rate of 1, a constant rate ends with loss 0.37 and 73 percent validation accuracy, while warmup plus cosine ends with loss 0.05 and 97 percent.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig13.jpg" alt="Figure 13. Warmup, then a cosine glide, rescues a bold learning rate.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig15.jpg" alt="Figure 15. Warmup then glide rescues a bold rate.">
 <figcaption>
-Figure 13. Warmup, then a cosine glide, rescues a bold learning rate. Source: image created by author.
+Figure 15. Warmup then glide rescues a bold rate. Source: image created by author.
 </figcaption>
 </figure>
-<p>Two last settings. Numbers are stored in a fixed number of bits. Think of a ruler: float32 has a long ruler with fine marks, bfloat16 keeps the long reach with coarser marks, and float16 has finer marks but a short ruler that ends at 65,504. The real output shows pi stored as 3.1415927 in float32 and 3.140625 in both sixteen-bit formats, and 70,000 becoming infinity in float16, which is why bfloat16 became a favorite for training. Every tensor also lives on a device: the CPU by default, or a graphics chip (<code>cuda</code> for Nvidia cards, <code>mps</code> for the graphics chip in some laptops), and <code>x = x.to(device)</code> moves it. Our saved timing shows the CPU ahead for small grids, because starting work on the graphics chip has a cost, and the graphics chip about twice as fast at 4096 × 4096. Timings vary from machine to machine.</p>
+<p>Two last settings. Numbers are stored with a fixed number of bits, each a single on-off switch. Think of a ruler: float32 is long with fine marks, bfloat16 keeps the long reach with coarser marks, and float16 has finer marks on a short ruler that ends at 65,504. The real output shows pi as 3.1415927 in float32 and 3.140625 in both sixteen-bit formats, and 70,000 becoming infinity in float16, which is why bfloat16 became a favorite for training. Every tensor also lives on a device: the CPU by default, or a graphics chip (<code>cuda</code> for Nvidia cards, <code>mps</code> for the graphics chip in some laptops), and <code>x = x.to(device)</code> moves it. Our saved timing shows the CPU ahead for small grids and the graphics chip about twice as fast at 4096 × 4096.</p>
 <h2 id="the-code-and-the-lab">The Code and the Lab</h2>
-<p>The library folder <code>dl_refresher</code> has four files, one idea each: <code>data.py</code> makes the spirals from a seed, so every run makes identical points; <code>raw_mlp.py</code> holds the loop above; <code>module_mlp.py</code> writes the same network with PyTorch building blocks; and <code>report.py</code> saves each run's output. Here is the second version, where a class inherits from <code>nn.Module</code> and PyTorch finds all 82 knobs itself (the <code>forward</code> method simply returns <code>self.net(x)</code>):</p>
-<pre class="python"><code>class MLP(nn.Module):
-    def __init__(self, hidden=(16,), dropout=0.0, in_features=2, out_features=2):
-        super().__init__()
-        layers, width = [], in_features
-        for size in hidden:
-            layers += [nn.Linear(width, size), nn.ReLU()]   # weights and a bias, then the bend
-            if dropout &gt; 0:
-                layers.append(nn.Dropout(dropout))
-            width = size
-        layers.append(nn.Linear(width, out_features))
-        self.net = nn.Sequential(*layers)</code></pre>
-<p>Its loop has five lines: <code>opt.zero_grad()</code>, forward and <code>F.cross_entropy</code>, <code>loss.backward()</code>, <code>opt.step()</code> and <code>scheduler.step()</code>. On the same spirals the raw version, with 1,000 steps of plain gradient descent, ends with loss 0.06 and 98 percent validation accuracy, and the <code>nn.Module</code> version with AdamW and 500 steps ends with loss 0.08 and 98 percent: the same job in half the steps. Sixteen tests guard the numbers. The project runs with uv from lesson 1: <code>uv sync</code> once, then <code>uv run python -m demos.d06_train_raw</code>, and compare with the expected output saved next to the code.</p>
-<p>Here is a challenge for your own lab. Predict the validation accuracy with 2, 4, 8 and 64 hidden units, counting the knobs for each first. The real answer: 2 units give 12 knobs and 55 percent, 4 give 22 knobs and 76 percent, 8 give 42 knobs and 91 percent, 16 give 82 knobs and 98 percent, and 64 give 322 knobs and 99 percent. A network needs enough knobs to bend, and beyond that extra size buys little on a small job. Then change one setting at a time, predict first, run the demo and compare.</p>
+<p>The library folder <code>dl_refresher</code> has four files, one idea each: <code>data.py</code> makes the spirals from a seed, so every run makes identical points; <code>raw_mlp.py</code> holds the loop above; <code>module_mlp.py</code> writes the same network with PyTorch building blocks; and <code>report.py</code> saves each run's output. In the second version a class inherits from <code>nn.Module</code>, its layers sit in an <code>nn.Sequential</code>, and PyTorch finds all 82 parameters itself. Its loop has five lines: <code>opt.zero_grad()</code>, forward and <code>F.cross_entropy</code>, <code>loss.backward()</code>, <code>opt.step()</code> and <code>scheduler.step()</code>. The raw version, with 1,000 steps of plain gradient descent, ends with loss 0.06 and 98 percent validation accuracy, and the <code>nn.Module</code> version with AdamW and 500 steps ends with loss 0.08 and 98 percent: the same job in half the steps. The project runs with uv from lesson 1: <code>uv sync</code> once, then <code>uv run python -m demos.d06_train_raw</code>, and compare with the expected output saved next to the code.</p>
+<p>Here is a challenge for your own lab. Predict the validation accuracy with 2, 4, 8 and 64 hidden units, counting the parameters for each first. The real answer: 2 units give 12 parameters and 55 percent, 4 give 22 and 76 percent, 8 give 42 and 91 percent, 16 give 82 and 98 percent, and 64 give 322 and 99 percent. A network needs enough parameters to bend, and beyond that extra size buys little on a small job. Then change one setting at a time, predict first and compare.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig14.jpg" alt="Figure 14. Validation accuracy for five network widths.">
+<img src="https://raw.githubusercontent.com/as4401s/Full-Stack-AI-LLM-Agentic-Engineering/medium-assets/part-02-deep-learning-refresher/article/images/fig16.jpg" alt="Figure 16. Validation accuracy for five network widths.">
 <figcaption>
-Figure 14. Validation accuracy for five network widths. Source: image created by author.
+Figure 16. Validation accuracy for five network widths. Source: image created by author.
 </figcaption>
 </figure>
-<p>To recap: a network is a pile of knobs plus a score called the loss; gradient descent walks the knobs downhill and backpropagation supplies every slope in one sweep; softmax makes probabilities and cross-entropy scores the surprise; and the loop has four moves, forward, loss, backward, step. To learn well, keep a validation set as the exam, calm overfitting with dropout and weight decay, choose AdamW with a rate found by a sweep, add warmup and a cosine glide, and move big jobs to a graphics chip.</p>
-<p>The training loop returns in lessons 3, 10 and 36, and the next lesson asks how a network can predict the next word in a sentence. One question before you go: which of the four moves would you inspect first when a loss curve behaves oddly?</p>
+<p>To recap with the real terms: a network is a function with parameters, the weights and the biases; the loss scores its mistakes; gradient descent changes the parameters against the gradient, backpropagation supplies every gradient in one backwards sweep, and the learning rate sets the step size. The loop has four moves: forward, loss, backward, step. To learn well, keep a validation set as the exam, calm overfitting with dropout and weight decay, and choose AdamW with a rate found by a sweep, warmup and a cosine glide.</p>
+<p>Six terms return in every lesson ahead: parameters, loss, gradient, learning rate, optimizer and validation. If one feels fuzzy, replay its scene in the video and repeat the calculator example once more. The next lesson asks how a network can predict the next word in a sentence, and the loop we wrote today trains it.</p>
 <p>Hope this article helps you train your first network with confidence. See you in the next lesson.</p>
 <h2 id="references">References</h2>
 <ol type="1">
