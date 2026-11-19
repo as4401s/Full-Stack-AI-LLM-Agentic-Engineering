@@ -1,0 +1,44 @@
+training sentences: 600   words in the vocabulary: 24
+
+bigram: the probabilities for the word after 'the' (a one-word context, so it must guess the noun):
+  nurse         0.144
+  doctor        0.136
+  clerk         0.115
+  chart         0.110
+  pharmacist    0.105
+  patient       0.103
+  form          0.078
+  prescription  0.077
+  schedule      0.066
+  appointment   0.036
+  room          0.029
+
+trigram: the probabilities after 'the nurse' (a two-word context):
+  checks        0.335
+  greets        0.312
+  prepares      0.202
+  updates       0.150
+
+ten sentences written by the bigram model (seed 3):
+   the clerk books the schedule today .
+   the nurse greets the patient .
+   the schedule today .
+   the clerk prints the doctor reviews the nurse greets the patient .
+   the form .
+   the pharmacist signs the pharmacist fills the chart .
+   the schedule today .
+   the nurse checks the prescription .
+   the pharmacist checks the chart .
+   the prescription .
+
+ten sentences written by the trigram model (seed 3):
+   the nurse checks the prescription today .
+   the doctor reads the chart .
+   the clerk updates the chart .
+   the clerk updates the schedule today .
+   the nurse prepares the room .
+   the pharmacist signs the form today .
+   the pharmacist signs the form .
+   the nurse checks the prescription .
+   the pharmacist checks the chart .
+   the pharmacist signs the form .

@@ -1,0 +1,21 @@
+[project]
+name = "lm-basics"
+version = "0.1.0"
+description = "Lesson 3: language modelling basics - counting models, a small neural language model, sampling and a chat template"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.5",              # the neural language model
+    "numpy>=2.0",              # the sampler and the worked examples
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",               # test runner
+]
+
+[tool.uv]
+package = false               # an application, not a library: run it from this folder
+
+[tool.pytest.ini_options]
+pythonpath = ["."]            # lets the tests import the lm_basics package from this folder
+testpaths = ["tests"]

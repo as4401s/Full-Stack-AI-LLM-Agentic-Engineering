@@ -1,0 +1,23 @@
+messages as a list of roles and contents:
+   {'role': 'system', 'content': 'You are CareDesk, a helpful front-desk assistant.'}
+   {'role': 'user', 'content': 'When does the clinic open?'}
+
+the same chat as one piece of text:
+<|system|>You are CareDesk, a helpful front-desk assistant.<|end|>
+<|user|>When does the clinic open?<|end|>
+<|assistant|>
+
+a longer chat, ready for the model to write the next reply:
+<|system|>You are CareDesk, a helpful front-desk assistant.<|end|>
+<|user|>When does the clinic open?<|end|>
+<|assistant|>The clinic opens at eight in the morning.<|end|>
+<|user|>And on Saturdays?<|end|>
+<|assistant|>
+
+the same chat without the final cue (used when training on finished conversations):
+<|system|>You are CareDesk, a helpful front-desk assistant.<|end|>
+<|user|>When does the clinic open?<|end|>
+<|assistant|>The clinic opens at eight in the morning.<|end|>
+<|user|>And on Saturdays?<|end|>
+
+a wrong role name is reported: unknown role 'robot'; use one of ('system', 'user', 'assistant')

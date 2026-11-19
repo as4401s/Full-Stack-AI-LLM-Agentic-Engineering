@@ -1,0 +1,21 @@
+                                  checks  greets   reads
+  scores                           2.000   1.000   0.100
+  temperature 1 (softmax)          0.659   0.242   0.099
+  temperature 0.5                  0.864   0.117   0.019
+  temperature 2                    0.502   0.304   0.194
+  top-k, k=2 (temperature 1)       0.731   0.269   0.000
+  top-p, p=0.9 (temperature 1)     0.731   0.269   0.000
+  top-p, p=0.6 (temperature 1)     1.000   0.000   0.000
+
+  top-p adapts to how sure the model is (p = 0.9):
+   sure model    [0.95, 0.03, 0.02] -> [1.0, 0.0, 0.0]
+   unsure model  [0.35, 0.3, 0.2, 0.1, 0.05] -> [0.368, 0.316, 0.211, 0.105, 0.0]
+
+  greedy always picks: checks
+
+  10,000 draws per setting (seed 0): share of each word
+  temperature 0.5                  0.868   0.113   0.019
+  temperature 1                    0.656   0.247   0.097
+  temperature 2                    0.501   0.303   0.196
+  top-k 2                          0.733   0.268   0.000
+  top-p 0.9                        0.733   0.268   0.000

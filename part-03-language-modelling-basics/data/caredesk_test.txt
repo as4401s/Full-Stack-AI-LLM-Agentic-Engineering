@@ -1,0 +1,40 @@
+the pharmacist checks the prescription today .
+the pharmacist checks the prescription .
+the nurse greets the patient .
+the nurse updates the chart .
+the nurse greets the patient .
+the nurse checks the chart .
+the pharmacist fills the prescription .
+the pharmacist fills the prescription .
+the clerk updates the schedule today .
+the pharmacist fills the prescription .
+the clerk updates the schedule .
+the doctor reads the chart .
+the nurse greets the patient .
+the nurse greets the patient .
+the clerk greets the patient .
+the nurse updates the chart today .
+the doctor reads the chart .
+the doctor signs the form today .
+the nurse checks the chart .
+the nurse prepares the room today .
+the doctor checks the chart today .
+the doctor checks the chart today .
+the doctor checks the chart .
+the doctor checks the chart .
+the doctor checks the chart today .
+the doctor updates the chart .
+the doctor updates the chart .
+the doctor updates the chart .
+the doctor updates the chart today .
+the doctor updates the chart .
+the clerk signs the form .
+the clerk signs the form .
+the clerk signs the form today .
+the clerk signs the form .
+the clerk signs the form today .
+the pharmacist greets the patient today .
+the pharmacist greets the patient .
+the pharmacist greets the patient .
+the pharmacist greets the patient today .
+the pharmacist greets the patient .

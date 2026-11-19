@@ -1,0 +1,12 @@
+after 'checks the':
+   counting model: chart 0.552, prescription 0.448
+   neural model:   chart 0.435, prescription 0.355, schedule 0.071
+after 'updates the':
+   counting model: schedule 0.606, chart 0.394
+   neural model:   schedule 0.311, chart 0.274, prescription 0.124
+after 'the nurse':
+   counting model: checks 0.335, greets 0.312, prepares 0.202
+   neural model:   greets 0.291, checks 0.275, updates 0.131
+after 'the doctor':
+   counting model: reads 0.294, greets 0.270, reviews 0.239
+   neural model:   greets 0.207, reads 0.173, signs 0.162

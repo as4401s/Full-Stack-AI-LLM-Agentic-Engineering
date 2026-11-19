@@ -1,0 +1,282 @@
+$ uv run python run_all.py
+toy sentences:
+   the nurse checks the chart .
+   the nurse greets the patient .
+   the doctor reads the chart .
+
+'the' is followed by a word 6 times:
+  nurse    2 of 6  ->  P(nurse | the) = 0.333
+  chart    2 of 6  ->  P(chart | the) = 0.333
+  patient  1 of 6  ->  P(patient | the) = 0.167
+  doctor   1 of 6  ->  P(doctor | the) = 0.167
+
+the chain rule, one probability per word (the sentence starts after a full stop):
+  P(the | .) = 1.000
+  P(nurse | the) = 0.333
+  P(checks | nurse) = 0.500
+  P(the | checks) = 1.000
+  P(chart | the) = 0.333
+  P(. | chart) = 1.000
+product of the six numbers = 0.0556   (1/18 = 0.0556)
+average loss per word = 0.4817   perplexity = e^loss = 1.619
+-- d01_counts_chain_rule finished in 0.0 s
+
+training sentences: 600   words in the vocabulary: 24
+
+bigram: the probabilities for the word after 'the' (a one-word context, so it must guess the noun):
+  nurse         0.144
+  doctor        0.136
+  clerk         0.115
+  chart         0.110
+  pharmacist    0.105
+  patient       0.103
+  form          0.078
+  prescription  0.077
+  schedule      0.066
+  appointment   0.036
+  room          0.029
+
+trigram: the probabilities after 'the nurse' (a two-word context):
+  checks        0.335
+  greets        0.312
+  prepares      0.202
+  updates       0.150
+
+ten sentences written by the bigram model (seed 3):
+   the clerk books the schedule today .
+   the nurse greets the patient .
+   the schedule today .
+   the clerk prints the doctor reviews the nurse greets the patient .
+   the form .
+   the pharmacist signs the pharmacist fills the chart .
+   the schedule today .
+   the nurse checks the prescription .
+   the pharmacist checks the chart .
+   the prescription .
+
+ten sentences written by the trigram model (seed 3):
+   the nurse checks the prescription today .
+   the doctor reads the chart .
+   the clerk updates the chart .
+   the clerk updates the schedule today .
+   the nurse prepares the room .
+   the pharmacist signs the form today .
+   the pharmacist signs the form .
+   the nurse checks the prescription .
+   the pharmacist checks the chart .
+   the pharmacist signs the form .
+-- d02_generate_dice finished in 0.0 s
+
+word pairs in the test sentences that the training sentences never contain: [('clerk', 'signs'), ('doctor', 'checks'), ('doctor', 'updates'), ('pharmacist', 'greets')]
+bigram  add 0.0: perplexity on all 40 test sentences     inf   on the 20 new pairings     inf
+bigram  add 0.1: perplexity on all 40 test sentences   4.448   on the 20 new pairings   6.999
+bigram  add 1.0: perplexity on all 40 test sentences   4.076   on the 20 new pairings   5.357
+trigram add 0.0: perplexity on all 40 test sentences     inf   on the 20 new pairings     inf
+trigram add 0.1: perplexity on all 40 test sentences   3.736   on the 20 new pairings   7.658
+trigram add 1.0: perplexity on all 40 test sentences   3.591   on the 20 new pairings   5.966
+
+P(checks | doctor) with plain counts   = 0.0
+P(checks | doctor) with add-one counts  = 0.0053
+-- d03_unseen_pairs finished in 0.0 s
+
+vocabulary: 24 words; a blind guess among 24 words has loss ln(24) = 3.178 and perplexity 24
+training examples: 3802   context shape (3802, 2)   target shape (3802,)
+parameters: embedding 48 + hidden layer 80 + output layer 408 = 536
+
+step   training loss
+   0   3.311
+  50   1.122
+ 100   0.953
+ 150   0.890
+ 200   0.794
+ 250   0.739
+ 300   0.722
+
+perplexity on sentences the models never saw (lower is better):
+model                          all 40  20 usual  20 new pairings
+neural (2 words of context)     2.466     2.038            2.969
+bigram, add one                 4.076     3.081            5.357
+trigram, add one                3.591     2.136            5.966
+trigram, add 0.1                3.736     1.792            7.658
+-- d04_train_neural finished in 1.8 s
+
+the embedding table: two numbers for every word
+  .             ( -1.09,  -0.12)
+  appointment   ( -0.64,   0.60)
+  books         ( -0.16,   0.50)
+  chart         ( -0.60,   0.48)
+  checks        ( -0.41,  -0.98)
+  clerk         ( -1.21,  -0.71)
+  doctor        ( -0.15,  -0.51)
+  fills         ( -0.34,  -1.10)
+  form          ( -0.55,   0.53)
+  greets        (  0.41,  -0.07)
+  nurse         ( -0.72,  -1.23)
+  patient       ( -0.60,   0.82)
+  pharmacist    (  0.44,  -1.10)
+  prepares      ( -0.56,   1.10)
+  prescription  ( -0.62,   0.77)
+  prints        (  0.73,  -1.19)
+  reads         ( -0.41,  -0.76)
+  reviews       ( -0.02,  -0.37)
+  room          ( -0.66,   0.66)
+  schedule      ( -0.56,   0.73)
+  signs         (  0.57,  -1.10)
+  the           (  1.02,   0.50)
+  today         ( -0.76,   1.05)
+  updates       ( -0.11,  -0.53)
+
+average distance between the number lists of two words in a group (small = used in the same way):
+  all 24 words         1.23
+  the 4 job titles     1.07
+  the 7 thing words    0.17
+
+the next word after 'the doctor':
+word         counts  counts+1   neural   (the training text has 'doctor reads', 'greets', 'signs', 'reviews')
+reads         0.294     0.262    0.173
+greets        0.270     0.241    0.207
+signs         0.196     0.176    0.162
+reviews       0.239     0.214    0.143
+checks        0.000     0.005    0.081
+updates       0.000     0.005    0.028
+prints        0.000     0.005    0.012
+-- d05_generalise finished in 0.2 s
+
+surprise for one word = -ln(probability the model gave the right word)
+  p = 1.0     loss = 0.000
+  p = 0.5     loss = 0.693
+  p = 0.25    loss = 1.386
+  p = 0.125   loss = 2.079
+  p = 0.1     loss = 2.303
+  p = 0.01    loss = 4.605
+
+four steps, probabilities [0.5, 0.25, 0.5, 0.125]
+  losses: [0.693, 1.386, 0.693, 2.079]  average = 1.2130
+  perplexity = e^1.2130 = 3.364   (the same as 128 ** 0.25 = 3.364)
+
+loss to perplexity:
+  loss 0.000  ->  perplexity  1.000
+  loss 0.693  ->  perplexity  2.000
+  loss 1.000  ->  perplexity  2.718
+  loss 2.000  ->  perplexity  7.389
+  loss 3.000  ->  perplexity 20.086
+  loss 3.178  ->  perplexity 24.000
+
+blind guess among 24 words: loss ln(24) = 3.178, perplexity 24
+-- d06_perplexity finished in 0.0 s
+
+                                  checks  greets   reads
+  scores                           2.000   1.000   0.100
+  temperature 1 (softmax)          0.659   0.242   0.099
+  temperature 0.5                  0.864   0.117   0.019
+  temperature 2                    0.502   0.304   0.194
+  top-k, k=2 (temperature 1)       0.731   0.269   0.000
+  top-p, p=0.9 (temperature 1)     0.731   0.269   0.000
+  top-p, p=0.6 (temperature 1)     1.000   0.000   0.000
+
+  top-p adapts to how sure the model is (p = 0.9):
+   sure model    [0.95, 0.03, 0.02] -> [1.0, 0.0, 0.0]
+   unsure model  [0.35, 0.3, 0.2, 0.1, 0.05] -> [0.368, 0.316, 0.211, 0.105, 0.0]
+
+  greedy always picks: checks
+
+  10,000 draws per setting (seed 0): share of each word
+  temperature 0.5                  0.868   0.113   0.019
+  temperature 1                    0.656   0.247   0.097
+  temperature 2                    0.501   0.303   0.196
+  top-k 2                          0.733   0.268   0.000
+  top-p 0.9                        0.733   0.268   0.000
+-- d07_sampling finished in 0.3 s
+
+greedy (temperature 0): 1 different sentences out of 6
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+
+temperature 0.5: 6 different sentences out of 6
+    the pharmacist checks the chart .
+    the doctor reads the prescription .
+    the nurse checks the chart .
+    the doctor reviews the schedule today .
+    the nurse checks the prescription .
+    the nurse greets the patient .
+
+temperature 1: 6 different sentences out of 6
+    the pharmacist checks the chart .
+    the doctor reads the prescription .
+    the pharmacist fills the chart .
+    the doctor reviews the patient today pharmacist pharmacist the form .
+    the nurse checks the prescription .
+    the clerk prepares the appointment appointment doctor pharmacist the prescription .
+
+temperature 2: 6 different sentences out of 6
+    the signs checks the clerk greets the patient pharmacist appointment the nurse
+    reads the clerk patient clerk nurse prints prepares reviews doctor the today
+    today the pharmacist fills form updates pharmacist checks the prints prepares today
+    books pharmacist fills chart the room prints clerk the nurse prepares the
+    doctor the prescription today .
+    the clerk books the room today appointment .
+
+temperature 1, top-p 0.9: 6 different sentences out of 6
+    the pharmacist checks the chart .
+    the doctor reads the prescription .
+    the nurse checks the chart .
+    the doctor reviews the patient today .
+    the nurse checks the the patient .
+    the nurse greets the appointment .
+
+-- d08_generate_from_model finished in 0.2 s
+
+messages as a list of roles and contents:
+   {'role': 'system', 'content': 'You are CareDesk, a helpful front-desk assistant.'}
+   {'role': 'user', 'content': 'When does the clinic open?'}
+
+the same chat as one piece of text:
+<|system|>You are CareDesk, a helpful front-desk assistant.<|end|>
+<|user|>When does the clinic open?<|end|>
+<|assistant|>
+
+a longer chat, ready for the model to write the next reply:
+<|system|>You are CareDesk, a helpful front-desk assistant.<|end|>
+<|user|>When does the clinic open?<|end|>
+<|assistant|>The clinic opens at eight in the morning.<|end|>
+<|user|>And on Saturdays?<|end|>
+<|assistant|>
+
+the same chat without the final cue (used when training on finished conversations):
+<|system|>You are CareDesk, a helpful front-desk assistant.<|end|>
+<|user|>When does the clinic open?<|end|>
+<|assistant|>The clinic opens at eight in the morning.<|end|>
+<|user|>And on Saturdays?<|end|>
+
+a wrong role name is reported: unknown role 'robot'; use one of ('system', 'user', 'assistant')
+-- d09_chat_template finished in 0.0 s
+
+weight decay  train loss  test perplexity  on new pairings
+         0.0       0.558            2.889            4.706
+         0.5       0.617            2.401            3.110
+         1.0       0.722            2.466            2.969
+         2.0       1.156            2.993            2.925
+         4.0       2.157            8.406            8.376
+
+Your turn: change context_size from 2 to 3 (or embed_dim from 2 to 4) and run it again.
+-- d10_lab_weight_decay finished in 1.2 s
+
+after 'checks the':
+   counting model: chart 0.552, prescription 0.448
+   neural model:   chart 0.435, prescription 0.355, schedule 0.071
+after 'updates the':
+   counting model: schedule 0.606, chart 0.394
+   neural model:   schedule 0.311, chart 0.274, prescription 0.124
+after 'the nurse':
+   counting model: checks 0.335, greets 0.312, prepares 0.202
+   neural model:   greets 0.291, checks 0.275, updates 0.131
+after 'the doctor':
+   counting model: reads 0.294, greets 0.270, reviews 0.239
+   neural model:   greets 0.207, reads 0.173, signs 0.162
+-- d11_suggestions finished in 0.2 s
+
+[exit 0]

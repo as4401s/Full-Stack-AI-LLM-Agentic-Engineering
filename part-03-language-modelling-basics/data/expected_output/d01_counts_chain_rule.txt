@@ -1,0 +1,20 @@
+toy sentences:
+   the nurse checks the chart .
+   the nurse greets the patient .
+   the doctor reads the chart .
+
+'the' is followed by a word 6 times:
+  nurse    2 of 6  ->  P(nurse | the) = 0.333
+  chart    2 of 6  ->  P(chart | the) = 0.333
+  patient  1 of 6  ->  P(patient | the) = 0.167
+  doctor   1 of 6  ->  P(doctor | the) = 0.167
+
+the chain rule, one probability per word (the sentence starts after a full stop):
+  P(the | .) = 1.000
+  P(nurse | the) = 0.333
+  P(checks | nurse) = 0.500
+  P(the | checks) = 1.000
+  P(chart | the) = 0.333
+  P(. | chart) = 1.000
+product of the six numbers = 0.0556   (1/18 = 0.0556)
+average loss per word = 0.4817   perplexity = e^loss = 1.619

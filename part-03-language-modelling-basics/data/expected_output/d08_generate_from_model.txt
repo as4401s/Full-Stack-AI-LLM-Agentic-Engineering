@@ -1,0 +1,40 @@
+greedy (temperature 0): 1 different sentences out of 6
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+    the nurse greets the patient .
+
+temperature 0.5: 6 different sentences out of 6
+    the pharmacist checks the chart .
+    the doctor reads the prescription .
+    the nurse checks the chart .
+    the doctor reviews the schedule today .
+    the nurse checks the prescription .
+    the nurse greets the patient .
+
+temperature 1: 6 different sentences out of 6
+    the pharmacist checks the chart .
+    the doctor reads the prescription .
+    the pharmacist fills the chart .
+    the doctor reviews the patient today pharmacist pharmacist the form .
+    the nurse checks the prescription .
+    the clerk prepares the appointment appointment doctor pharmacist the prescription .
+
+temperature 2: 6 different sentences out of 6
+    the signs checks the clerk greets the patient pharmacist appointment the nurse
+    reads the clerk patient clerk nurse prints prepares reviews doctor the today
+    today the pharmacist fills form updates pharmacist checks the prints prepares today
+    books pharmacist fills chart the room prints clerk the nurse prepares the
+    doctor the prescription today .
+    the clerk books the room today appointment .
+
+temperature 1, top-p 0.9: 6 different sentences out of 6
+    the pharmacist checks the chart .
+    the doctor reads the prescription .
+    the nurse checks the chart .
+    the doctor reviews the patient today .
+    the nurse checks the the patient .
+    the nurse greets the appointment .
+

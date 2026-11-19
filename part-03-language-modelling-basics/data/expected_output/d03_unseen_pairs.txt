@@ -1,0 +1,10 @@
+word pairs in the test sentences that the training sentences never contain: [('clerk', 'signs'), ('doctor', 'checks'), ('doctor', 'updates'), ('pharmacist', 'greets')]
+bigram  add 0.0: perplexity on all 40 test sentences     inf   on the 20 new pairings     inf
+bigram  add 0.1: perplexity on all 40 test sentences   4.448   on the 20 new pairings   6.999
+bigram  add 1.0: perplexity on all 40 test sentences   4.076   on the 20 new pairings   5.357
+trigram add 0.0: perplexity on all 40 test sentences     inf   on the 20 new pairings     inf
+trigram add 0.1: perplexity on all 40 test sentences   3.736   on the 20 new pairings   7.658
+trigram add 1.0: perplexity on all 40 test sentences   3.591   on the 20 new pairings   5.966
+
+P(checks | doctor) with plain counts   = 0.0
+P(checks | doctor) with add-one counts  = 0.0053

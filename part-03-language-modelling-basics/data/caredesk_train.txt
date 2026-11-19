@@ -1,0 +1,600 @@
+the doctor reads the chart today .
+the nurse greets the patient today .
+the clerk updates the schedule today .
+the nurse checks the chart .
+the clerk books the appointment .
+the doctor greets the patient today .
+the nurse checks the chart .
+the doctor reviews the schedule .
+the nurse checks the chart .
+the doctor signs the form today .
+the nurse checks the chart today .
+the nurse greets the patient today .
+the doctor signs the form .
+the pharmacist fills the prescription today .
+the nurse greets the patient today .
+the nurse prepares the room today .
+the clerk updates the schedule .
+the pharmacist signs the form .
+the clerk books the appointment .
+the doctor greets the patient .
+the pharmacist signs the form .
+the nurse checks the chart .
+the pharmacist fills the prescription .
+the doctor reads the chart .
+the nurse greets the patient today .
+the nurse greets the patient today .
+the doctor reads the chart .
+the pharmacist fills the prescription today .
+the nurse updates the chart .
+the clerk books the appointment .
+the clerk updates the schedule .
+the doctor greets the patient today .
+the clerk books the appointment today .
+the nurse checks the chart today .
+the nurse checks the chart .
+the nurse updates the chart .
+the clerk updates the schedule .
+the doctor signs the form .
+the doctor reads the chart .
+the clerk books the appointment today .
+the doctor signs the form today .
+the doctor reads the chart .
+the pharmacist fills the prescription .
+the clerk prints the form .
+the nurse prepares the room .
+the clerk books the appointment today .
+the doctor reviews the schedule .
+the pharmacist checks the prescription .
+the clerk prints the form .
+the doctor reads the chart .
+the pharmacist signs the form .
+the nurse greets the patient today .
+the doctor greets the patient today .
+the clerk greets the patient today .
+the nurse greets the patient .
+the doctor reviews the schedule .
+the nurse checks the chart .
+the clerk updates the schedule .
+the clerk greets the patient .
+the clerk books the appointment .
+the pharmacist checks the prescription .
+the doctor reads the chart .
+the clerk prints the form today .
+the clerk books the appointment .
+the clerk books the appointment today .
+the doctor signs the form .
+the pharmacist fills the prescription .
+the pharmacist checks the prescription .
+the doctor reviews the schedule today .
+the clerk updates the schedule today .
+the nurse checks the chart .
+the clerk prints the form .
+the clerk updates the schedule today .
+the pharmacist signs the form today .
+the pharmacist fills the prescription .
+the doctor reads the chart .
+the doctor greets the patient .
+the clerk updates the schedule today .
+the nurse checks the chart .
+the doctor signs the form today .
+the nurse updates the chart .
+the nurse greets the patient .
+the nurse checks the chart .
+the clerk greets the patient .
+the nurse greets the patient .
+the nurse prepares the room .
+the doctor greets the patient today .
+the pharmacist checks the prescription today .
+the nurse greets the patient .
+the doctor signs the form .
+the clerk books the appointment .
+the pharmacist checks the prescription today .
+the pharmacist fills the prescription .
+the pharmacist fills the prescription .
+the doctor reads the chart .
+the doctor greets the patient today .
+the doctor greets the patient .
+the pharmacist checks the prescription .
+the pharmacist signs the form today .
+the nurse greets the patient today .
+the nurse updates the chart .
+the nurse prepares the room .
+the nurse prepares the room .
+the doctor reviews the schedule today .
+the clerk books the appointment .
+the nurse prepares the room .
+the nurse checks the chart .
+the doctor greets the patient today .
+the doctor greets the patient .
+the clerk books the appointment .
+the pharmacist signs the form .
+the clerk prints the form today .
+the doctor reviews the schedule today .
+the clerk updates the schedule .
+the clerk updates the schedule today .
+the nurse checks the chart .
+the pharmacist checks the prescription .
+the clerk greets the patient today .
+the pharmacist checks the prescription today .
+the pharmacist fills the prescription .
+the doctor greets the patient .
+the doctor greets the patient .
+the nurse greets the patient today .
+the clerk updates the schedule .
+the nurse checks the chart today .
+the nurse checks the chart .
+the nurse updates the chart today .
+the nurse updates the chart today .
+the doctor reads the chart today .
+the nurse checks the chart .
+the nurse checks the chart .
+the nurse greets the patient .
+the nurse greets the patient .
+the doctor greets the patient .
+the nurse checks the chart .
+the pharmacist checks the prescription .
+the clerk updates the schedule today .
+the nurse greets the patient .
+the nurse prepares the room .
+the doctor greets the patient today .
+the doctor greets the patient .
+the nurse greets the patient .
+the pharmacist fills the prescription .
+the pharmacist signs the form .
+the doctor signs the form today .
+the doctor reviews the schedule today .
+the nurse greets the patient today .
+the nurse greets the patient .
+the doctor greets the patient .
+the doctor reads the chart today .
+the pharmacist fills the prescription .
+the nurse updates the chart today .
+the nurse checks the chart .
+the pharmacist signs the form .
+the clerk books the appointment .
+the nurse greets the patient .
+the clerk books the appointment today .
+the nurse checks the chart .
+the clerk books the appointment .
+the pharmacist signs the form .
+the pharmacist fills the prescription today .
+the clerk prints the form .
+the nurse prepares the room .
+the doctor greets the patient today .
+the nurse updates the chart .
+the clerk greets the patient .
+the clerk books the appointment .
+the clerk greets the patient today .
+the doctor reads the chart today .
+the nurse prepares the room today .
+the pharmacist fills the prescription .
+the pharmacist signs the form today .
+the pharmacist fills the prescription .
+the pharmacist fills the prescription .
+the pharmacist fills the prescription .
+the clerk greets the patient today .
+the nurse prepares the room .
+the doctor reviews the schedule .
+the doctor greets the patient today .
+the nurse checks the chart .
+the nurse checks the chart .
+the doctor reads the chart today .
+the nurse prepares the room today .
+the clerk prints the form .
+the pharmacist signs the form .
+the doctor signs the form .
+the pharmacist checks the prescription .
+the pharmacist signs the form today .
+the pharmacist signs the form today .
+the doctor greets the patient .
+the nurse prepares the room .
+the nurse prepares the room .
+the nurse updates the chart .
+the nurse updates the chart today .
+the clerk updates the schedule .
+the pharmacist checks the prescription .
+the pharmacist fills the prescription .
+the doctor reviews the schedule today .
+the clerk updates the schedule .
+the pharmacist fills the prescription .
+the nurse greets the patient .
+the clerk updates the schedule .
+the pharmacist checks the prescription .
+the clerk greets the patient .
+the clerk greets the patient .
+the doctor reviews the schedule .
+the nurse updates the chart .
+the clerk greets the patient today .
+the doctor reads the chart today .
+the pharmacist fills the prescription .
+the pharmacist signs the form today .
+the doctor greets the patient today .
+the doctor greets the patient today .
+the pharmacist checks the prescription .
+the clerk prints the form .
+the nurse updates the chart .
+the nurse greets the patient .
+the nurse greets the patient .
+the pharmacist checks the prescription today .
+the pharmacist fills the prescription today .
+the nurse greets the patient today .
+the pharmacist fills the prescription .
+the pharmacist signs the form .
+the clerk updates the schedule .
+the doctor greets the patient today .
+the clerk books the appointment .
+the nurse greets the patient .
+the nurse checks the chart .
+the pharmacist signs the form .
+the clerk updates the schedule .
+the clerk books the appointment .
+the pharmacist checks the prescription today .
+the doctor signs the form .
+the pharmacist checks the prescription today .
+the pharmacist fills the prescription .
+the nurse prepares the room .
+the nurse prepares the room .
+the doctor reads the chart today .
+the nurse prepares the room today .
+the clerk books the appointment today .
+the nurse prepares the room today .
+the doctor greets the patient .
+the nurse greets the patient .
+the pharmacist checks the prescription .
+the doctor greets the patient .
+the doctor signs the form .
+the clerk books the appointment .
+the pharmacist checks the prescription today .
+the doctor greets the patient .
+the pharmacist checks the prescription .
+the doctor reviews the schedule .
+the clerk books the appointment today .
+the doctor reviews the schedule .
+the nurse checks the chart .
+the doctor signs the form .
+the nurse updates the chart .
+the nurse checks the chart today .
+the pharmacist fills the prescription today .
+the nurse updates the chart today .
+the doctor signs the form today .
+the clerk prints the form .
+the clerk books the appointment .
+the doctor reads the chart .
+the doctor reviews the schedule .
+the clerk books the appointment .
+the clerk greets the patient .
+the nurse greets the patient today .
+the clerk books the appointment .
+the nurse prepares the room .
+the doctor reads the chart today .
+the clerk greets the patient .
+the doctor reviews the schedule .
+the clerk books the appointment today .
+the clerk greets the patient .
+the pharmacist checks the prescription today .
+the doctor signs the form today .
+the clerk updates the schedule today .
+the doctor reviews the schedule .
+the doctor reviews the schedule .
+the clerk prints the form today .
+the doctor signs the form today .
+the clerk books the appointment .
+the doctor reviews the schedule .
+the pharmacist checks the prescription today .
+the clerk prints the form .
+the pharmacist checks the prescription today .
+the pharmacist checks the prescription .
+the nurse prepares the room .
+the clerk books the appointment today .
+the pharmacist checks the prescription today .
+the pharmacist fills the prescription .
+the nurse greets the patient .
+the nurse greets the patient .
+the doctor signs the form today .
+the nurse checks the chart today .
+the nurse prepares the room .
+the nurse checks the chart .
+the clerk updates the schedule today .
+the clerk greets the patient .
+the pharmacist checks the prescription .
+the nurse greets the patient .
+the clerk prints the form .
+the clerk updates the schedule .
+the nurse greets the patient .
+the pharmacist checks the prescription .
+the pharmacist signs the form .
+the nurse prepares the room .
+the pharmacist signs the form today .
+the doctor greets the patient .
+the doctor reviews the schedule today .
+the pharmacist signs the form today .
+the pharmacist fills the prescription .
+the nurse updates the chart .
+the doctor signs the form .
+the doctor reviews the schedule .
+the doctor reads the chart .
+the nurse updates the chart .
+the doctor reads the chart today .
+the clerk prints the form today .
+the nurse checks the chart .
+the clerk books the appointment .
+the doctor signs the form .
+the nurse checks the chart today .
+the doctor reads the chart .
+the clerk updates the schedule .
+the doctor reviews the schedule .
+the nurse checks the chart today .
+the pharmacist signs the form today .
+the clerk greets the patient .
+the pharmacist signs the form .
+the nurse greets the patient today .
+the doctor reads the chart .
+the nurse checks the chart .
+the clerk greets the patient .
+the doctor reads the chart today .
+the nurse greets the patient today .
+the doctor signs the form .
+the pharmacist checks the prescription .
+the pharmacist fills the prescription .
+the nurse prepares the room today .
+the nurse greets the patient .
+the pharmacist checks the prescription .
+the clerk books the appointment .
+the clerk prints the form .
+the nurse greets the patient .
+the nurse checks the chart today .
+the clerk prints the form .
+the doctor signs the form today .
+the nurse checks the chart .
+the pharmacist checks the prescription .
+the clerk updates the schedule .
+the pharmacist fills the prescription today .
+the nurse greets the patient today .
+the pharmacist fills the prescription .
+the nurse checks the chart .
+the pharmacist fills the prescription .
+the doctor signs the form today .
+the doctor reads the chart today .
+the clerk books the appointment .
+the pharmacist checks the prescription .
+the doctor reads the chart today .
+the nurse greets the patient .
+the clerk books the appointment .
+the nurse prepares the room today .
+the nurse greets the patient .
+the nurse updates the chart today .
+the nurse checks the chart .
+the nurse updates the chart .
+the doctor reads the chart .
+the doctor reads the chart .
+the clerk greets the patient .
+the doctor reads the chart .
+the doctor reviews the schedule .
+the nurse updates the chart .
+the doctor greets the patient .
+the nurse checks the chart .
+the nurse prepares the room today .
+the nurse checks the chart .
+the clerk prints the form .
+the clerk books the appointment today .
+the nurse updates the chart .
+the doctor reviews the schedule .
+the pharmacist checks the prescription .
+the nurse greets the patient today .
+the pharmacist fills the prescription .
+the doctor signs the form today .
+the doctor reviews the schedule today .
+the pharmacist fills the prescription .
+the doctor greets the patient today .
+the doctor reviews the schedule .
+the clerk prints the form .
+the pharmacist signs the form today .
+the doctor greets the patient .
+the pharmacist fills the prescription today .
+the clerk prints the form .
+the clerk updates the schedule .
+the doctor greets the patient .
+the doctor greets the patient today .
+the nurse checks the chart .
+the nurse greets the patient .
+the nurse checks the chart .
+the clerk greets the patient today .
+the nurse prepares the room .
+the nurse updates the chart .
+the nurse greets the patient .
+the pharmacist fills the prescription .
+the pharmacist checks the prescription today .
+the clerk updates the schedule .
+the doctor reads the chart .
+the nurse prepares the room .
+the doctor reads the chart .
+the doctor signs the form today .
+the nurse greets the patient .
+the doctor signs the form .
+the doctor reads the chart today .
+the pharmacist signs the form .
+the pharmacist signs the form .
+the clerk books the appointment today .
+the nurse prepares the room .
+the pharmacist signs the form today .
+the doctor reads the chart .
+the doctor greets the patient today .
+the nurse checks the chart .
+the doctor greets the patient .
+the doctor reviews the schedule today .
+the doctor reviews the schedule today .
+the nurse updates the chart .
+the doctor reviews the schedule .
+the nurse checks the chart today .
+the doctor reads the chart today .
+the nurse greets the patient today .
+the doctor greets the patient .
+the nurse checks the chart .
+the nurse checks the chart .
+the doctor reads the chart today .
+the nurse prepares the room .
+the clerk books the appointment today .
+the clerk books the appointment .
+the clerk greets the patient .
+the clerk updates the schedule .
+the clerk prints the form .
+the pharmacist checks the prescription .
+the doctor greets the patient .
+the doctor reads the chart .
+the pharmacist signs the form today .
+the nurse greets the patient .
+the clerk prints the form .
+the clerk updates the schedule .
+the nurse checks the chart .
+the pharmacist fills the prescription today .
+the pharmacist checks the prescription .
+the clerk updates the schedule .
+the clerk prints the form .
+the pharmacist fills the prescription .
+the nurse greets the patient .
+the doctor reviews the schedule today .
+the doctor reviews the schedule .
+the pharmacist fills the prescription today .
+the pharmacist fills the prescription .
+the pharmacist fills the prescription today .
+the clerk books the appointment .
+the pharmacist checks the prescription .
+the clerk updates the schedule .
+the clerk prints the form .
+the nurse prepares the room .
+the nurse checks the chart today .
+the nurse greets the patient today .
+the doctor greets the patient today .
+the nurse greets the patient .
+the pharmacist fills the prescription .
+the clerk books the appointment .
+the clerk updates the schedule .
+the clerk updates the schedule today .
+the clerk updates the schedule today .
+the doctor reviews the schedule .
+the nurse checks the chart today .
+the pharmacist fills the prescription today .
+the clerk greets the patient .
+the doctor reviews the schedule today .
+the clerk books the appointment .
+the clerk updates the schedule today .
+the nurse checks the chart .
+the clerk prints the form .
+the nurse prepares the room today .
+the nurse checks the chart .
+the doctor reads the chart .
+the clerk prints the form today .
+the nurse updates the chart .
+the clerk greets the patient today .
+the pharmacist signs the form today .
+the doctor reviews the schedule today .
+the doctor greets the patient .
+the doctor reviews the schedule .
+the clerk updates the schedule .
+the clerk greets the patient .
+the clerk updates the schedule today .
+the clerk updates the schedule today .
+the nurse checks the chart .
+the nurse greets the patient .
+the nurse prepares the room .
+the clerk greets the patient .
+the doctor reads the chart .
+the clerk books the appointment .
+the nurse checks the chart .
+the nurse checks the chart today .
+the doctor reads the chart .
+the clerk updates the schedule today .
+the clerk prints the form .
+the clerk updates the schedule .
+the doctor reads the chart today .
+the doctor reviews the schedule today .
+the doctor signs the form .
+the doctor signs the form today .
+the nurse greets the patient .
+the pharmacist checks the prescription .
+the nurse updates the chart today .
+the pharmacist signs the form today .
+the pharmacist checks the prescription .
+the nurse checks the chart .
+the doctor signs the form .
+the pharmacist fills the prescription .
+the pharmacist signs the form today .
+the doctor signs the form .
+the doctor reads the chart .
+the nurse updates the chart today .
+the pharmacist checks the prescription .
+the nurse prepares the room .
+the clerk books the appointment .
+the nurse greets the patient today .
+the doctor reviews the schedule .
+the pharmacist signs the form .
+the nurse greets the patient .
+the pharmacist fills the prescription .
+the doctor reviews the schedule .
+the pharmacist checks the prescription today .
+the clerk prints the form today .
+the nurse prepares the room today .
+the pharmacist checks the prescription today .
+the doctor reviews the schedule .
+the nurse checks the chart .
+the nurse checks the chart .
+the doctor reviews the schedule .
+the doctor signs the form .
+the doctor reads the chart today .
+the nurse greets the patient .
+the doctor greets the patient .
+the doctor reads the chart .
+the pharmacist fills the prescription .
+the nurse checks the chart today .
+the clerk greets the patient .
+the pharmacist fills the prescription .
+the nurse greets the patient today .
+the pharmacist checks the prescription .
+the clerk prints the form today .
+the pharmacist checks the prescription today .
+the doctor reads the chart today .
+the doctor greets the patient .
+the doctor greets the patient .
+the pharmacist signs the form .
+the clerk books the appointment .
+the doctor greets the patient .
+the doctor signs the form .
+the doctor reads the chart today .
+the nurse checks the chart .
+the nurse greets the patient .
+the pharmacist fills the prescription .
+the doctor reads the chart .
+the pharmacist checks the prescription .
+the nurse prepares the room .
+the doctor reads the chart .
+the doctor reviews the schedule .
+the nurse updates the chart .
+the doctor greets the patient .
+the pharmacist signs the form .
+the pharmacist checks the prescription .
+the pharmacist fills the prescription .
+the clerk updates the schedule today .
+the pharmacist checks the prescription .
+the pharmacist checks the prescription today .
+the clerk books the appointment .
+the clerk prints the form today .
+the nurse checks the chart today .
+the clerk prints the form today .
+the doctor signs the form .
+the clerk greets the patient .
+the clerk updates the schedule today .
+the doctor reads the chart today .
+the nurse checks the chart today .
+the pharmacist checks the prescription .
+the nurse greets the patient .
+the doctor signs the form .
+the doctor greets the patient .
+the doctor reads the chart today .
+the clerk greets the patient .
+the pharmacist signs the form .
+the nurse prepares the room .
+the clerk updates the schedule .
+the doctor reads the chart .
+the clerk books the appointment today .
+the doctor greets the patient .

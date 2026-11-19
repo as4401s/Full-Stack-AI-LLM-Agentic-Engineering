@@ -1,0 +1,21 @@
+surprise for one word = -ln(probability the model gave the right word)
+  p = 1.0     loss = 0.000
+  p = 0.5     loss = 0.693
+  p = 0.25    loss = 1.386
+  p = 0.125   loss = 2.079
+  p = 0.1     loss = 2.303
+  p = 0.01    loss = 4.605
+
+four steps, probabilities [0.5, 0.25, 0.5, 0.125]
+  losses: [0.693, 1.386, 0.693, 2.079]  average = 1.2130
+  perplexity = e^1.2130 = 3.364   (the same as 128 ** 0.25 = 3.364)
+
+loss to perplexity:
+  loss 0.000  ->  perplexity  1.000
+  loss 0.693  ->  perplexity  2.000
+  loss 1.000  ->  perplexity  2.718
+  loss 2.000  ->  perplexity  7.389
+  loss 3.000  ->  perplexity 20.086
+  loss 3.178  ->  perplexity 24.000
+
+blind guess among 24 words: loss ln(24) = 3.178, perplexity 24
