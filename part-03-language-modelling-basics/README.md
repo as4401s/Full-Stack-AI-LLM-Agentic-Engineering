@@ -143,20 +143,60 @@ The video calculates small numbers by hand. `worked_examples.py` prints exactly 
 == 1. Counting: what follows 'the'?
 the appears 6 times; the words after it: {'nurse': 2, 'chart': 2, 'patient': 1, 'doctor': 1}
   P(nurse | the) = 2/6 = 0.333
+  P(chart | the) = 2/6 = 0.333
+  P(patient | the) = 1/6 = 0.167
+  P(doctor | the) = 1/6 = 0.167
 == 2. The chain rule: multiply one probability per word
+  P(the | .) = 1.0
+  P(nurse | the) = 0.333
+  P(checks | nurse) = 0.5
+  P(the | checks) = 1.0
+  P(chart | the) = 0.333
+  P(. | chart) = 1.0
   product = 1 x 1/3 x 1/2 x 1 x 1/3 x 1 = 1/18 = 0.0556
+== 3. Weighted dice: slices of the number line from 0 to 1
+  nurse: from 0.0 up to 0.333
+  chart: from 0.333 up to 0.667
+  patient: from 0.667 up to 0.833
+  doctor: from 0.833 up to 1.0
+  a roll of 0.52 lands in the slice of 'chart'
 == 4. A pair the text never showed
   P(greets | doctor) = 0.0 so the whole sentence 'the doctor greets the patient .' gets 0.0
+  words in the toy vocabulary: 9
   add one to every count: P(greets | doctor) = (0 + 1) / (1 + 9) = 0.1
+  add one to every count: P(reads | doctor)  = (1 + 1) / (1 + 9) = 0.2
+  the probabilities after 'doctor' still add up to 1.0
+== 5. Embeddings: two numbers for every word
+  after 'nurse': scores checks 2.0, greets 1.0, reads 0.1  ->  probabilities [0.659, 0.242, 0.099]
+  after 'doctor': scores checks 1.95, greets 0.9, reads 0.18  ->  probabilities [0.658, 0.23, 0.112]
+  distance nurse to doctor: 0.141   nurse to chart: 1.746
 == 6. Cross-entropy and perplexity
+  probability 1.0: loss = -ln(1.0) = 0.0
+  probability 0.5: loss = -ln(0.5) = 0.693
+  probability 0.25: loss = -ln(0.25) = 1.386
+  probability 0.125: loss = -ln(0.125) = 2.079
+  probability 0.1: loss = -ln(0.1) = 2.303
   four steps with probabilities [0.5, 0.25, 0.5, 0.125] -> losses [0.693, 1.386, 0.693, 2.079] -> average 1.213
   perplexity = e^1.213 = 3.364   (check: 128 to the power 1/4 = 3.364)
+  a loss of 2.0 means perplexity e^2.0 = 7.389 equally likely choices
+  a blind guess among 10 words: loss ln(10) = 2.303, perplexity 10.0
+  the toy sentence: six steps, average loss 0.4817, perplexity 1.619
 == 7. Sampling from the scores [2.0, 1.0, 0.1] for checks, greets, reads
+  greedy picks the highest score: index 0 (checks)
+  temperature 1.0: scores / 1.0 = [2.0, 1.0, 0.1] -> probabilities [0.659, 0.242, 0.099]
   temperature 0.5: scores / 0.5 = [4.0, 2.0, 0.2] -> probabilities [0.864, 0.117, 0.019]
+  temperature 2.0: scores / 2.0 = [1.0, 0.5, 0.05] -> probabilities [0.502, 0.304, 0.194]
+  top-k with k=2 at temperature 1: [0.731, 0.269, 0.0]
   top-p with p=0.9 at temperature 1: [0.731, 0.269, 0.0] (the first two words already cover 0.901 )
+  top-p 0.9 when the model is sure   [0.95, 0.03, 0.02] -> [1.0, 0.0, 0.0]
+  top-p 0.9 when the model is unsure [0.35, 0.3, 0.2, 0.1, 0.05] -> [0.368, 0.316, 0.211, 0.105, 0.0]
+== 8. A chat template
+<|system|>You are CareDesk, a helpful front-desk assistant.<|end|>
+<|user|>When does the clinic open?<|end|>
+<|assistant|>
 ```
 
-The same text, with all eight groups of numbers, is saved in `data/expected_output/worked_examples.txt`.
+The same text is saved in `data/expected_output/worked_examples.txt`.
 
 ## Lab: check and extend
 
