@@ -1,6 +1,8 @@
 # Video 1 - Python engineering for AI
 
-Video: [VIDEO LINK, to be added when the video is published]
+Video: https://youtu.be/lRv88z2V2A8
+
+Article: https://arjun-sarkar786.medium.com/1-full-stack-ai-llm-agentic-engineering-python-engineering-for-ai-662ed14f7f79
 
 **Learning goal:** write Python the way AI projects need it: clear about the data it handles, able to do many things at once, and tested, because every later part of the course builds on it. We build one small program, the **CareDesk fan-out client**, that asks several AI services the same question at the same time, checks every reply, tries again when something fails for a moment and comes with tests.
 

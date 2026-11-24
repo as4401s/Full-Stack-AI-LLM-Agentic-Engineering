@@ -14,7 +14,7 @@ Only code lives here: no slides, animations, images or videos.
 
 | # | Video | Code | Article |
 |---|---|---|---|
-| 1 | Python engineering for AI | [part-01-python-engineering-for-ai](part-01-python-engineering-for-ai) | Medium article: link added when published |
+| 1 | [Python engineering for AI](https://youtu.be/lRv88z2V2A8) | [part-01-python-engineering-for-ai](part-01-python-engineering-for-ai) | [Medium article](https://arjun-sarkar786.medium.com/1-full-stack-ai-llm-agentic-engineering-python-engineering-for-ai-662ed14f7f79) |
 | 2 | Deep learning refresher with PyTorch | [part-02-deep-learning-refresher](part-02-deep-learning-refresher) | Medium article: link added when published |
 | 3 | Language modelling basics | [part-03-language-modelling-basics](part-03-language-modelling-basics) | Medium article: link added when published |
 
