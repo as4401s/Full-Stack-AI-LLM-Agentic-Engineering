@@ -1,0 +1,200 @@
+The doctor reviews the results for Mr. Novak in room 28.
+The pharmacist filled the prescription for amoxicillin 100 mg for Ms. Berg.
+The clerk booked a follow-up visit at the oncology clinic on 2026-04-08.
+Ward 8 has 0 free beds today and 5 patients on the cardiology list.
+The pharmacist filled the prescription for amoxicillin 250 mg for Ms. Rahman.
+Ward 9 has 1 free beds today and 5 patients on the oncology list.
+The clerk books the appointment for Mr. Kowalski in room 38.
+The clerk prints the form for Mr. Weber in room 21.
+The nurse prepares the room for Mr. Lindqvist in room 40.
+Ward 9 has 1 free beds today and 4 patients on the maternity list.
+The clerk booked a follow-up visit at the surgery clinic on 2026-11-18.
+The pharmacist filled the prescription for bisoprolol 50 mg for Ms. Berg.
+The pharmacist filled the prescription for tamsulosin 5 mg for Ms. Berg.
+The clerk updates the schedule for Mr. Berg in room 28.
+Room 23: sertraline 100 mg three times daily from 2026-01-04.
+The clerk booked a follow-up visit at the oncology clinic on 2026-04-05.
+The clerk booked a follow-up visit at the surgery clinic on 2026-07-23.
+Ward 9 has 0 free beds today and 8 patients on the oncology list.
+The pharmacist filled the prescription for ramipril 5 mg for Ms. Kowalski.
+The pharmacist filled the prescription for amoxicillin 50 mg for Ms. Okafor.
+The clerk updates the schedule for Mr. Kowalski in room 21.
+Ward 7 has 1 free beds today and 3 patients on the cardiology list.
+The clerk booked a follow-up visit at the maternity clinic on 2026-09-05.
+Ward 1 has 5 free beds today and 6 patients on the oncology list.
+Room 12: paracetamol 250 mg at night from 2026-05-10.
+The pharmacist filled the prescription for furosemide 250 mg for Ms. Rahman.
+Room 6: carvedilol 5 mg every morning from 2026-10-23.
+The pharmacist filled the prescription for dapagliflozin 400 mg for Ms. Moreau.
+The pharmacist filled the prescription for metformin 400 mg for Ms. Moreau.
+The pharmacist fills the prescription for Mr. Lindqvist in room 10.
+Room 10: levothyroxine 500 mg twice daily from 2026-02-28.
+Room 5: carvedilol 500 mg at night from 2026-09-11.
+Room 12: amlodipine 10 mg three times daily from 2026-07-06.
+The clerk booked a follow-up visit at the oncology clinic on 2026-01-21.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-01-09.
+Ward 3 has 0 free beds today and 12 patients on the radiology list.
+The pharmacist filled the prescription for levothyroxine 500 mg for Ms. Okafor.
+Ward 6 has 1 free beds today and 10 patients on the radiology list.
+The doctor reviews the results for Mr. Rahman in room 37.
+The clerk booked a follow-up visit at the surgery clinic on 2026-10-05.
+The clerk prints the form for Mr. Berg in room 13.
+The clerk booked a follow-up visit at the oncology clinic on 2026-04-25.
+The clerk booked a follow-up visit at the oncology clinic on 2026-01-01.
+Room 7: warfarin 40 mg twice daily from 2026-12-11.
+The clerk booked a follow-up visit at the radiology clinic on 2026-10-01.
+The pharmacist fills the prescription for Mr. Silva in room 1.
+The pharmacist filled the prescription for amoxicillin 40 mg for Ms. Kowalski.
+Ward 3 has 1 free beds today and 3 patients on the radiology list.
+The pharmacist filled the prescription for ramipril 500 mg for Ms. Costa.
+The clerk booked a follow-up visit at the surgery clinic on 2026-08-05.
+The pharmacist filled the prescription for levothyroxine 40 mg for Ms. Tanaka.
+Room 4: levothyroxine 20 mg twice daily from 2026-09-14.
+The pharmacist filled the prescription for tamsulosin 400 mg for Ms. Lindqvist.
+The clerk booked a follow-up visit at the maternity clinic on 2026-09-16.
+The doctor reviews the results for Mr. Okafor in room 26.
+Room 33: ibuprofen 50 mg at night from 2026-12-13.
+Ward 7 has 0 free beds today and 11 patients on the maternity list.
+The pharmacist filled the prescription for ramipril 100 mg for Ms. Lindqvist.
+The doctor reads the chart for Mr. Silva in room 30.
+Room 23: sertraline 5 mg at night from 2026-09-27.
+Room 19: levothyroxine 1000 mg every morning from 2026-02-27.
+The pharmacist filled the prescription for tamsulosin 10 mg for Ms. Haddad.
+Room 1: paracetamol 250 mg twice daily from 2026-10-24.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-09-24.
+Ward 7 has 4 free beds today and 11 patients on the cardiology list.
+The clerk booked a follow-up visit at the cardiology clinic on 2026-04-01.
+The pharmacist checks the prescription for Mr. Silva in room 39.
+Room 4: ibuprofen 5 mg at night from 2026-07-26.
+The clerk booked a follow-up visit at the radiology clinic on 2026-02-03.
+The clerk booked a follow-up visit at the maternity clinic on 2026-11-08.
+Room 25: prednisolone 500 mg once daily from 2026-05-25.
+Ward 9 has 0 free beds today and 2 patients on the cardiology list.
+The pharmacist filled the prescription for omeprazole 250 mg for Ms. Tanaka.
+The pharmacist filled the prescription for paracetamol 100 mg for Ms. Lindqvist.
+Room 25: amoxicillin 20 mg three times daily from 2026-08-26.
+The clerk booked a follow-up visit at the cardiology clinic on 2026-05-05.
+Ward 8 has 2 free beds today and 9 patients on the paediatrics list.
+Room 39: paracetamol 20 mg at night from 2026-05-16.
+The nurse greets the patient for Mr. Moreau in room 19.
+The clerk booked a follow-up visit at the cardiology clinic on 2026-03-08.
+Room 40: carvedilol 10 mg every morning from 2026-02-23.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-08-08.
+Room 10: lisinopril 5 mg every morning from 2026-04-05.
+The pharmacist filled the prescription for bisoprolol 400 mg for Ms. Silva.
+Room 32: lisinopril 100 mg three times daily from 2026-08-05.
+Ward 8 has 4 free beds today and 6 patients on the cardiology list.
+Ward 7 has 6 free beds today and 9 patients on the maternity list.
+The pharmacist filled the prescription for prednisolone 400 mg for Ms. Costa.
+The clerk updates the schedule for Mr. Lindqvist in room 31.
+The clerk booked a follow-up visit at the cardiology clinic on 2026-11-17.
+Ward 1 has 5 free beds today and 6 patients on the paediatrics list.
+Room 19: metformin 1000 mg every morning from 2026-09-27.
+Ward 2 has 4 free beds today and 5 patients on the maternity list.
+The pharmacist filled the prescription for tamsulosin 100 mg for Ms. Tanaka.
+Room 39: ramipril 250 mg once daily from 2026-03-14.
+The pharmacist filled the prescription for carvedilol 20 mg for Ms. Silva.
+The clerk prints the form for Mr. Okafor in room 16.
+Room 4: salbutamol 500 mg twice daily from 2026-07-12.
+The doctor reads the chart for Mr. Haddad in room 29.
+Ward 6 has 1 free beds today and 8 patients on the cardiology list.
+Room 32: carvedilol 400 mg every morning from 2026-04-09.
+The clerk booked a follow-up visit at the radiology clinic on 2026-05-10.
+The clerk booked a follow-up visit at the cardiology clinic on 2026-11-06.
+The nurse updates the chart for Mr. Rahman in room 37.
+Room 15: paracetamol 250 mg twice daily from 2026-04-08.
+Ward 5 has 5 free beds today and 7 patients on the oncology list.
+Ward 6 has 3 free beds today and 6 patients on the cardiology list.
+The doctor reviews the results for Mr. Rahman in room 6.
+Ward 5 has 5 free beds today and 7 patients on the oncology list.
+The clerk booked a follow-up visit at the oncology clinic on 2026-08-06.
+The clerk booked a follow-up visit at the surgery clinic on 2026-09-06.
+Room 27: furosemide 500 mg twice daily from 2026-10-12.
+Room 1: bisoprolol 50 mg once daily from 2026-02-19.
+The clerk prints the form for Mr. Weber in room 19.
+Ward 6 has 3 free beds today and 4 patients on the cardiology list.
+Room 11: tamsulosin 10 mg once daily from 2026-09-20.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-05-13.
+The doctor reads the chart for Mr. Haddad in room 16.
+The nurse prepares the room for Mr. Silva in room 36.
+The clerk booked a follow-up visit at the radiology clinic on 2026-06-06.
+Ward 5 has 2 free beds today and 2 patients on the geriatrics list.
+The pharmacist fills the prescription for Mr. Okafor in room 38.
+The clerk booked a follow-up visit at the oncology clinic on 2026-04-08.
+The pharmacist filled the prescription for salbutamol 250 mg for Ms. Kowalski.
+The pharmacist filled the prescription for amoxicillin 40 mg for Ms. Tanaka.
+Room 15: furosemide 5 mg once daily from 2026-01-27.
+Room 26: sertraline 20 mg at night from 2026-10-06.
+Room 13: bisoprolol 40 mg at night from 2026-05-10.
+The pharmacist filled the prescription for lisinopril 250 mg for Ms. Lindqvist.
+The doctor signs the form for Mr. Silva in room 27.
+The nurse greets the patient for Mr. Weber in room 24.
+The pharmacist filled the prescription for ramipril 250 mg for Ms. Haddad.
+The pharmacist filled the prescription for metformin 20 mg for Ms. Costa.
+The doctor reads the chart for Mr. Moreau in room 11.
+The clerk prints the form for Mr. Tanaka in room 7.
+Ward 1 has 4 free beds today and 10 patients on the radiology list.
+The nurse greets the patient for Mr. Berg in room 26.
+The pharmacist filled the prescription for paracetamol 50 mg for Ms. Okafor.
+Room 25: ibuprofen 1000 mg three times daily from 2026-05-02.
+The pharmacist filled the prescription for sertraline 250 mg for Ms. Weber.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-12-16.
+The clerk booked a follow-up visit at the oncology clinic on 2026-06-11.
+The doctor signs the form for Mr. Tanaka in room 33.
+Ward 7 has 3 free beds today and 10 patients on the geriatrics list.
+The nurse prepares the room for Mr. Novak in room 6.
+The clerk booked a follow-up visit at the oncology clinic on 2026-05-11.
+The clerk booked a follow-up visit at the surgery clinic on 2026-08-17.
+The pharmacist filled the prescription for levothyroxine 400 mg for Ms. Berg.
+The clerk booked a follow-up visit at the radiology clinic on 2026-07-16.
+The clerk booked a follow-up visit at the radiology clinic on 2026-01-14.
+The pharmacist filled the prescription for amlodipine 50 mg for Ms. Lindqvist.
+Room 37: salbutamol 100 mg twice daily from 2026-01-23.
+Ward 8 has 0 free beds today and 1 patients on the cardiology list.
+The clerk prints the form for Mr. Rahman in room 16.
+Ward 9 has 5 free beds today and 8 patients on the maternity list.
+Ward 3 has 6 free beds today and 1 patients on the oncology list.
+Room 9: furosemide 5 mg once daily from 2026-10-05.
+Ward 2 has 0 free beds today and 10 patients on the cardiology list.
+The pharmacist filled the prescription for paracetamol 250 mg for Ms. Berg.
+The clerk booked a follow-up visit at the maternity clinic on 2026-07-01.
+The clerk booked a follow-up visit at the maternity clinic on 2026-12-15.
+Room 26: warfarin 400 mg every morning from 2026-07-01.
+The clerk booked a follow-up visit at the cardiology clinic on 2026-07-22.
+The pharmacist filled the prescription for rivaroxaban 20 mg for Ms. Rahman.
+The clerk prints the form for Mr. Moreau in room 20.
+The pharmacist filled the prescription for levothyroxine 500 mg for Ms. Novak.
+The doctor signs the form for Mr. Novak in room 19.
+Room 26: prednisolone 250 mg three times daily from 2026-02-26.
+Room 19: levothyroxine 400 mg at night from 2026-08-18.
+The clerk booked a follow-up visit at the surgery clinic on 2026-07-28.
+The nurse updates the chart for Mr. Tanaka in room 12.
+The pharmacist filled the prescription for sertraline 400 mg for Ms. Okafor.
+The clerk updates the schedule for Mr. Rahman in room 34.
+Ward 5 has 3 free beds today and 11 patients on the maternity list.
+The clerk booked a follow-up visit at the geriatrics clinic on 2026-03-07.
+The clerk booked a follow-up visit at the oncology clinic on 2026-05-26.
+The clerk books the appointment for Mr. Novak in room 14.
+The pharmacist filled the prescription for salbutamol 5 mg for Ms. Lindqvist.
+Ward 3 has 1 free beds today and 6 patients on the radiology list.
+Room 33: prednisolone 5 mg twice daily from 2026-12-07.
+The pharmacist filled the prescription for ramipril 250 mg for Ms. Tanaka.
+The pharmacist checks the prescription for Mr. Costa in room 6.
+The pharmacist filled the prescription for amlodipine 50 mg for Ms. Moreau.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-02-04.
+Room 12: lisinopril 250 mg three times daily from 2026-09-20.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-12-10.
+The pharmacist filled the prescription for levothyroxine 50 mg for Ms. Costa.
+The pharmacist filled the prescription for carvedilol 1000 mg for Ms. Berg.
+The pharmacist filled the prescription for carvedilol 50 mg for Ms. Weber.
+Room 31: amoxicillin 10 mg every morning from 2026-12-06.
+The pharmacist filled the prescription for metformin 10 mg for Ms. Okafor.
+Room 19: ramipril 50 mg at night from 2026-09-16.
+Room 34: amoxicillin 400 mg twice daily from 2026-06-03.
+The pharmacist signs the form for Mr. Kowalski in room 36.
+Room 4: paracetamol 1000 mg three times daily from 2026-02-04.
+The clerk booked a follow-up visit at the oncology clinic on 2026-02-28.
+Ward 2 has 6 free beds today and 2 patients on the cardiology list.
+The pharmacist filled the prescription for salbutamol 20 mg for Ms. Kowalski.
+The clerk booked a follow-up visit at the paediatrics clinic on 2026-08-15.
+The pharmacist filled the prescription for atorvastatin 100 mg for Ms. Weber.

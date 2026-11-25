@@ -1,0 +1,39 @@
+libraries: tiktoken 0.14.0, tokenizers 0.23.3, sentencepiece 0.2.3
+
+sentence: The pharmacist filled the prescription for rivaroxaban 500 mg on 2026-03-14.
+(11 words, 76 characters)
+
+our BPE (512)  (vocabulary 512)  ->  27 tokens
+  pieces: The | _pharmacist | _filled | _the | _prescription | _for | _r | i | v | ar | o | x | a | b | a | n | _500 | _mg | _on | _202 | 6 | - | 03 | - | 1 | 4 | .
+  ids   : [271, 308, 339, 261, 318, 269, 291, 105, 118, 270, 111, 120] ...
+gpt2  (vocabulary 50,257)  ->  22 tokens
+  pieces: The | Ġpharm | acist | Ġfilled | Ġthe | Ġprescription | Ġfor | Ġr | iv | ar | ox | aban | Ġ500 | Ġmg | Ġon | Ġ20 | 26 | - | 03 | - | 14 | .
+  ids   : [464, 10113, 20279, 5901, 262, 15077, 329, 374, 452, 283, 1140, 45094] ...
+cl100k_base  (vocabulary 100,277)  ->  22 tokens
+  pieces: The | _pharmacist | _filled | _the | _prescription | _for | _riv | ar | ox | aban | _ | 500 | _mg | _on | _ | 202 | 6 | - | 03 | - | 14 | .
+  ids   : [791, 90394, 10409, 279, 22866, 369, 44229, 277, 5241, 39265, 220, 2636] ...
+o200k_base  (vocabulary 200,019)  ->  22 tokens
+  pieces: The | _pharmacist | _filled | _the | _prescription | _for | _riv | ar | ox | aban | _ | 500 | _mg | _on | _ | 202 | 6 | - | 03 | - | 14 | .
+  ids   : [976, 118510, 14255, 290, 27577, 395, 25458, 277, 1233, 14236, 220, 3234] ...
+bert-base-uncased  (vocabulary 30,522)  ->  24 tokens
+  pieces: the | ph | ##arm | ##ac | ##ist | filled | the | prescription | for | ri | ##var | ##ox | ##aba | ##n | 500 | mg | on | 202 | ##6 | - | 03 | - | 14 | .
+  ids   : [1996, 6887, 27292, 6305, 2923, 3561, 1996, 20422, 2005, 15544, 10755, 11636] ...
+t5-small  (vocabulary 32,100)  ->  21 tokens
+  pieces: ▁The | ▁pharmacist | ▁filled | ▁the | ▁prescription | ▁for | ▁ | riv | a | rox | a | ban | ▁500 | ▁mg | ▁on | ▁20 | 26 | - | 03 | -14 | .
+  ids   : [37, 26302, 3353, 8, 7744, 21, 3, 5927, 9, 12907, 9, 3478] ...
+
+which tiktoken encoding belongs to which model name (from the library's own table):
+  gpt-3.5-turbo   -> cl100k_base
+  gpt-4           -> cl100k_base
+  gpt-4o          -> o200k_base
+  gpt-4.1         -> o200k_base
+  gpt-5           -> o200k_base
+  o1              -> o200k_base
+  o3              -> o200k_base
+  o1-*            -> o200k_base
+  o3-*            -> o200k_base
+  gpt-5*          -> o200k_base
+  gpt-4.1-*       -> o200k_base
+  gpt-4o-*        -> o200k_base
+  gpt-4-*         -> cl100k_base
+  gpt-3.5-turbo-* -> cl100k_base

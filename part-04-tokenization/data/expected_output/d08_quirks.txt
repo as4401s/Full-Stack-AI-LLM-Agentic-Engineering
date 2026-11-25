@@ -1,0 +1,61 @@
+== cl100k_base
+ spaces and capitals: the same word, different tokens
+                'nurse'                 2  n | urse   [77, 30385]
+                ' nurse'                1  _nurse   [29198]
+                'Nurse'                 2  N | urse   [45, 30385]
+                ' Nurse'                1  _Nurse   [49876]
+                'NURSE'                 3  N | UR | SE   [45, 1539, 937]
+                ' nurse  '              2  _nurse | __   [29198, 256]
+ numbers
+                '2026'                  2  202 | 6   [2366, 21]
+                ' 2026'                 3  _ | 202 | 6   [220, 2366, 21]
+                '2026-03-14'            6  202 | 6 | - | 03 | - | 14   [2366, 21, 12, 2839, 12, 975]
+                '1234567'               3  123 | 456 | 7   [4513, 10961, 22]
+                '12,345.67'             5  12 | , | 345 | . | 67   [717, 11, 12901, 13, 3080]
+                '3.14159'               4  3 | . | 141 | 59   [18, 13, 9335, 2946]
+ common words and rare drug names (with a leading space)
+                ' the'                  1  _the   [279]
+                ' nurse'                1  _nurse   [29198]
+                ' prescription'         1  _prescription   [22866]
+                ' paracetamol'          4  _par | acet | am | ol   [1370, 68323, 309, 337]
+                ' rivaroxaban'          4  _riv | ar | ox | aban   [44229, 277, 5241, 39265]
+                ' dapagliflozin'        6  _dap | ag | l | if | lo | zin   [82621, 351, 75, 333, 385, 58197]
+                ' hydroxychloroquine'   5  _hydro | xy | chlor | o | quine   [17055, 4223, 72967, 78, 48358]
+ long words
+                ' cardiology'           2  _card | iology   [3786, 31226]
+                ' Kardiologiestation'   5  _K | ardi | olog | iest | ation   [735, 37489, 1640, 13744, 367]
+                ' electrocardiography'  4  _electro | card | i | ography   [25396, 5057, 72, 5814]
+
+== o200k_base
+ spaces and capitals: the same word, different tokens
+                'nurse'                 2  n | urse   [77, 29529]
+                ' nurse'                1  _nurse   [37736]
+                'Nurse'                 2  N | urse   [45, 29529]
+                ' Nurse'                1  _Nurse   [71117]
+                'NURSE'                 3  N | UR | SE   [45, 2184, 1529]
+                ' nurse  '              2  _nurse | __   [37736, 256]
+ numbers
+                '2026'                  2  202 | 6   [1323, 21]
+                ' 2026'                 3  _ | 202 | 6   [220, 1323, 21]
+                '2026-03-14'            6  202 | 6 | - | 03 | - | 14   [1323, 21, 12, 3659, 12, 1265]
+                '1234567'               3  123 | 456 | 7   [7633, 19354, 22]
+                '12,345.67'             5  12 | , | 345 | . | 67   [899, 11, 22901, 13, 5462]
+                '3.14159'               4  3 | . | 141 | 59   [18, 13, 16926, 4621]
+ common words and rare drug names (with a leading space)
+                ' the'                  1  _the   [290]
+                ' nurse'                1  _nurse   [37736]
+                ' prescription'         1  _prescription   [27577]
+                ' paracetamol'          3  _par | acetam | ol   [686, 144847, 340]
+                ' rivaroxaban'          4  _riv | ar | ox | aban   [25458, 277, 1233, 14236]
+                ' dapagliflozin'        5  _dap | ag | lif | lo | zin   [63185, 348, 83008, 746, 23419]
+                ' hydroxychloroquine'   4  _hydro | xy | chl | oroquine   [31200, 6077, 127541, 189569]
+ long words
+                ' cardiology'           2  _cardi | ology   [28029, 3035]
+                ' Kardiologiestation'   5  _K | ardi | olog | iest | ation   [658, 27648, 1653, 19116, 387]
+                ' electrocardiography'  4  _electro | card | i | ography   [29674, 7687, 72, 7587]
+
+== counting letters
+  the model receives ' paracetamol' as 3 ids [686, 144847, 340]  (pieces: _par | acetam | ol)
+  a program counts the letter 'a' exactly: 3   (code: 'paracetamol'.count('a'))
+  the model receives ' strawberry' as 1 ids [101830]  (pieces: _strawberry)
+  a program counts the letter 'r' exactly: 3   (code: 'strawberry'.count('r'))

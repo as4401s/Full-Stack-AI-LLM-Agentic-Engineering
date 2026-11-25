@@ -1,0 +1,44 @@
+$ uv sync
+Using CPython 3.13.9 interpreter
+Creating virtual environment at: .venv
+Resolved 32 packages in 594ms
+Downloading tokenizers (3.0MiB)
+Downloading hf-xet (3.4MiB)
+Downloading pygments (1.2MiB)
+Downloading sentencepiece (1.4MiB)
+ Downloading pygments
+ Downloading sentencepiece
+ Downloading tokenizers
+ Downloading hf-xet
+Prepared 29 packages in 1.42s
+Installed 29 packages in 25ms
+ + anyio==4.16.0
+ + certifi==2026.11.20
+ + charset-normalizer==3.5.3
+ + click==8.5.1
+ + filelock==4.3.1
+ + fsspec==2026.9.0
+ + h11==0.16.0
+ + hf-xet==1.8.0
+ + httpcore2==2.16.2
+ + httpx2==2.16.2
+ + huggingface-hub==2.4.0
+ + idna==3.20
+ + iniconfig==2.3.1
+ + jinja2==3.1.6
+ + markupsafe==3.0.4
+ + packaging==26.4
+ + pluggy==1.7.0
+ + pygments==2.21.0
+ + pytest==9.2.0
+ + pyyaml==6.0.4
+ + regex==2026.11.24
+ + requests==2.34.2
+ + sentencepiece==0.2.3
+ + tiktoken==0.14.0
+ + tokenizers==0.23.3
+ + tqdm==4.70.1
+ + truststore==0.10.5
+ + typing-extensions==4.16.0
+ + urllib3==2.8.0
+[exit 0]

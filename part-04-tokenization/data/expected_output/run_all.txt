@@ -1,0 +1,364 @@
+$ uv run python run_all.py
+training text: 23239 words, 132586 letters; test text: 2308 words, 13313 letters
+
+one word, three ways:
+  letters : p a r a c e t a m o l   (11 tokens)
+  one word: paracetamol   (1 token if the word is in the list, else 'unknown')
+  pieces  :  p ar a c e tamol   (6 tokens)
+
+the same word list on a word we never trained on:
+  letters : r i v a r o x a b a n   (11 tokens)
+  one word: rivaroxaban   -> unknown (not in the list)
+  pieces  :  r i v ar o x a b a n   (10 tokens)
+
+the trade-off on the test text (2308 words):
+  way                        vocabulary  tokens per word  unknown words
+  letters                            52             5.77              0
+  whole words (top 100)             100             1.00            254
+  whole words (top 508)             508             1.00             19
+  pieces (vocabulary 300)           300             3.62              0
+  pieces (vocabulary 400)           400             2.21              0
+  pieces (vocabulary 512)           512             1.80              0
+
+tokens per word as the vocabulary grows (pieces, learned from the training text):
+  vocabulary  256:  5.77 tokens per word
+  vocabulary  300:  3.62 tokens per word
+  vocabulary  350:  2.67 tokens per word
+  vocabulary  400:  2.21 tokens per word
+  vocabulary  450:  2.00 tokens per word
+  vocabulary  512:  1.80 tokens per word
+  vocabulary  600:  1.65 tokens per word
+  vocabulary  695:  1.49 tokens per word
+-- d01_three_ways finished in 0.7 s
+
+the corpus (word: how often it occurs): {'charted': 7, 'dosed': 6, 'ward': 8, 'checked': 5}
+
+start: every word is a row of single letters
+  c h a r t e d    x 7
+  d o s e d        x 6
+  w a r d          x 8
+  c h e c k e d    x 5
+
+merge 1: the most frequent pair is e + d  (count 18)
+  top pairs: e+d=18, a+r=15, c+h=12, w+a=8, r+d=8
+  c h a r t ed     x 7
+  d o s ed         x 6
+  w a r d          x 8
+  c h e c k ed     x 5
+
+merge 2: the most frequent pair is a + r  (count 15)
+  top pairs: a+r=15, c+h=12, w+a=8, r+d=8, h+a=7
+  c h ar t ed      x 7
+  d o s ed         x 6
+  w ar d           x 8
+  c h e c k ed     x 5
+
+merge 3: the most frequent pair is c + h  (count 12)
+  top pairs: c+h=12, w+ar=8, ar+d=8, h+ar=7, ar+t=7
+  ch ar t ed       x 7
+  d o s ed         x 6
+  w ar d           x 8
+  ch e c k ed      x 5
+
+merge 4: the most frequent pair is w + ar  (count 8)
+  top pairs: w+ar=8, ar+d=8, ch+ar=7, ar+t=7, t+ed=7
+  ch ar t ed       x 7
+  d o s ed         x 6
+  war d            x 8
+  ch e c k ed      x 5
+
+merge 5: the most frequent pair is war + d  (count 8)
+  top pairs: war+d=8, ch+ar=7, ar+t=7, t+ed=7, d+o=6
+  ch ar t ed       x 7
+  d o s ed         x 6
+  ward             x 8
+  ch e c k ed      x 5
+
+the vocabulary: 16 pieces = 11 letters + 5 merges
+  a c d e h k o r s t w ed ar ch war ward
+
+the merge list, in order: ['e+d', 'a+r', 'c+h', 'w+ar', 'war+d']
+
+encode 'warded' with the same five merges: ward ed
+  decode: warded
+
+encode 'waxed' with the same five merges: w a x ed   (not in the vocabulary: ['x'])
+  decode: waxed
+-- d02_bpe_by_hand finished in 0.0 s
+
+text           characters  bytes   bytes in hex
+e                       1      1   65
+é                       1      2   c3 a9
+ü                       1      2   c3 bc
+€                       1      3   e2 82 ac
+日                       1      3   e6 97 a5
+😀                       1      4   f0 9f 98 80
+ward                    4      4   77 61 72 64
+Größe                   5      7   47 72 c3 b6 c3 9f 65
+Herzinfarkt            11     11   48 65 72 7a 69 6e 66 61 72 6b 74
+Kardiologiestation         18     18   4b 61 72 64 69 6f 6c 6f 67 69 65 73 74 61 ...
+paracetamol            11     11   70 61 72 61 63 65 74 61 6d 6f 6c
+
+every byte is a number from 0 to 255, so a vocabulary of 256 pieces can write any text in any language
+decoding goes back the same way: ü = c3 bc
+a broken sequence cannot be read: � (c3 alone is half of a character)
+-- d03_bytes_utf8 finished in 0.0 s
+
+chunks of one line (a leading space stays with its word):
+  ['Room', ' 26', ':', ' levothyroxine', ' 5', ' mg', ' twice', ' daily', ' from', ' 202', '6', '-', '09', '-', '18', '.']
+
+trained: 256 merges, vocabulary of 512 pieces (ids 0-255 are bytes; _ marks a space)
+the first 15 merges (id: left + right = new piece):
+  256: '_' + 'f' = '_f'
+  257: 'h' + 'e' = 'he'
+  258: '_' + 't' = '_t'
+  259: 'o' + 'r' = 'or'
+  260: '_' + 'p' = '_p'
+  261: '_t' + 'he' = '_the'
+  262: 'i' + 's' = 'is'
+  263: 'o' + 'n' = 'on'
+  264: '_' + 'a' = '_a'
+  265: 'i' + 'n' = 'in'
+  266: 'e' + 'd' = 'ed'
+  267: '_' + '2' = '_2'
+  268: 'o' + 'm' = 'om'
+  269: '_f' + 'or' = '_for'
+  270: 'a' + 'r' = 'ar'
+
+some later merges: '_in' 'at' '_3' 'olo' 'olog' 'ology' '_4' '00' '_s' 'ur' 'iology' 'ad'
+
+a word the training text never mentions, cut with the pieces it learned:
+  ' physiology':  p | h | y | s | iology
+
+The nurse checks the chart for Mr. Berg in room 12.
+  pieces: The |  nurse |  c | he | c | k | s |  the |  chart |  for |  Mr | . |  Berg |  in |  room |  1 | 2 | .
+  ids   : [271, 419, 272, 257, 99, 107, 115, 261, 459, 269, 355, 46, 491, 356, 338, 290, 50, 46]
+  11 words -> 18 tokens;  decode gives the text back: True
+
+The pharmacist filled the prescription for rivaroxaban 500 mg.
+  pieces: The |  pharmacist |  filled |  the |  prescription |  for |  r | i | v | ar | o | x | a | b | a | n |  500 |  mg | .
+  ids   : [271, 308, 339, 261, 318, 269, 291, 105, 118, 270, 111, 120, 97, 98, 97, 110, 463, 287, 46]
+  9 words -> 19 tokens;  decode gives the text back: True
+
+whole test text: 2308 words -> 4158 tokens (1.80 per word), round trip exact: True
+  never-seen text 'Größe 😀 €': 16 tokens, round trip exact: True
+  never-seen text 'Die Untersuchungen zeigten keinen Herzinfarkt.': 36 tokens, round trip exact: True
+-- d04_train_bpe finished in 0.0 s
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+libraries: tiktoken 0.14.0, tokenizers 0.23.3, sentencepiece 0.2.3
+
+sentence: The pharmacist filled the prescription for rivaroxaban 500 mg on 2026-03-14.
+(11 words, 76 characters)
+
+our BPE (512)  (vocabulary 512)  ->  27 tokens
+  pieces: The | _pharmacist | _filled | _the | _prescription | _for | _r | i | v | ar | o | x | a | b | a | n | _500 | _mg | _on | _202 | 6 | - | 03 | - | 1 | 4 | .
+  ids   : [271, 308, 339, 261, 318, 269, 291, 105, 118, 270, 111, 120] ...
+gpt2  (vocabulary 50,257)  ->  22 tokens
+  pieces: The | Ġpharm | acist | Ġfilled | Ġthe | Ġprescription | Ġfor | Ġr | iv | ar | ox | aban | Ġ500 | Ġmg | Ġon | Ġ20 | 26 | - | 03 | - | 14 | .
+  ids   : [464, 10113, 20279, 5901, 262, 15077, 329, 374, 452, 283, 1140, 45094] ...
+cl100k_base  (vocabulary 100,277)  ->  22 tokens
+  pieces: The | _pharmacist | _filled | _the | _prescription | _for | _riv | ar | ox | aban | _ | 500 | _mg | _on | _ | 202 | 6 | - | 03 | - | 14 | .
+  ids   : [791, 90394, 10409, 279, 22866, 369, 44229, 277, 5241, 39265, 220, 2636] ...
+o200k_base  (vocabulary 200,019)  ->  22 tokens
+  pieces: The | _pharmacist | _filled | _the | _prescription | _for | _riv | ar | ox | aban | _ | 500 | _mg | _on | _ | 202 | 6 | - | 03 | - | 14 | .
+  ids   : [976, 118510, 14255, 290, 27577, 395, 25458, 277, 1233, 14236, 220, 3234] ...
+bert-base-uncased  (vocabulary 30,522)  ->  24 tokens
+  pieces: the | ph | ##arm | ##ac | ##ist | filled | the | prescription | for | ri | ##var | ##ox | ##aba | ##n | 500 | mg | on | 202 | ##6 | - | 03 | - | 14 | .
+  ids   : [1996, 6887, 27292, 6305, 2923, 3561, 1996, 20422, 2005, 15544, 10755, 11636] ...
+t5-small  (vocabulary 32,100)  ->  21 tokens
+  pieces: ▁The | ▁pharmacist | ▁filled | ▁the | ▁prescription | ▁for | ▁ | riv | a | rox | a | ban | ▁500 | ▁mg | ▁on | ▁20 | 26 | - | 03 | -14 | .
+  ids   : [37, 26302, 3353, 8, 7744, 21, 3, 5927, 9, 12907, 9, 3478] ...
+
+which tiktoken encoding belongs to which model name (from the library's own table):
+  gpt-3.5-turbo   -> cl100k_base
+  gpt-4           -> cl100k_base
+  gpt-4o          -> o200k_base
+  gpt-4.1         -> o200k_base
+  gpt-5           -> o200k_base
+  o1              -> o200k_base
+  o3              -> o200k_base
+  o1-*            -> o200k_base
+  o3-*            -> o200k_base
+  gpt-5*          -> o200k_base
+  gpt-4.1-*       -> o200k_base
+  gpt-4o-*        -> o200k_base
+  gpt-4-*         -> cl100k_base
+  gpt-3.5-turbo-* -> cl100k_base
+-- d05_real_tokenizers finished in 7.2 s
+
+1. a special token in our own tokenizer
+  'Room 12.<|end|>' -> [335, 290, 50, 46, 512]   (the last id, 512, is the special token)
+  the same text with special tokens switched off -> 10 ordinary tokens: Room | _1 | 2 | . | < | | | en | d | | | >
+  our own tiny chat template:
+    <|start|>system
+    You are CareDesk, an assistant for the operations team of a fictional hospital.<|end|>
+    <|start|>user
+    Which room is Mr. Berg in?<|end|>
+    <|start|>assistant
+    Mr. Berg is in room 12.<|end|>
+    <|start|>assistant
+
+2. the end-of-text token in OpenAI's encodings
+  cl100k_base: '<|endoftext|>' with special tokens allowed -> [100257]
+  cl100k_base: by default, user text that contains it is refused: Encountered text corresponding to disallowed special token '<|endoftex...
+  cl100k_base: with special tokens switched off it is cut into ordinary pieces -> 7 ids [27, 91, 8862, 728, 428, 91, 29]
+  o200k_base: '<|endoftext|>' with special tokens allowed -> [199999]
+  o200k_base: by default, user text that contains it is refused: Encountered text corresponding to disallowed special token '<|endoftex...
+  o200k_base: with special tokens switched off it is cut into ordinary pieces -> 7 ids [27, 91, 419, 1440, 919, 91, 29]
+
+3. a chat rendered through a published chat template (Qwen2.5)
+raw text the model reads:
+  | <|im_start|>system
+  | You are CareDesk, an assistant for the operations team of a fictional hospital.<|im_end|>
+  | <|im_start|>user
+  | Which room is Mr. Berg in?<|im_end|>
+  | <|im_start|>assistant
+  | Mr. Berg is in room 12.<|im_end|>
+  | <|im_start|>user
+  | Please book a follow-up visit.<|im_end|>
+  | <|im_start|>assistant
+
+299 characters -> 64 tokens
+special tokens in this chat (each one token): [('<|im_start|>', 151644), ('<|im_end|>', 151645)]
+first 20 tokens: <|im_start|> | system | Ċ | You | Ġare | ĠCare | Desk | , | Ġan | Ġassistant | Ġfor | Ġthe | Ġoperations | Ġteam | Ġof | Ġa | Ġfictional | Ġhospital | . | <|im_end|>
+first 20 ids   : [151644, 8948, 198, 2610, 525, 10627, 69521, 11, 458, 17847, 369, 279, 7525, 2083, 315, 264, 43582, 8777, 13, 151645]
+-- d06_special_and_chat finished in 0.8 s
+
+1. the same letter, three ways (English, German, Python)
+  tokenizer                   English   German   Python   German / English
+  our BPE (512)                   213      349      398               1.64
+  gpt2                             92      180      195               1.96
+  cl100k_base                      99      142      148               1.43
+  o200k_base                       98      116      148               1.18
+  bert-base-uncased                93      169      174               1.82
+  t5-small                         99      121      187               1.22
+  (characters: English 401, German 478, Python 583; words: English 73, German 70)
+
+2. German compounds and their English counterparts
+  cl100k_base:
+    Kardiologiestation    5 tokens: _K | ardi | olog | iest | ation
+    cardiology ward       3 tokens: _card | iology | _ward
+    Kontrolltermin        3 tokens: _Kont | roll | termin
+    follow-up visit       3 tokens: _follow | -up | _visit
+    Blutdruck             4 tokens: _Bl | ut | dr | uck
+    blood pressure        2 tokens: _blood | _pressure
+    Herzinfarkt           4 tokens: _Herz | inf | ark | t
+    heart attack          2 tokens: _heart | _attack
+    Entlassungsbrief      4 tokens: _Ent | lass | ungs | brief
+    discharge letter      2 tokens: _discharge | _letter
+  o200k_base:
+    Kardiologiestation    5 tokens: _K | ardi | olog | iest | ation
+    cardiology ward       3 tokens: _cardi | ology | _ward
+    Kontrolltermin        2 tokens: _Kontroll | termin
+    follow-up visit       3 tokens: _follow | -up | _visit
+    Blutdruck             2 tokens: _Blut | druck
+    blood pressure        2 tokens: _blood | _pressure
+    Herzinfarkt           3 tokens: _Herz | inf | arkt
+    heart attack          2 tokens: _heart | _attack
+    Entlassungsbrief      4 tokens: _Ent | lass | ungs | brief
+    discharge letter      2 tokens: _discharge | _letter
+
+3. money, with an EXAMPLE price of $2.00 per million input tokens and $8.00 per million output tokens
+  English letter: 98 prompt tokens x 10,000 requests = 980,000 tokens in -> $1.96; 300 reply tokens x 10,000 = $24.00; total $25.96 per day
+  German letter: 116 prompt tokens x 10,000 requests = 1,160,000 tokens in -> $2.32; 300 reply tokens x 10,000 = $24.00; total $26.32 per day
+
+4. a context window is a shared budget (counted with o200k_base; the window sizes are EXAMPLES)
+  system prompt                61 tokens
+  chat so far                  80 tokens
+  the question                 18 tokens
+  reserved for the reply     1000 tokens
+  fixed parts together       1159 tokens
+  one retrieved note costs about 19.1 tokens (average of 40 notes)
+  window of   8,000: 6,841 tokens left for notes -> about 357 notes fit
+  window of 128,000: 126,841 tokens left for notes -> about 6,632 notes fit
+-- d07_tokens_and_money finished in 0.6 s
+
+== cl100k_base
+ spaces and capitals: the same word, different tokens
+                'nurse'                 2  n | urse   [77, 30385]
+                ' nurse'                1  _nurse   [29198]
+                'Nurse'                 2  N | urse   [45, 30385]
+                ' Nurse'                1  _Nurse   [49876]
+                'NURSE'                 3  N | UR | SE   [45, 1539, 937]
+                ' nurse  '              2  _nurse | __   [29198, 256]
+ numbers
+                '2026'                  2  202 | 6   [2366, 21]
+                ' 2026'                 3  _ | 202 | 6   [220, 2366, 21]
+                '2026-03-14'            6  202 | 6 | - | 03 | - | 14   [2366, 21, 12, 2839, 12, 975]
+                '1234567'               3  123 | 456 | 7   [4513, 10961, 22]
+                '12,345.67'             5  12 | , | 345 | . | 67   [717, 11, 12901, 13, 3080]
+                '3.14159'               4  3 | . | 141 | 59   [18, 13, 9335, 2946]
+ common words and rare drug names (with a leading space)
+                ' the'                  1  _the   [279]
+                ' nurse'                1  _nurse   [29198]
+                ' prescription'         1  _prescription   [22866]
+                ' paracetamol'          4  _par | acet | am | ol   [1370, 68323, 309, 337]
+                ' rivaroxaban'          4  _riv | ar | ox | aban   [44229, 277, 5241, 39265]
+                ' dapagliflozin'        6  _dap | ag | l | if | lo | zin   [82621, 351, 75, 333, 385, 58197]
+                ' hydroxychloroquine'   5  _hydro | xy | chlor | o | quine   [17055, 4223, 72967, 78, 48358]
+ long words
+                ' cardiology'           2  _card | iology   [3786, 31226]
+                ' Kardiologiestation'   5  _K | ardi | olog | iest | ation   [735, 37489, 1640, 13744, 367]
+                ' electrocardiography'  4  _electro | card | i | ography   [25396, 5057, 72, 5814]
+
+== o200k_base
+ spaces and capitals: the same word, different tokens
+                'nurse'                 2  n | urse   [77, 29529]
+                ' nurse'                1  _nurse   [37736]
+                'Nurse'                 2  N | urse   [45, 29529]
+                ' Nurse'                1  _Nurse   [71117]
+                'NURSE'                 3  N | UR | SE   [45, 2184, 1529]
+                ' nurse  '              2  _nurse | __   [37736, 256]
+ numbers
+                '2026'                  2  202 | 6   [1323, 21]
+                ' 2026'                 3  _ | 202 | 6   [220, 1323, 21]
+                '2026-03-14'            6  202 | 6 | - | 03 | - | 14   [1323, 21, 12, 3659, 12, 1265]
+                '1234567'               3  123 | 456 | 7   [7633, 19354, 22]
+                '12,345.67'             5  12 | , | 345 | . | 67   [899, 11, 22901, 13, 5462]
+                '3.14159'               4  3 | . | 141 | 59   [18, 13, 16926, 4621]
+ common words and rare drug names (with a leading space)
+                ' the'                  1  _the   [290]
+                ' nurse'                1  _nurse   [37736]
+                ' prescription'         1  _prescription   [27577]
+                ' paracetamol'          3  _par | acetam | ol   [686, 144847, 340]
+                ' rivaroxaban'          4  _riv | ar | ox | aban   [25458, 277, 1233, 14236]
+                ' dapagliflozin'        5  _dap | ag | lif | lo | zin   [63185, 348, 83008, 746, 23419]
+                ' hydroxychloroquine'   4  _hydro | xy | chl | oroquine   [31200, 6077, 127541, 189569]
+ long words
+                ' cardiology'           2  _cardi | ology   [28029, 3035]
+                ' Kardiologiestation'   5  _K | ardi | olog | iest | ation   [658, 27648, 1653, 19116, 387]
+                ' electrocardiography'  4  _electro | card | i | ography   [29674, 7687, 72, 7587]
+
+== counting letters
+  the model receives ' paracetamol' as 3 ids [686, 144847, 340]  (pieces: _par | acetam | ol)
+  a program counts the letter 'a' exactly: 3   (code: 'paracetamol'.count('a'))
+  the model receives ' strawberry' as 1 ids [101830]  (pieces: _strawberry)
+  a program counts the letter 'r' exactly: 3   (code: 'strawberry'.count('r'))
+-- d08_quirks finished in 0.0 s
+
+vocabulary  merges  train tokens/word  test tokens/word  bytes per token  rivaroxaban  dapagliflozin
+       260       4               5.29              5.34             1.08           12             14
+       300      44               3.60              3.62             1.60           10             12
+       400     144               2.16              2.21             2.61           10             11
+       512     256               1.77              1.80             3.20           10             11
+       695     439               1.44              1.49             3.87           10             11
+
+small extra gains: going from 512 to 695 pieces saves 0.31 tokens per word, while going from 260 to 300 saved 1.72
+-- d09_lab_vocab_size finished in 0.1 s
+
+== SentencePiece unigram, vocabulary 260
+  33 tokens: ▁T he ▁p har m ac ist ▁fill ed ▁t he ▁pre sc r ip ti on ▁for ▁ r i va ro x a b a n ▁50 0 ▁m g .
+  27 tokens: ▁T he ▁n ur se ▁c he c k s ▁t he ▁c har t ▁for ▁M r . ▁Berg ▁ in ▁ ro om ▁12 .
+  40 tokens: ▁ D i e ▁ K ard i olo g i e s t at i on ▁ ha t ▁ he u t e ▁ z w e i ▁fr e i e ▁ B et t en .
+  whole test text: 6063 tokens (2.63 per word)
+
+== SentencePiece bpe, vocabulary 300
+  19 tokens: ▁The ▁pharmacist ▁filled ▁the ▁prescription ▁for ▁r i v ar o x a b a n ▁500 ▁mg .
+  20 tokens: ▁The ▁nurse ▁c he c k s ▁the ▁chart ▁for ▁Mr . ▁B er g ▁in ▁room ▁1 2 .
+  37 tokens: ▁ D i e ▁ K ard i ol o g i es ta tion ▁h at ▁ he u t e ▁ z w e i ▁f re i e ▁B e t t en .
+  whole test text: 3729 tokens (1.62 per word)
+
+-- d10_sentencepiece finished in 0.0 s
+
+[exit 0]

@@ -1,0 +1,8 @@
+date_utc: 2026-11-25T16:04:39Z
+uv: uv 0.9.7 (0adb44480 2025-10-30)
+python: 3.13.9
+tiktoken: 0.14.0
+tokenizers: 0.23.3
+sentencepiece: 0.2.3
+jinja2: 3.1.6
+pytest: 9.2.0

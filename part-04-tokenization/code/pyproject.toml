@@ -1,0 +1,23 @@
+[project]
+name = "tokenizer-lab"
+version = "0.1.0"
+description = "Lesson 4: tokenization - byte-pair encoding from scratch, real tokenizers (tiktoken, Hugging Face, SentencePiece), tokens and money, and tokenizer quirks"
+requires-python = ">=3.12"
+dependencies = [
+    "tiktoken>=0.9",           # OpenAI's tokenizer library (byte-level BPE encodings)
+    "tokenizers>=0.21",        # Hugging Face tokenizers: BPE, WordPiece and Unigram models
+    "sentencepiece>=0.2",      # SentencePiece: trains and runs a Unigram model on raw text
+    "jinja2>=3.1",             # renders the chat template that a model publishes
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",               # test runner
+]
+
+[tool.uv]
+package = false               # an application, not a library: run it from this folder
+
+[tool.pytest.ini_options]
+pythonpath = ["."]            # lets the tests import the tokenizer_lab package from this folder
+testpaths = ["tests"]

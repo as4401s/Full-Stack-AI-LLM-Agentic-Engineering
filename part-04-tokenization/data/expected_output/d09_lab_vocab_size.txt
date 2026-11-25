@@ -1,0 +1,8 @@
+vocabulary  merges  train tokens/word  test tokens/word  bytes per token  rivaroxaban  dapagliflozin
+       260       4               5.29              5.34             1.08           12             14
+       300      44               3.60              3.62             1.60           10             12
+       400     144               2.16              2.21             2.61           10             11
+       512     256               1.77              1.80             3.20           10             11
+       695     439               1.44              1.49             3.87           10             11
+
+small extra gains: going from 512 to 695 pieces saves 0.31 tokens per word, while going from 260 to 300 saved 1.72

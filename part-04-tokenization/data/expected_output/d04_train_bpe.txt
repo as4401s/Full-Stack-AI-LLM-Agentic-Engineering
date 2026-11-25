@@ -1,0 +1,39 @@
+chunks of one line (a leading space stays with its word):
+  ['Room', ' 26', ':', ' levothyroxine', ' 5', ' mg', ' twice', ' daily', ' from', ' 202', '6', '-', '09', '-', '18', '.']
+
+trained: 256 merges, vocabulary of 512 pieces (ids 0-255 are bytes; _ marks a space)
+the first 15 merges (id: left + right = new piece):
+  256: '_' + 'f' = '_f'
+  257: 'h' + 'e' = 'he'
+  258: '_' + 't' = '_t'
+  259: 'o' + 'r' = 'or'
+  260: '_' + 'p' = '_p'
+  261: '_t' + 'he' = '_the'
+  262: 'i' + 's' = 'is'
+  263: 'o' + 'n' = 'on'
+  264: '_' + 'a' = '_a'
+  265: 'i' + 'n' = 'in'
+  266: 'e' + 'd' = 'ed'
+  267: '_' + '2' = '_2'
+  268: 'o' + 'm' = 'om'
+  269: '_f' + 'or' = '_for'
+  270: 'a' + 'r' = 'ar'
+
+some later merges: '_in' 'at' '_3' 'olo' 'olog' 'ology' '_4' '00' '_s' 'ur' 'iology' 'ad'
+
+a word the training text never mentions, cut with the pieces it learned:
+  ' physiology':  p | h | y | s | iology
+
+The nurse checks the chart for Mr. Berg in room 12.
+  pieces: The |  nurse |  c | he | c | k | s |  the |  chart |  for |  Mr | . |  Berg |  in |  room |  1 | 2 | .
+  ids   : [271, 419, 272, 257, 99, 107, 115, 261, 459, 269, 355, 46, 491, 356, 338, 290, 50, 46]
+  11 words -> 18 tokens;  decode gives the text back: True
+
+The pharmacist filled the prescription for rivaroxaban 500 mg.
+  pieces: The |  pharmacist |  filled |  the |  prescription |  for |  r | i | v | ar | o | x | a | b | a | n |  500 |  mg | .
+  ids   : [271, 308, 339, 261, 318, 269, 291, 105, 118, 270, 111, 120, 97, 98, 97, 110, 463, 287, 46]
+  9 words -> 19 tokens;  decode gives the text back: True
+
+whole test text: 2308 words -> 4158 tokens (1.80 per word), round trip exact: True
+  never-seen text 'Größe 😀 €': 16 tokens, round trip exact: True
+  never-seen text 'Die Untersuchungen zeigten keinen Herzinfarkt.': 36 tokens, round trip exact: True

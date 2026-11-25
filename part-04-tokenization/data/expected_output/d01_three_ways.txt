@@ -1,0 +1,30 @@
+training text: 23239 words, 132586 letters; test text: 2308 words, 13313 letters
+
+one word, three ways:
+  letters : p a r a c e t a m o l   (11 tokens)
+  one word: paracetamol   (1 token if the word is in the list, else 'unknown')
+  pieces  :  p ar a c e tamol   (6 tokens)
+
+the same word list on a word we never trained on:
+  letters : r i v a r o x a b a n   (11 tokens)
+  one word: rivaroxaban   -> unknown (not in the list)
+  pieces  :  r i v ar o x a b a n   (10 tokens)
+
+the trade-off on the test text (2308 words):
+  way                        vocabulary  tokens per word  unknown words
+  letters                            52             5.77              0
+  whole words (top 100)             100             1.00            254
+  whole words (top 508)             508             1.00             19
+  pieces (vocabulary 300)           300             3.62              0
+  pieces (vocabulary 400)           400             2.21              0
+  pieces (vocabulary 512)           512             1.80              0
+
+tokens per word as the vocabulary grows (pieces, learned from the training text):
+  vocabulary  256:  5.77 tokens per word
+  vocabulary  300:  3.62 tokens per word
+  vocabulary  350:  2.67 tokens per word
+  vocabulary  400:  2.21 tokens per word
+  vocabulary  450:  2.00 tokens per word
+  vocabulary  512:  1.80 tokens per word
+  vocabulary  600:  1.65 tokens per word
+  vocabulary  695:  1.49 tokens per word

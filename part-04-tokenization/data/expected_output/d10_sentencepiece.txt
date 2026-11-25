@@ -1,0 +1,12 @@
+== SentencePiece unigram, vocabulary 260
+  33 tokens: ▁T he ▁p har m ac ist ▁fill ed ▁t he ▁pre sc r ip ti on ▁for ▁ r i va ro x a b a n ▁50 0 ▁m g .
+  27 tokens: ▁T he ▁n ur se ▁c he c k s ▁t he ▁c har t ▁for ▁M r . ▁Berg ▁ in ▁ ro om ▁12 .
+  40 tokens: ▁ D i e ▁ K ard i olo g i e s t at i on ▁ ha t ▁ he u t e ▁ z w e i ▁fr e i e ▁ B et t en .
+  whole test text: 6063 tokens (2.63 per word)
+
+== SentencePiece bpe, vocabulary 300
+  19 tokens: ▁The ▁pharmacist ▁filled ▁the ▁prescription ▁for ▁r i v ar o x a b a n ▁500 ▁mg .
+  20 tokens: ▁The ▁nurse ▁c he c k s ▁the ▁chart ▁for ▁Mr . ▁B er g ▁in ▁room ▁1 2 .
+  37 tokens: ▁ D i e ▁ K ard i ol o g i es ta tion ▁h at ▁ he u t e ▁ z w e i ▁f re i e ▁B e t t en .
+  whole test text: 3729 tokens (1.62 per word)
+

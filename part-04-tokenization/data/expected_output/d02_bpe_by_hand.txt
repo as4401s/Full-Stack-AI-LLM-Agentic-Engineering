@@ -1,0 +1,53 @@
+the corpus (word: how often it occurs): {'charted': 7, 'dosed': 6, 'ward': 8, 'checked': 5}
+
+start: every word is a row of single letters
+  c h a r t e d    x 7
+  d o s e d        x 6
+  w a r d          x 8
+  c h e c k e d    x 5
+
+merge 1: the most frequent pair is e + d  (count 18)
+  top pairs: e+d=18, a+r=15, c+h=12, w+a=8, r+d=8
+  c h a r t ed     x 7
+  d o s ed         x 6
+  w a r d          x 8
+  c h e c k ed     x 5
+
+merge 2: the most frequent pair is a + r  (count 15)
+  top pairs: a+r=15, c+h=12, w+a=8, r+d=8, h+a=7
+  c h ar t ed      x 7
+  d o s ed         x 6
+  w ar d           x 8
+  c h e c k ed     x 5
+
+merge 3: the most frequent pair is c + h  (count 12)
+  top pairs: c+h=12, w+ar=8, ar+d=8, h+ar=7, ar+t=7
+  ch ar t ed       x 7
+  d o s ed         x 6
+  w ar d           x 8
+  ch e c k ed      x 5
+
+merge 4: the most frequent pair is w + ar  (count 8)
+  top pairs: w+ar=8, ar+d=8, ch+ar=7, ar+t=7, t+ed=7
+  ch ar t ed       x 7
+  d o s ed         x 6
+  war d            x 8
+  ch e c k ed      x 5
+
+merge 5: the most frequent pair is war + d  (count 8)
+  top pairs: war+d=8, ch+ar=7, ar+t=7, t+ed=7, d+o=6
+  ch ar t ed       x 7
+  d o s ed         x 6
+  ward             x 8
+  ch e c k ed      x 5
+
+the vocabulary: 16 pieces = 11 letters + 5 merges
+  a c d e h k o r s t w ed ar ch war ward
+
+the merge list, in order: ['e+d', 'a+r', 'c+h', 'w+ar', 'war+d']
+
+encode 'warded' with the same five merges: ward ed
+  decode: warded
+
+encode 'waxed' with the same five merges: w a x ed   (not in the vocabulary: ['x'])
+  decode: waxed

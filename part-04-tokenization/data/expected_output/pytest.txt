@@ -1,0 +1,32 @@
+$ uv run pytest -v --no-header -p no:cacheprovider -p no:warnings
+============================= test session starts ==============================
+collecting ... collected 25 items
+
+tests/test_bpe.py::test_pretokenize_keeps_leading_spaces_and_cuts_digits_in_threes PASSED [  4%]
+tests/test_bpe.py::test_vocabulary_starts_with_256_bytes_and_grows_by_one_per_merge PASSED [  8%]
+tests/test_bpe.py::test_round_trip_is_exact_for_any_text PASSED          [ 12%]
+tests/test_bpe.py::test_more_merges_mean_fewer_tokens PASSED             [ 16%]
+tests/test_bpe.py::test_training_is_deterministic PASSED                 [ 20%]
+tests/test_bpe.py::test_merges_never_cross_a_chunk_border PASSED         [ 24%]
+tests/test_bpe.py::test_special_tokens_are_one_id_and_can_be_switched_off PASSED [ 28%]
+tests/test_bpe.py::test_save_and_load PASSED                             [ 32%]
+tests/test_bpe.py::test_unseen_word_still_encodes_with_bytes_only PASSED [ 36%]
+tests/test_bpe_words.py::test_pair_counts_match_the_video PASSED         [ 40%]
+tests/test_bpe_words.py::test_five_merges PASSED                         [ 44%]
+tests/test_bpe_words.py::test_tie_goes_to_the_pair_met_first PASSED      [ 48%]
+tests/test_bpe_words.py::test_vocabulary_grows_from_eleven_letters_to_sixteen_pieces PASSED [ 52%]
+tests/test_bpe_words.py::test_new_words_and_round_trip PASSED            [ 56%]
+tests/test_bpe_words.py::test_training_stops_when_nothing_can_merge PASSED [ 60%]
+tests/test_chat_template.py::test_simple_template_has_markers_and_ends_with_the_assistant_cue PASSED [ 64%]
+tests/test_chat_template.py::test_published_style_template_renders_with_jinja PASSED [ 68%]
+tests/test_corpus.py::test_sizes PASSED                                  [ 72%]
+tests/test_corpus.py::test_new_drug_names_appear_only_in_the_test_text PASSED [ 76%]
+tests/test_corpus.py::test_letters_have_three_versions PASSED            [ 80%]
+tests/test_real_tokenizers.py::test_tiktoken_round_trip[cl100k_base] PASSED [ 84%]
+tests/test_real_tokenizers.py::test_tiktoken_round_trip[o200k_base] PASSED [ 88%]
+tests/test_real_tokenizers.py::test_leading_space_changes_the_token PASSED [ 92%]
+tests/test_real_tokenizers.py::test_special_token_is_refused_in_user_text_by_default PASSED [ 96%]
+tests/test_worked_examples.py::test_worked_examples_print_the_video_numbers PASSED [100%]
+
+============================== 25 passed in 0.34s ==============================
+[exit 0]

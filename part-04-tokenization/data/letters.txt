@@ -1,0 +1,15 @@
+### ENGLISH
+Discharge letter. Mr. Anders Berg, born 12 May 1961, was admitted to the cardiology ward on 3 March 2026 with chest pain. The tests showed no heart attack. He received aspirin 100 mg once daily and metoprolol 50 mg twice daily. His blood pressure improved after two days. He may go home today. Please book a follow-up visit with the family doctor in two weeks, and call the clinic if the pain returns.
+### GERMAN
+Entlassungsbrief. Herr Anders Berg, geboren am 12. Mai 1961, wurde am 3. März 2026 wegen Brustschmerzen auf der Kardiologiestation aufgenommen. Die Untersuchungen zeigten keinen Herzinfarkt. Er erhielt einmal täglich Aspirin 100 mg und zweimal täglich Metoprolol 50 mg. Sein Blutdruck verbesserte sich nach zwei Tagen. Er darf heute nach Hause. Bitte vereinbaren Sie in zwei Wochen einen Kontrolltermin beim Hausarzt und rufen Sie die Klinik an, wenn die Schmerzen wiederkehren.
+### PYTHON
+def discharge_letter(patient):
+    """Write the discharge letter for one patient."""
+    medicines = [("aspirin", 100, 1), ("metoprolol", 50, 2)]
+    lines = [f"Discharge letter. {patient.name}, born {patient.born}, was admitted on {patient.admitted}."]
+    for name, mg, times in medicines:
+        lines.append(f"{name} {mg} mg, {times} times daily")
+    if patient.blood_pressure_improved:
+        lines.append("Blood pressure improved after two days. May go home today.")
+    lines.append("Book a follow-up visit with the family doctor in two weeks.")
+    return "\n".join(lines)

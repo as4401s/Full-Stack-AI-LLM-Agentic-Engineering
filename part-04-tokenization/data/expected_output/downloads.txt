@@ -1,0 +1,7 @@
+tokenizer files used (source, file, bytes, sha256):
+huggingface.co/bert-base-uncased  tokenizer.json  466062  ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98
+huggingface.co/gpt2  tokenizer.json  1355256  8414cab924d8b9b33013f0d221c5862f365ee9be39c5c2bfae8a5a9e970478a6
+huggingface.co/Qwen/Qwen2.5-0.5B-Instruct  tokenizer.json  7031645  c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539
+huggingface.co/t5-small  tokenizer.json  1389353  d2acde0d8d71dd30a711834b07781b9c89feaac33fd332f60507699282740066
+openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken  1681126  223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7
+openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken  3613922  446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d

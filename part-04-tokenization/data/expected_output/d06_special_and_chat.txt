@@ -1,0 +1,36 @@
+1. a special token in our own tokenizer
+  'Room 12.<|end|>' -> [335, 290, 50, 46, 512]   (the last id, 512, is the special token)
+  the same text with special tokens switched off -> 10 ordinary tokens: Room | _1 | 2 | . | < | | | en | d | | | >
+  our own tiny chat template:
+    <|start|>system
+    You are CareDesk, an assistant for the operations team of a fictional hospital.<|end|>
+    <|start|>user
+    Which room is Mr. Berg in?<|end|>
+    <|start|>assistant
+    Mr. Berg is in room 12.<|end|>
+    <|start|>assistant
+
+2. the end-of-text token in OpenAI's encodings
+  cl100k_base: '<|endoftext|>' with special tokens allowed -> [100257]
+  cl100k_base: by default, user text that contains it is refused: Encountered text corresponding to disallowed special token '<|endoftex...
+  cl100k_base: with special tokens switched off it is cut into ordinary pieces -> 7 ids [27, 91, 8862, 728, 428, 91, 29]
+  o200k_base: '<|endoftext|>' with special tokens allowed -> [199999]
+  o200k_base: by default, user text that contains it is refused: Encountered text corresponding to disallowed special token '<|endoftex...
+  o200k_base: with special tokens switched off it is cut into ordinary pieces -> 7 ids [27, 91, 419, 1440, 919, 91, 29]
+
+3. a chat rendered through a published chat template (Qwen2.5)
+raw text the model reads:
+  | <|im_start|>system
+  | You are CareDesk, an assistant for the operations team of a fictional hospital.<|im_end|>
+  | <|im_start|>user
+  | Which room is Mr. Berg in?<|im_end|>
+  | <|im_start|>assistant
+  | Mr. Berg is in room 12.<|im_end|>
+  | <|im_start|>user
+  | Please book a follow-up visit.<|im_end|>
+  | <|im_start|>assistant
+
+299 characters -> 64 tokens
+special tokens in this chat (each one token): [('<|im_start|>', 151644), ('<|im_end|>', 151645)]
+first 20 tokens: <|im_start|> | system | Ċ | You | Ġare | ĠCare | Desk | , | Ġan | Ġassistant | Ġfor | Ġthe | Ġoperations | Ġteam | Ġof | Ġa | Ġfictional | Ġhospital | . | <|im_end|>
+first 20 ids   : [151644, 8948, 198, 2610, 525, 10627, 69521, 11, 458, 17847, 369, 279, 7525, 2083, 315, 264, 43582, 8777, 13, 151645]

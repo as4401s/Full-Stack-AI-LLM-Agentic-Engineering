@@ -1,0 +1,47 @@
+1. the same letter, three ways (English, German, Python)
+  tokenizer                   English   German   Python   German / English
+  our BPE (512)                   213      349      398               1.64
+  gpt2                             92      180      195               1.96
+  cl100k_base                      99      142      148               1.43
+  o200k_base                       98      116      148               1.18
+  bert-base-uncased                93      169      174               1.82
+  t5-small                         99      121      187               1.22
+  (characters: English 401, German 478, Python 583; words: English 73, German 70)
+
+2. German compounds and their English counterparts
+  cl100k_base:
+    Kardiologiestation    5 tokens: _K | ardi | olog | iest | ation
+    cardiology ward       3 tokens: _card | iology | _ward
+    Kontrolltermin        3 tokens: _Kont | roll | termin
+    follow-up visit       3 tokens: _follow | -up | _visit
+    Blutdruck             4 tokens: _Bl | ut | dr | uck
+    blood pressure        2 tokens: _blood | _pressure
+    Herzinfarkt           4 tokens: _Herz | inf | ark | t
+    heart attack          2 tokens: _heart | _attack
+    Entlassungsbrief      4 tokens: _Ent | lass | ungs | brief
+    discharge letter      2 tokens: _discharge | _letter
+  o200k_base:
+    Kardiologiestation    5 tokens: _K | ardi | olog | iest | ation
+    cardiology ward       3 tokens: _cardi | ology | _ward
+    Kontrolltermin        2 tokens: _Kontroll | termin
+    follow-up visit       3 tokens: _follow | -up | _visit
+    Blutdruck             2 tokens: _Blut | druck
+    blood pressure        2 tokens: _blood | _pressure
+    Herzinfarkt           3 tokens: _Herz | inf | arkt
+    heart attack          2 tokens: _heart | _attack
+    Entlassungsbrief      4 tokens: _Ent | lass | ungs | brief
+    discharge letter      2 tokens: _discharge | _letter
+
+3. money, with an EXAMPLE price of $2.00 per million input tokens and $8.00 per million output tokens
+  English letter: 98 prompt tokens x 10,000 requests = 980,000 tokens in -> $1.96; 300 reply tokens x 10,000 = $24.00; total $25.96 per day
+  German letter: 116 prompt tokens x 10,000 requests = 1,160,000 tokens in -> $2.32; 300 reply tokens x 10,000 = $24.00; total $26.32 per day
+
+4. a context window is a shared budget (counted with o200k_base; the window sizes are EXAMPLES)
+  system prompt                61 tokens
+  chat so far                  80 tokens
+  the question                 18 tokens
+  reserved for the reply     1000 tokens
+  fixed parts together       1159 tokens
+  one retrieved note costs about 19.1 tokens (average of 40 notes)
+  window of   8,000: 6,841 tokens left for notes -> about 357 notes fit
+  window of 128,000: 126,841 tokens left for notes -> about 6,632 notes fit
