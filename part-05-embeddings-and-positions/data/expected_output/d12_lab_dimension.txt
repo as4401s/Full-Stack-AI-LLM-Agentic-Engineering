@@ -1,0 +1,8 @@
+numbers per word  table entries  train loss  test loss  same system  same system, 2-D  same kind of word
+               2            178       3.656      3.665           7%                7%                57%
+               4            356       3.570      3.580          17%                7%                92%
+               8            712       3.438      3.448         100%              100%                70%
+              16          1,424       3.374      3.385          87%               98%                83%
+              32          2,848       3.368      3.380          83%               70%                87%
+
+random guessing costs ln(89) = 4.489; choosing a neighbour at random would match the body system about 1 time in 6 (17%)

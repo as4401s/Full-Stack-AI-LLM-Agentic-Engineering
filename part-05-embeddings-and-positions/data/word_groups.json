@@ -1,0 +1,242 @@
+{
+ "alendronate": {
+  "group": "bone",
+  "role": "drugs"
+ },
+ "angina": {
+  "group": "heart",
+  "role": "conditions"
+ },
+ "arrhythmia": {
+  "group": "heart",
+  "role": "conditions"
+ },
+ "arthritis": {
+  "group": "bone",
+  "role": "conditions"
+ },
+ "asthma": {
+  "group": "lung",
+  "role": "conditions"
+ },
+ "bilirubin": {
+  "group": "liver",
+  "role": "tests"
+ },
+ "bisoprolol": {
+  "group": "heart",
+  "role": "drugs"
+ },
+ "bone": {
+  "group": "bone",
+  "role": "organ"
+ },
+ "brain": {
+  "group": "brain",
+  "role": "organ"
+ },
+ "bronchitis": {
+  "group": "lung",
+  "role": "conditions"
+ },
+ "budesonide": {
+  "group": "lung",
+  "role": "drugs"
+ },
+ "cardiologist": {
+  "group": "heart",
+  "role": "staff"
+ },
+ "cardiology": {
+  "group": "heart",
+  "role": "clinic"
+ },
+ "cirrhosis": {
+  "group": "liver",
+  "role": "conditions"
+ },
+ "creatinine": {
+  "group": "kidney",
+  "role": "tests"
+ },
+ "cystitis": {
+  "group": "kidney",
+  "role": "conditions"
+ },
+ "densitometry": {
+  "group": "bone",
+  "role": "tests"
+ },
+ "dexa": {
+  "group": "bone",
+  "role": "tests"
+ },
+ "ecg": {
+  "group": "heart",
+  "role": "tests"
+ },
+ "eeg": {
+  "group": "brain",
+  "role": "tests"
+ },
+ "epilepsy": {
+  "group": "brain",
+  "role": "conditions"
+ },
+ "fibroscan": {
+  "group": "liver",
+  "role": "tests"
+ },
+ "fracture": {
+  "group": "bone",
+  "role": "conditions"
+ },
+ "furosemide": {
+  "group": "kidney",
+  "role": "drugs"
+ },
+ "heart": {
+  "group": "heart",
+  "role": "organ"
+ },
+ "hepatitis": {
+  "group": "liver",
+  "role": "conditions"
+ },
+ "hepatologist": {
+  "group": "liver",
+  "role": "staff"
+ },
+ "hepatology": {
+  "group": "liver",
+  "role": "clinic"
+ },
+ "infarction": {
+  "group": "heart",
+  "role": "conditions"
+ },
+ "jaundice": {
+  "group": "liver",
+  "role": "conditions"
+ },
+ "kidney": {
+  "group": "kidney",
+  "role": "organ"
+ },
+ "lactulose": {
+  "group": "liver",
+  "role": "drugs"
+ },
+ "levetiracetam": {
+  "group": "brain",
+  "role": "drugs"
+ },
+ "liver": {
+  "group": "liver",
+  "role": "organ"
+ },
+ "lung": {
+  "group": "lung",
+  "role": "organ"
+ },
+ "migraine": {
+  "group": "brain",
+  "role": "conditions"
+ },
+ "mri": {
+  "group": "brain",
+  "role": "tests"
+ },
+ "naproxen": {
+  "group": "bone",
+  "role": "drugs"
+ },
+ "nephritis": {
+  "group": "kidney",
+  "role": "conditions"
+ },
+ "nephrologist": {
+  "group": "kidney",
+  "role": "staff"
+ },
+ "nephrology": {
+  "group": "kidney",
+  "role": "clinic"
+ },
+ "neurologist": {
+  "group": "brain",
+  "role": "staff"
+ },
+ "neurology": {
+  "group": "brain",
+  "role": "clinic"
+ },
+ "orthopaedics": {
+  "group": "bone",
+  "role": "clinic"
+ },
+ "orthopaedist": {
+  "group": "bone",
+  "role": "staff"
+ },
+ "osteoporosis": {
+  "group": "bone",
+  "role": "conditions"
+ },
+ "oximetry": {
+  "group": "lung",
+  "role": "tests"
+ },
+ "pneumonia": {
+  "group": "lung",
+  "role": "conditions"
+ },
+ "pulmonologist": {
+  "group": "lung",
+  "role": "staff"
+ },
+ "pulmonology": {
+  "group": "lung",
+  "role": "clinic"
+ },
+ "ramipril": {
+  "group": "heart",
+  "role": "drugs"
+ },
+ "salbutamol": {
+  "group": "lung",
+  "role": "drugs"
+ },
+ "sevelamer": {
+  "group": "kidney",
+  "role": "drugs"
+ },
+ "spirometry": {
+  "group": "lung",
+  "role": "tests"
+ },
+ "stroke": {
+  "group": "brain",
+  "role": "conditions"
+ },
+ "sumatriptan": {
+  "group": "brain",
+  "role": "drugs"
+ },
+ "troponin": {
+  "group": "heart",
+  "role": "tests"
+ },
+ "uraemia": {
+  "group": "kidney",
+  "role": "conditions"
+ },
+ "urinalysis": {
+  "group": "kidney",
+  "role": "tests"
+ },
+ "ursodiol": {
+  "group": "liver",
+  "role": "drugs"
+ }
+}

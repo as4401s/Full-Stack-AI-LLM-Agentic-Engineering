@@ -1,0 +1,25 @@
+[project]
+name = "embedding-lab"
+version = "0.1.0"
+description = "Lesson 5: embeddings and positions - the table lookup, meaning as place, dot product and cosine, sinusoidal / learned / rotary positions, token versus sentence vectors"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",              # arrays, dot products, the rotation maths, PCA through the singular value decomposition
+    "torch>=2.5",              # nn.Embedding and the training loop of our own word map
+    "transformers>=4.46",      # runs the small public model all-MiniLM-L6-v2
+    "huggingface_hub>=0.26",   # downloads model files and config.json files
+    "gensim>=4.3",             # reads the GloVe word vectors for the king - man + woman example
+    "matplotlib>=3.9",         # draws the PNG of the word map (optional: the demos carry on without it)
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",               # test runner
+]
+
+[tool.uv]
+package = false               # an application, not a library: run it from this folder
+
+[tool.pytest.ini_options]
+pythonpath = ["."]            # lets the tests import the embedding_lab package from this folder
+testpaths = ["tests"]

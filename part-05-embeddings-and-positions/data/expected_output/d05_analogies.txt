@@ -1,0 +1,16 @@
+our own map: specialist(A) - organ(A) + organ(B) should give specialist(B)
+  orthopaedist - bone + brain -> neurologist (0.98); expected neurologist
+  orthopaedist - bone + heart -> cardiologist (0.97); expected cardiologist
+  orthopaedist - bone + kidney -> urinalysis (0.97); expected nephrologist
+  all pairs: 14 of 30 correct (the sentences are regular and made by templates)
+
+GloVe: 400,000 words x 50 numbers, learned from Wikipedia and a news archive
+  king - man + woman -> queen 0.85, throne 0.77, prince 0.76   (a clean answer would be queen)
+  paris - france + italy -> rome 0.85, milan 0.78, turin 0.77   (a clean answer would be rome)
+  walking - walked + swam -> swim 0.81, swims 0.79, swimming 0.74   (a clean answer would be swimming)
+  doctor - man + woman -> nurse 0.84, child 0.77, pregnant 0.76   (a clean answer would be doctor)
+
+what happens when the input words are not skipped (king - man + woman):
+  king     0.89
+  queen    0.86
+  daughter 0.77

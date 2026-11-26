@@ -1,0 +1,10 @@
+output vector for 'bites' (first 4 of 8 numbers)
+  word vectors only
+    in 'dog bites man': [0.248, 0.245, -0.827, -0.197]
+    in 'man bites dog': [0.248, 0.245, -0.827, -0.197]   identical: True
+  word vectors + position codes
+    in 'dog bites man': [-0.856, 1.76, 0.048, 1.043]
+    in 'man bites dog': [-1.066, 0.973, 0.639, 1.067]   identical: False
+
+without position codes the output for 'dog' is the same whether the dog comes first or last: True
+largest difference with position codes for 'dog': 1.576

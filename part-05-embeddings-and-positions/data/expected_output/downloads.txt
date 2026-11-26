@@ -1,0 +1,11 @@
+model and vector files used (source, file, bytes, sha256):
+huggingface.co/fse/glove-wiki-gigaword-50  glove-wiki-gigaword-50.model  21494764  d64693ba82109842fe8c9b1078970fae99de992e374d1ee9eba141b121e605a6
+huggingface.co/fse/glove-wiki-gigaword-50  glove-wiki-gigaword-50.model.vectors.npy  80000128  5cee3016e3af5c1a3675d6b1f6d467b0fc7a0ba3dccf745aded1984ccce3ad74
+huggingface.co/openai-community/gpt2  config.json  665  0daed7749b4f02b8f76240d5444551d7b08712dab4d0adb8239c56ba823bb7b4
+huggingface.co/Qwen/Qwen2.5-0.5B-Instruct  config.json  659  18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45
+huggingface.co/sentence-transformers/all-MiniLM-L6-v2  config.json  612  953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41
+huggingface.co/sentence-transformers/all-MiniLM-L6-v2  model.safetensors  90868376  53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db
+huggingface.co/sentence-transformers/all-MiniLM-L6-v2  special_tokens_map.json  112  303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3
+huggingface.co/sentence-transformers/all-MiniLM-L6-v2  tokenizer_config.json  350  acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b
+huggingface.co/sentence-transformers/all-MiniLM-L6-v2  tokenizer.json  466247  be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037
+huggingface.co/sentence-transformers/all-MiniLM-L6-v2  vocab.txt  231508  07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3

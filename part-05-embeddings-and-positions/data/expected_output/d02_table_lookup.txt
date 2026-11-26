@@ -1,0 +1,34 @@
+torch 2.15.0
+
+a table of 6 tokens x 3 numbers = 18 numbers
+  row 0 ('the'): [0.1, 0.0, 0.2]
+  row 1 ('patient'): [0.9, 0.3, 0.1]
+  row 2 ('has'): [0.2, 0.1, 0.0]
+  row 3 ('kidney'): [0.2, 0.8, 0.7]
+  row 4 ('failure'): [0.1, 0.6, 0.9]
+  row 5 ('.'): [0.0, 0.0, 0.1]
+
+lookup for ids [0, 1, 2, 3, 4] gives a block of shape (5, 3):
+  id 0 -> [0.1, 0.0, 0.2]
+  id 1 -> [0.9, 0.3, 0.1]
+  id 2 -> [0.2, 0.1, 0.0]
+  id 3 -> [0.2, 0.8, 0.7]
+  id 4 -> [0.1, 0.6, 0.9]
+
+one-hot vector for id 3: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0]
+one-hot x table        : [0.2, 0.8, 0.7]
+table(3)               : [0.2, 0.8, 0.7]   (same numbers, no multiplication needed)
+
+learning signal (gradient) after one lookup of id 3:
+  row 0 ('the'): [0.0, 0.0, 0.0]
+  row 1 ('patient'): [0.0, 0.0, 0.0]
+  row 2 ('has'): [0.0, 0.0, 0.0]
+  row 3 ('kidney'): [-1.6, 1.6, 1.4]
+  row 4 ('failure'): [0.0, 0.0, 0.0]
+  row 5 ('.'): [0.0, 0.0, 0.0]
+
+how many numbers real tables hold (vocabulary x numbers per token):
+  our tiny table                   6 x 3    =            18 numbers
+  MiniLM token table          30,522 x 384  =    11,720,448 numbers
+  GPT-2 token table           50,257 x 768  =    38,597,376 numbers
+  Qwen2.5-0.5B token table   151,936 x 896  =   136,134,656 numbers

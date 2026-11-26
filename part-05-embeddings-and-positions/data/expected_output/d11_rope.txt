@@ -1,0 +1,23 @@
+one rotating pair: the first two numbers of the query, turned by position * 1 radian (57.3 degrees per position)
+  position 0: ( 0.001,  0.299)   angle    0.0 degrees
+  position 1: (-0.251,  0.162)   angle   57.3 degrees
+  position 2: (-0.272, -0.123)   angle  114.6 degrees
+  position 3: (-0.043, -0.296)   angle  171.9 degrees
+  position 4: ( 0.225, -0.196)   angle  229.2 degrees
+  position 5: ( 0.287,  0.084)   angle  286.5 degrees
+
+length of the query: 1.986816; largest change in length over 286 positions: 2.2e-16
+
+attention score numerator (dot of rotated query and rotated key) for several positions:
+  query at    5, key at    2 (distance 3):   1.69336
+  query at  105, key at  102 (distance 3):   1.69336
+  query at 1005, key at 1002 (distance 3):   1.69336
+  query at    7, key at    3 (distance 4):   1.55178
+  query at  107, key at  103 (distance 4):   1.55178
+largest change when both positions move together by the same amount: 8.9e-16
+
+stretching a window trained for 4096 tokens to 8192 tokens:
+  position interpolation: positions 100, 4096, 6000, 8191 become [50.0, 2048.0, 3000.0, 4095.5]  (all inside 0..4096)
+  NTK-style base: 10000 -> 20,452; slowest pair turns 1.33e-04 -> 6.67e-05 radians per position, fastest 1.00 -> 1.00
+
+Qwen2.5-0.5B-Instruct: rope_theta 1,000,000, max_position_embeddings 32,768, 14 heads of 64 numbers each, so 32 turning pairs per head

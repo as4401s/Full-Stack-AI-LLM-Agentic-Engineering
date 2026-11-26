@@ -1,0 +1,21 @@
+query: "kidney failure"
+
+keyword search (a sentence must share a whole word with the query):
+  [3] shares ['failure', 'kidney']: Chronic kidney failure requires regular dialysis sessions.
+  [5] shares ['failure']: Heart failure symptoms include swollen ankles and tiredness.
+  -> 2 of 8 sentences found; missed: [0, 1, 2] and more
+
+each sentence became 384 numbers, each vector has length 1.000
+
+embedding search (cosine between the query vector and each sentence vector):
+  1. cosine 0.66  [3] Chronic kidney failure requires regular dialysis sessions.
+  2. cosine 0.65  [2] Creatinine rose again, which suggests the kidneys are failing.
+  3. cosine 0.59  [0] Renal insufficiency was noted at the follow-up visit.
+  4. cosine 0.56  [7] Dialysis replaces the work of the kidneys when they stop working.
+  5. cosine 0.48  [5] Heart failure symptoms include swollen ankles and tiredness.
+  6. cosine 0.26  [1] The patient reports pain in the left knee after a fall.
+  7. cosine 0.24  [6] A broken wrist needs a cast for six weeks.
+  8. cosine 0.07  [4] The flight to Berlin leaves at nine in the morning.
+
+cosine("kidney failure", "renal insufficiency") = 0.70
+cosine("kidney failure", "knee surgery")        = 0.25

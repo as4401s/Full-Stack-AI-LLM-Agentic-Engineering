@@ -1,0 +1,21 @@
+a = [1.0, 2.0, 0.0], b = [2.0, 1.0, 0.0]
+dot(a, b)    = 1*2 + 2*1 + 0*0 = 4
+length(a) = length(b) = sqrt(5) = 2.236
+cosine(a, b) = 4 / 5 = 0.80
+cosine(a, a) = 1.00  (a vector points exactly the way it points)
+cosine(a, 2a) = 1.00  but the distance between a and 2a is 2.236 while a to b is 1.414
+cosine([1,0,0], [0,1,0]) = 0.00   cosine(a, -a) = -1.00
+
+cosine between rows of our trained table:
+  kidney       nephrologist   0.92
+  kidney       furosemide     0.97
+  kidney       nephritis      0.96
+  heart        cardiologist   0.89
+  kidney       cardiologist  -0.08
+  kidney       ramipril      -0.01
+  furosemide   ramipril       0.12
+  asthma       stroke         0.14
+
+the same table, one word against every other word of its own body system and of all the others:
+  same body system : 270 pairs, average cosine 0.97
+  different systems: 1500 pairs, average cosine 0.28

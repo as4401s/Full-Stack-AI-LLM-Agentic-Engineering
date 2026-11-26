@@ -1,0 +1,14 @@
+learned position table: 512 rows x 384 numbers (one row per position 0..511)
+the tokenizer cuts every text at 512 tokens, because no row exists for position 512
+
+cosine between the rows of two positions:
+  position  10 and  11:  0.89
+  position  10 and  12:  0.68
+  position  10 and  20:  0.38
+  position  10 and  60:  0.12
+  position  10 and 200: -0.17
+  position  10 and 400: -0.23
+
+average over all positions: neighbours 0.85, 100 apart 0.14
+
+GPT-2 learned position table: 1,024 rows x 768 numbers = 786,432 numbers (its context window is 1,024 tokens)

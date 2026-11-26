@@ -1,0 +1,19 @@
+Qwen/Qwen2.5-0.5B-Instruct: rope_theta 1,000,000, 14 heads of 64 numbers, window 32,768 tokens
+turning speeds (radians per position) of the 32 pairs: library vs rope.rope_frequencies
+  fastest pair: 1.000000 vs 1.000000; slowest pair: 1.540e-06 vs 1.540e-06
+  largest relative difference over all pairs: 7.4e-08
+
+
+rotated 8 random query vectors of 64 numbers at positions [0, 1, 2, 3, 10, 100, 1000, 20000]
+  position      0: largest difference between the library and rope.rotate = 5.5e-08
+  position      1: largest difference between the library and rope.rotate = 2.2e-07
+  position      2: largest difference between the library and rope.rotate = 1.4e-07
+  position      3: largest difference between the library and rope.rotate = 1.6e-07
+  position     10: largest difference between the library and rope.rotate = 3.0e-07
+  position    100: largest difference between the library and rope.rotate = 1.1e-06
+  position   1000: largest difference between the library and rope.rotate = 1.8e-05
+  position  20000: largest difference between the library and rope.rotate = 3.1e-04
+
+largest difference over all 512 numbers: 3.1e-04
+the two agree to better than 0.001 everywhere: True
+with the other pairing (neighbouring numbers) the largest difference would be 4.88, because the numbers are paired in another order

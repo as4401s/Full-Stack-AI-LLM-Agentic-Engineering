@@ -1,0 +1,41 @@
+$ uv run python worked_examples.py
+== 1. The table is a lookup (6 tokens x 3 numbers)
+  table size: 6 x 3 = 18 numbers
+  token id 3 is 'kidney': row 3 = [0.2, 0.8, 0.7]
+  one-hot [0,0,0,1,0,0] times the table = [0.2, 0.8, 0.7]  (the same row)
+  real sizes: 30,522 x 384 = 11,720,448   50,257 x 768 = 38,597,376
+
+== 2. Dot product and cosine of a = [1, 2, 0] and b = [2, 1, 0]
+  dot = 1*2 + 2*1 + 0*0 = 4
+  length of a = sqrt(1 + 4 + 0) = sqrt(5) = 2.236; length of b = sqrt(5) = 2.236
+  cosine = 4 / (sqrt(5) * sqrt(5)) = 4 / 5 = 0.80
+  angle = 36.9 degrees
+  a with itself: dot = 5, cosine = 5 / 5 = 1.00
+  a with 2a = [2, 4, 0]: cosine = 1.00, but the straight-line distance is 2.236 (a to b: 1.414)
+  right angle [1,0,0] and [0,1,0]: cosine = 0; opposite a and -a: cosine = -1
+
+== 3. A bag of tokens: dog = [1, 0, 2], bites = [0, 3, 1], man = [2, 1, 0]
+  'dog bites man' sum = [3, 4, 3]   'man bites dog' sum = [3, 4, 3]  (identical)
+  with position vectors added: dog at position 1 = [2, 0, 2], dog at position 3 = [1, 0, 3]  (different now)
+  man at position 3 = [2, 1, 1], man at position 1 = [3, 1, 0]
+
+== 4. Sinusoidal codes with 4 numbers per position (two turning pairs: 1 radian and 0.01 radian per position)
+  position 0: [0.0, 1.0, 0.0, 1.0]
+  position 1: [0.841, 0.54, 0.01, 1.0]
+  position 2: [0.909, -0.416, 0.02, 1.0]
+  position 3: [0.141, -0.99, 0.03, 1.0]
+  dot(position 0, position 1) = cos(1) + cos(0.01) = 1.5403   from the table: 1.5403
+  dot(position 1, position 2) = 1.5403   dot(position 2, position 3) = 1.5403  (same distance, same dot product)
+
+== 5. Rotation by 30 degrees per position: q = [2, 0], k = [1, 1]
+  q at position 3 turns 90 degrees: [0.0, 2.0]; its length stays 2.000 (before: 2.000)
+  k at position 1 turns 30 degrees: [0.366, 1.366]
+  score(q at 3, k at 1) = 2.732   distance 2
+  score(q at 5, k at 3) = 2.732   distance 2 again, same score
+  score(q at 4, k at 1) = 2.000   distance 3, a different score
+  the library function rope.rotate keeps lengths too: 5.477226 vs 5.477226
+
+== 6. Stretching a window trained for 4,096 tokens to 8,192
+  position interpolation: scale = 4096 / 8192 = 0.5; position 6000 becomes 3000; position 8191 becomes 4095.5
+  NTK-style base for 64 numbers per head and a stretch of 2: 10000 x 2^(64/62) = 20,452
+[exit 0]

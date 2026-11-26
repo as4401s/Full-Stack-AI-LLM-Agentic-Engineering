@@ -18,6 +18,7 @@ Only code lives here: no slides, animations, images or videos.
 | 2 | Deep learning refresher with PyTorch | [part-02-deep-learning-refresher](part-02-deep-learning-refresher) | Medium article: link added when published |
 | 3 | Language modelling basics | [part-03-language-modelling-basics](part-03-language-modelling-basics) | Medium article: link added when published |
 | 4 | Tokenization | [part-04-tokenization](part-04-tokenization) | Medium article: link added when published |
+| 5 | Embeddings and positions | [part-05-embeddings-and-positions](part-05-embeddings-and-positions) | Medium article: link added when published |
 
 More folders are added as each video is released.
 

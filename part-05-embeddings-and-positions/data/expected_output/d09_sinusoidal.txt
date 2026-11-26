@@ -1,0 +1,23 @@
+sinusoidal table, 8 positions x 8 numbers (pairs: sin, cos):
+  position 0:  0.000  1.000  0.000  1.000  0.000  1.000  0.000  1.000
+  position 1:  0.841  0.540  0.100  0.995  0.010  1.000  0.001  1.000
+  position 2:  0.909 -0.416  0.199  0.980  0.020  1.000  0.002  1.000
+  position 3:  0.141 -0.990  0.296  0.955  0.030  1.000  0.003  1.000
+  position 4: -0.757 -0.654  0.389  0.921  0.040  0.999  0.004  1.000
+  position 5: -0.959  0.284  0.479  0.878  0.050  0.999  0.005  1.000
+  position 6: -0.279  0.960  0.565  0.825  0.060  0.998  0.006  1.000
+  position 7:  0.657  0.754  0.644  0.765  0.070  0.998  0.007  1.000
+
+how far a pair has to travel before it repeats (wavelength = 2 pi / angle per position):
+  pair 0: 1.0000 radians per position -> repeats every 6.3 positions
+  pair 1: 0.1000 radians per position -> repeats every 62.8 positions
+  pair 2: 0.0100 radians per position -> repeats every 628.3 positions
+  pair 3: 0.0010 radians per position -> repeats every 6,283.2 positions
+
+dot product between the codes of two positions, by distance k (same for every start p):
+  k =  1: p = 0 -> 3.5353, p = 7 -> 3.5353, p = 29 -> 3.5353   spread 8.9e-16
+  k =  2: p = 0 -> 2.5637, p = 7 -> 2.5637, p = 29 -> 2.5637   spread 4.4e-16
+  k =  5: p = 0 -> 3.1600, p = 7 -> 3.1600, p = 29 -> 3.1600   spread 8.9e-16
+  k = 10: p = 0 -> 1.6962, p = 7 -> 1.6962, p = 29 -> 1.6962   spread 8.9e-16
+
+same position: dot = 4.0 (one 1 for every pair, so 4 pairs = 4)

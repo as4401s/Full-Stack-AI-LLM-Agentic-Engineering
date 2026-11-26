@@ -1,0 +1,32 @@
+torch 2.15.0
+vocabulary: 89 words, 388,972 (word, neighbour) pairs, 8 numbers per word -> a table of 712 numbers
+random guessing among 89 words costs ln(89) = 4.489 per pair
+
+loss after each epoch (average over all pairs):
+  epoch  1: 3.8396
+  epoch  2: 3.5863
+  epoch  5: 3.4695
+  epoch 10: 3.4484
+  epoch 15: 3.4434
+  epoch 20: 3.4392
+train loss 3.4377, loss on 300 unseen sentences 3.4475
+
+60 content words in 6 body systems; nearest neighbour is from the same system for 100% of them
+
+  closest to 'kidney': urinalysis 0.97, sevelamer 0.97, furosemide 0.97, creatinine 0.97
+  closest to 'heart': bisoprolol 0.97, ramipril 0.97, infarction 0.96, troponin 0.96
+  closest to 'ramipril': bisoprolol 1.00, arrhythmia 1.00, infarction 1.00, angina 1.00
+  closest to 'nephritis': uraemia 1.00, cystitis 1.00, furosemide 1.00, sevelamer 1.00
+
+on the 2-D map the nearest neighbour is from the same body system for 100% of the words
+
+PCA keeps 49% + 45% = 95% of the spread in two numbers per word
+centre of each body system on the 2-D map (x, y):
+  bone    (10 words): (  2.47,   3.03)
+  brain   (10 words): (  3.91,  -0.69)
+  heart   (10 words): (  1.46,  -3.35)
+  kidney  (10 words): ( -4.20,   0.67)
+  liver   (10 words): ( -1.24,   3.49)
+  lung    (10 words): ( -2.41,  -3.15)
+
+saved data/results/d04_map.png

@@ -1,0 +1,22 @@
+MiniLM token table: 30,522 rows x 384 numbers = 11,720,448 numbers
+MiniLM position table: 512 rows x 384 numbers = 196,608 numbers
+
+'kidney': ids [14234] -> pieces ['kidney']
+'renal': ids [25125] -> pieces ['renal']
+'insufficiency': ids [16021, 16093, 8873, 29125] -> pieces ['ins', '##uf', '##fi', '##ciency']
+'failure': ids [4945] -> pieces ['failure']
+'knee': ids [6181] -> pieces ['knee']
+'the': ids [1996] -> pieces ['the']
+
+'kidney failure' with the start and end markers: ids [101, 14234, 4945, 102] -> ['[CLS]', 'kidney', 'failure', '[SEP]']
+
+row 14234 (the token 'kidney'), first 6 of 384 numbers: [-0.078, -0.044, 0.12, -0.016, -0.095, 0.001]
+
+cosine between table rows (no context involved yet, just the lookup rows):
+  cosine(kidney, renal) = 0.75
+  cosine(kidney, knee) = 0.24
+  cosine(kidney, the) = 0.06
+
+sizes read from the models' own config.json files:
+  GPT-2: token table 50,257 x 768 = 38,597,376; learned position table 1,024 x 768 = 786,432
+  Qwen2.5-0.5B-Instruct: token table 151,936 x 896 = 136,134,656 numbers; positions: RoPE (no position table), rope_theta 1,000,000, max_position_embeddings 32,768, tied input/output table: True

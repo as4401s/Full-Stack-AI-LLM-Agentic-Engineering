@@ -1,0 +1,11 @@
+'She sat on the bank of the river.' -> tokens ['[CLS]', 'she', 'sat', 'on', 'the', 'bank', 'of', 'the', 'river', '.', '[SEP]']
+  'bank' sits at position 5; its output vector starts [0.368, 0.478, -0.928, -0.432]
+'He deposited money at the bank.' -> tokens ['[CLS]', 'he', 'deposited', 'money', 'at', 'the', 'bank', '.', '[SEP]']
+  'bank' sits at position 6; its output vector starts [0.446, 0.423, -0.604, -0.082]
+
+table row of 'bank' (id 2924) starts [0.049, 0.031, -0.07, 0.059] in both sentences: the lookup ignores the neighbours
+cosine between the two output vectors for 'bank': 0.82 (the table row would give 1.00)
+
+sentence vectors: the model's own recipe versus a plain average of table rows
+  cosine('kidney failure', 'renal insufficiency'): model sentence vectors 0.70, average of table rows 0.33
+  cosine('kidney failure', 'knee surgery'): model sentence vectors 0.25, average of table rows 0.23

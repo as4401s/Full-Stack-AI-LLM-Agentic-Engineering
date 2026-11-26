@@ -1,0 +1,284 @@
+$ uv run python run_all.py
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+query: "kidney failure"
+
+keyword search (a sentence must share a whole word with the query):
+  [3] shares ['failure', 'kidney']: Chronic kidney failure requires regular dialysis sessions.
+  [5] shares ['failure']: Heart failure symptoms include swollen ankles and tiredness.
+  -> 2 of 8 sentences found; missed: [0, 1, 2] and more
+
+each sentence became 384 numbers, each vector has length 1.000
+
+embedding search (cosine between the query vector and each sentence vector):
+  1. cosine 0.66  [3] Chronic kidney failure requires regular dialysis sessions.
+  2. cosine 0.65  [2] Creatinine rose again, which suggests the kidneys are failing.
+  3. cosine 0.59  [0] Renal insufficiency was noted at the follow-up visit.
+  4. cosine 0.56  [7] Dialysis replaces the work of the kidneys when they stop working.
+  5. cosine 0.48  [5] Heart failure symptoms include swollen ankles and tiredness.
+  6. cosine 0.26  [1] The patient reports pain in the left knee after a fall.
+  7. cosine 0.24  [6] A broken wrist needs a cast for six weeks.
+  8. cosine 0.07  [4] The flight to Berlin leaves at nine in the morning.
+
+cosine("kidney failure", "renal insufficiency") = 0.70
+cosine("kidney failure", "knee surgery")        = 0.25
+-- d01_search_hook finished in 25.3 s
+
+torch 2.15.0
+
+a table of 6 tokens x 3 numbers = 18 numbers
+  row 0 ('the'): [0.1, 0.0, 0.2]
+  row 1 ('patient'): [0.9, 0.3, 0.1]
+  row 2 ('has'): [0.2, 0.1, 0.0]
+  row 3 ('kidney'): [0.2, 0.8, 0.7]
+  row 4 ('failure'): [0.1, 0.6, 0.9]
+  row 5 ('.'): [0.0, 0.0, 0.1]
+
+lookup for ids [0, 1, 2, 3, 4] gives a block of shape (5, 3):
+  id 0 -> [0.1, 0.0, 0.2]
+  id 1 -> [0.9, 0.3, 0.1]
+  id 2 -> [0.2, 0.1, 0.0]
+  id 3 -> [0.2, 0.8, 0.7]
+  id 4 -> [0.1, 0.6, 0.9]
+
+one-hot vector for id 3: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0]
+one-hot x table        : [0.2, 0.8, 0.7]
+table(3)               : [0.2, 0.8, 0.7]   (same numbers, no multiplication needed)
+
+learning signal (gradient) after one lookup of id 3:
+  row 0 ('the'): [0.0, 0.0, 0.0]
+  row 1 ('patient'): [0.0, 0.0, 0.0]
+  row 2 ('has'): [0.0, 0.0, 0.0]
+  row 3 ('kidney'): [-1.6, 1.6, 1.4]
+  row 4 ('failure'): [0.0, 0.0, 0.0]
+  row 5 ('.'): [0.0, 0.0, 0.0]
+
+how many numbers real tables hold (vocabulary x numbers per token):
+  our tiny table                   6 x 3    =            18 numbers
+  MiniLM token table          30,522 x 384  =    11,720,448 numbers
+  GPT-2 token table           50,257 x 768  =    38,597,376 numbers
+  Qwen2.5-0.5B token table   151,936 x 896  =   136,134,656 numbers
+-- d02_table_lookup finished in 0.0 s
+
+MiniLM token table: 30,522 rows x 384 numbers = 11,720,448 numbers
+MiniLM position table: 512 rows x 384 numbers = 196,608 numbers
+
+'kidney': ids [14234] -> pieces ['kidney']
+'renal': ids [25125] -> pieces ['renal']
+'insufficiency': ids [16021, 16093, 8873, 29125] -> pieces ['ins', '##uf', '##fi', '##ciency']
+'failure': ids [4945] -> pieces ['failure']
+'knee': ids [6181] -> pieces ['knee']
+'the': ids [1996] -> pieces ['the']
+
+'kidney failure' with the start and end markers: ids [101, 14234, 4945, 102] -> ['[CLS]', 'kidney', 'failure', '[SEP]']
+
+row 14234 (the token 'kidney'), first 6 of 384 numbers: [-0.078, -0.044, 0.12, -0.016, -0.095, 0.001]
+
+cosine between table rows (no context involved yet, just the lookup rows):
+  cosine(kidney, renal) = 0.75
+  cosine(kidney, knee) = 0.24
+  cosine(kidney, the) = 0.06
+
+sizes read from the models' own config.json files:
+  GPT-2: token table 50,257 x 768 = 38,597,376; learned position table 1,024 x 768 = 786,432
+  Qwen2.5-0.5B-Instruct: token table 151,936 x 896 = 136,134,656 numbers; positions: RoPE (no position table), rope_theta 1,000,000, max_position_embeddings 32,768, tied input/output table: True
+-- d03_real_tables finished in 1.1 s
+
+Matplotlib is building the font cache; this may take a moment.
+torch 2.15.0
+vocabulary: 89 words, 388,972 (word, neighbour) pairs, 8 numbers per word -> a table of 712 numbers
+random guessing among 89 words costs ln(89) = 4.489 per pair
+
+loss after each epoch (average over all pairs):
+  epoch  1: 3.8396
+  epoch  2: 3.5863
+  epoch  5: 3.4695
+  epoch 10: 3.4484
+  epoch 15: 3.4434
+  epoch 20: 3.4392
+train loss 3.4377, loss on 300 unseen sentences 3.4475
+
+60 content words in 6 body systems; nearest neighbour is from the same system for 100% of them
+
+  closest to 'kidney': urinalysis 0.97, sevelamer 0.97, furosemide 0.97, creatinine 0.97
+  closest to 'heart': bisoprolol 0.97, ramipril 0.97, infarction 0.96, troponin 0.96
+  closest to 'ramipril': bisoprolol 1.00, arrhythmia 1.00, infarction 1.00, angina 1.00
+  closest to 'nephritis': uraemia 1.00, cystitis 1.00, furosemide 1.00, sevelamer 1.00
+
+on the 2-D map the nearest neighbour is from the same body system for 100% of the words
+
+PCA keeps 49% + 45% = 95% of the spread in two numbers per word
+centre of each body system on the 2-D map (x, y):
+  bone    (10 words): (  2.47,   3.03)
+  brain   (10 words): (  3.91,  -0.69)
+  heart   (10 words): (  1.46,  -3.35)
+  kidney  (10 words): ( -4.20,   0.67)
+  liver   (10 words): ( -1.24,   3.49)
+  lung    (10 words): ( -2.41,  -3.15)
+
+saved data/results/d04_map.png
+-- d04_train_map finished in 11.7 s
+
+our own map: specialist(A) - organ(A) + organ(B) should give specialist(B)
+  orthopaedist - bone + brain -> neurologist (0.98); expected neurologist
+  orthopaedist - bone + heart -> cardiologist (0.97); expected cardiologist
+  orthopaedist - bone + kidney -> urinalysis (0.97); expected nephrologist
+  all pairs: 14 of 30 correct (the sentences are regular and made by templates)
+
+GloVe: 400,000 words x 50 numbers, learned from Wikipedia and a news archive
+  king - man + woman -> queen 0.85, throne 0.77, prince 0.76   (a clean answer would be queen)
+  paris - france + italy -> rome 0.85, milan 0.78, turin 0.77   (a clean answer would be rome)
+  walking - walked + swam -> swim 0.81, swims 0.79, swimming 0.74   (a clean answer would be swimming)
+  doctor - man + woman -> nurse 0.84, child 0.77, pregnant 0.76   (a clean answer would be doctor)
+
+what happens when the input words are not skipped (king - man + woman):
+  king     0.89
+  queen    0.86
+  daughter 0.77
+-- d05_analogies finished in 16.8 s
+
+a = [1.0, 2.0, 0.0], b = [2.0, 1.0, 0.0]
+dot(a, b)    = 1*2 + 2*1 + 0*0 = 4
+length(a) = length(b) = sqrt(5) = 2.236
+cosine(a, b) = 4 / 5 = 0.80
+cosine(a, a) = 1.00  (a vector points exactly the way it points)
+cosine(a, 2a) = 1.00  but the distance between a and 2a is 2.236 while a to b is 1.414
+cosine([1,0,0], [0,1,0]) = 0.00   cosine(a, -a) = -1.00
+
+cosine between rows of our trained table:
+  kidney       nephrologist   0.92
+  kidney       furosemide     0.97
+  kidney       nephritis      0.96
+  heart        cardiologist   0.89
+  kidney       cardiologist  -0.08
+  kidney       ramipril      -0.01
+  furosemide   ramipril       0.12
+  asthma       stroke         0.14
+
+the same table, one word against every other word of its own body system and of all the others:
+  same body system : 270 pairs, average cosine 0.97
+  different systems: 1500 pairs, average cosine 0.28
+-- d06_dot_cosine finished in 0.0 s
+
+'She sat on the bank of the river.' -> tokens ['[CLS]', 'she', 'sat', 'on', 'the', 'bank', 'of', 'the', 'river', '.', '[SEP]']
+  'bank' sits at position 5; its output vector starts [0.368, 0.478, -0.928, -0.432]
+'He deposited money at the bank.' -> tokens ['[CLS]', 'he', 'deposited', 'money', 'at', 'the', 'bank', '.', '[SEP]']
+  'bank' sits at position 6; its output vector starts [0.446, 0.423, -0.604, -0.082]
+
+table row of 'bank' (id 2924) starts [0.049, 0.031, -0.07, 0.059] in both sentences: the lookup ignores the neighbours
+cosine between the two output vectors for 'bank': 0.82 (the table row would give 1.00)
+
+sentence vectors: the model's own recipe versus a plain average of table rows
+  cosine('kidney failure', 'renal insufficiency'): model sentence vectors 0.70, average of table rows 0.33
+  cosine('kidney failure', 'knee surgery'): model sentence vectors 0.25, average of table rows 0.23
+-- d07_sentence_vs_token finished in 0.7 s
+
+output vector for 'bites' (first 4 of 8 numbers)
+  word vectors only
+    in 'dog bites man': [0.248, 0.245, -0.827, -0.197]
+    in 'man bites dog': [0.248, 0.245, -0.827, -0.197]   identical: True
+  word vectors + position codes
+    in 'dog bites man': [-0.856, 1.76, 0.048, 1.043]
+    in 'man bites dog': [-1.066, 0.973, 0.639, 1.067]   identical: False
+
+without position codes the output for 'dog' is the same whether the dog comes first or last: True
+largest difference with position codes for 'dog': 1.576
+-- d08_bag_of_tokens finished in 0.0 s
+
+sinusoidal table, 8 positions x 8 numbers (pairs: sin, cos):
+  position 0:  0.000  1.000  0.000  1.000  0.000  1.000  0.000  1.000
+  position 1:  0.841  0.540  0.100  0.995  0.010  1.000  0.001  1.000
+  position 2:  0.909 -0.416  0.199  0.980  0.020  1.000  0.002  1.000
+  position 3:  0.141 -0.990  0.296  0.955  0.030  1.000  0.003  1.000
+  position 4: -0.757 -0.654  0.389  0.921  0.040  0.999  0.004  1.000
+  position 5: -0.959  0.284  0.479  0.878  0.050  0.999  0.005  1.000
+  position 6: -0.279  0.960  0.565  0.825  0.060  0.998  0.006  1.000
+  position 7:  0.657  0.754  0.644  0.765  0.070  0.998  0.007  1.000
+
+how far a pair has to travel before it repeats (wavelength = 2 pi / angle per position):
+  pair 0: 1.0000 radians per position -> repeats every 6.3 positions
+  pair 1: 0.1000 radians per position -> repeats every 62.8 positions
+  pair 2: 0.0100 radians per position -> repeats every 628.3 positions
+  pair 3: 0.0010 radians per position -> repeats every 6,283.2 positions
+
+dot product between the codes of two positions, by distance k (same for every start p):
+  k =  1: p = 0 -> 3.5353, p = 7 -> 3.5353, p = 29 -> 3.5353   spread 8.9e-16
+  k =  2: p = 0 -> 2.5637, p = 7 -> 2.5637, p = 29 -> 2.5637   spread 4.4e-16
+  k =  5: p = 0 -> 3.1600, p = 7 -> 3.1600, p = 29 -> 3.1600   spread 8.9e-16
+  k = 10: p = 0 -> 1.6962, p = 7 -> 1.6962, p = 29 -> 1.6962   spread 8.9e-16
+
+same position: dot = 4.0 (one 1 for every pair, so 4 pairs = 4)
+-- d09_sinusoidal finished in 0.0 s
+
+learned position table: 512 rows x 384 numbers (one row per position 0..511)
+the tokenizer cuts every text at 512 tokens, because no row exists for position 512
+
+cosine between the rows of two positions:
+  position  10 and  11:  0.89
+  position  10 and  12:  0.68
+  position  10 and  20:  0.38
+  position  10 and  60:  0.12
+  position  10 and 200: -0.17
+  position  10 and 400: -0.23
+
+average over all positions: neighbours 0.85, 100 apart 0.14
+
+GPT-2 learned position table: 1,024 rows x 768 numbers = 786,432 numbers (its context window is 1,024 tokens)
+-- d10_learned_positions finished in 0.8 s
+
+one rotating pair: the first two numbers of the query, turned by position * 1 radian (57.3 degrees per position)
+  position 0: ( 0.001,  0.299)   angle    0.0 degrees
+  position 1: (-0.251,  0.162)   angle   57.3 degrees
+  position 2: (-0.272, -0.123)   angle  114.6 degrees
+  position 3: (-0.043, -0.296)   angle  171.9 degrees
+  position 4: ( 0.225, -0.196)   angle  229.2 degrees
+  position 5: ( 0.287,  0.084)   angle  286.5 degrees
+
+length of the query: 1.986816; largest change in length over 286 positions: 2.2e-16
+
+attention score numerator (dot of rotated query and rotated key) for several positions:
+  query at    5, key at    2 (distance 3):   1.69336
+  query at  105, key at  102 (distance 3):   1.69336
+  query at 1005, key at 1002 (distance 3):   1.69336
+  query at    7, key at    3 (distance 4):   1.55178
+  query at  107, key at  103 (distance 4):   1.55178
+largest change when both positions move together by the same amount: 8.9e-16
+
+stretching a window trained for 4096 tokens to 8192 tokens:
+  position interpolation: positions 100, 4096, 6000, 8191 become [50.0, 2048.0, 3000.0, 4095.5]  (all inside 0..4096)
+  NTK-style base: 10000 -> 20,452; slowest pair turns 1.33e-04 -> 6.67e-05 radians per position, fastest 1.00 -> 1.00
+
+Qwen2.5-0.5B-Instruct: rope_theta 1,000,000, max_position_embeddings 32,768, 14 heads of 64 numbers each, so 32 turning pairs per head
+-- d11_rope finished in 0.2 s
+
+numbers per word  table entries  train loss  test loss  same system  same system, 2-D  same kind of word
+               2            178       3.656      3.665           7%                7%                57%
+               4            356       3.570      3.580          17%                7%                92%
+               8            712       3.438      3.448         100%              100%                70%
+              16          1,424       3.374      3.385          87%               98%                83%
+              32          2,848       3.368      3.380          83%               70%                87%
+
+random guessing costs ln(89) = 4.489; choosing a neighbour at random would match the body system about 1 time in 6 (17%)
+-- d12_lab_dimension finished in 8.2 s
+
+Qwen/Qwen2.5-0.5B-Instruct: rope_theta 1,000,000, 14 heads of 64 numbers, window 32,768 tokens
+turning speeds (radians per position) of the 32 pairs: library vs rope.rope_frequencies
+  fastest pair: 1.000000 vs 1.000000; slowest pair: 1.540e-06 vs 1.540e-06
+  largest relative difference over all pairs: 7.4e-08
+
+
+rotated 8 random query vectors of 64 numbers at positions [0, 1, 2, 3, 10, 100, 1000, 20000]
+  position      0: largest difference between the library and rope.rotate = 5.5e-08
+  position      1: largest difference between the library and rope.rotate = 2.2e-07
+  position      2: largest difference between the library and rope.rotate = 1.4e-07
+  position      3: largest difference between the library and rope.rotate = 1.6e-07
+  position     10: largest difference between the library and rope.rotate = 3.0e-07
+  position    100: largest difference between the library and rope.rotate = 1.1e-06
+  position   1000: largest difference between the library and rope.rotate = 1.8e-05
+  position  20000: largest difference between the library and rope.rotate = 3.1e-04
+
+largest difference over all 512 numbers: 3.1e-04
+the two agree to better than 0.001 everywhere: True
+with the other pairing (neighbouring numbers) the largest difference would be 4.88, because the numbers are paired in another order
+-- d13_rope_vs_qwen finished in 0.4 s
+
+[exit 0]

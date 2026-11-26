@@ -1,0 +1,300 @@
+the cardiologist in the cardiology clinic prescribed bisoprolol after the ecg .
+the hepatologist in the hepatology clinic prescribed lactulose after the fibroscan .
+the nephrologist explained the urinalysis and the furosemide to the patient with nephritis .
+a problem of the brain such as stroke needs a mri and levetiracetam .
+the bilirubin showed signs of jaundice in the liver .
+the nephrologist reviewed the kidney of the patient with uraemia .
+the oximetry showed signs of asthma in the lung .
+the cardiologist explained the ecg and the ramipril to the patient with angina .
+the nephrologist in the nephrology clinic prescribed sevelamer after the creatinine .
+the neurology clinic ordered a mri for stroke .
+a problem of the heart such as angina needs a ecg and ramipril .
+a problem of the heart such as arrhythmia needs a ecg and bisoprolol .
+the pulmonology clinic ordered a oximetry for asthma .
+the pulmonologist reviewed the lung of the patient with pneumonia .
+the spirometry showed signs of pneumonia in the lung .
+the hepatologist explained the bilirubin and the ursodiol to the patient with hepatitis .
+the hepatologist explained the fibroscan and the lactulose to the patient with jaundice .
+a patient with angina was treated with bisoprolol on the cardiology ward .
+the nephrologist reviewed the kidney of the patient with cystitis .
+a patient with angina was treated with bisoprolol on the cardiology ward .
+the hepatologist in the hepatology clinic prescribed lactulose after the fibroscan .
+the mri showed signs of migraine in the brain .
+the cardiologist in the cardiology clinic prescribed bisoprolol after the troponin .
+the pulmonologist in the pulmonology clinic prescribed budesonide after the oximetry .
+a patient with hepatitis was treated with ursodiol on the hepatology ward .
+the hepatology clinic ordered a fibroscan for cirrhosis .
+the neurologist in the neurology clinic prescribed levetiracetam after the mri .
+the neurologist explained the eeg and the sumatriptan to the patient with epilepsy .
+a patient with fracture was treated with alendronate on the orthopaedics ward .
+salbutamol is often used for asthma and for the lung .
+naproxen is often used for fracture and for the bone .
+the cardiology clinic ordered a troponin for infarction .
+the troponin showed signs of arrhythmia in the heart .
+the neurology clinic ordered a eeg for migraine .
+the cardiology clinic ordered a ecg for arrhythmia .
+naproxen is often used for arthritis and for the bone .
+furosemide is often used for nephritis and for the kidney .
+the nephrologist explained the creatinine and the sevelamer to the patient with nephritis .
+the orthopaedist reviewed the bone of the patient with osteoporosis .
+the hepatology clinic ordered a bilirubin for hepatitis .
+a problem of the liver such as cirrhosis needs a bilirubin and ursodiol .
+the spirometry showed signs of asthma in the lung .
+the cardiology clinic ordered a ecg for angina .
+the mri showed signs of migraine in the brain .
+the orthopaedist reviewed the bone of the patient with fracture .
+the neurologist explained the mri and the levetiracetam to the patient with migraine .
+a problem of the liver such as hepatitis needs a fibroscan and lactulose .
+a patient with uraemia was treated with sevelamer on the nephrology ward .
+the neurology clinic ordered a mri for stroke .
+the hepatologist in the hepatology clinic prescribed lactulose after the bilirubin .
+the hepatology clinic ordered a bilirubin for hepatitis .
+the orthopaedics clinic ordered a densitometry for fracture .
+the orthopaedics clinic ordered a densitometry for osteoporosis .
+alendronate is often used for osteoporosis and for the bone .
+the cardiologist explained the troponin and the ramipril to the patient with arrhythmia .
+the ecg showed signs of arrhythmia in the heart .
+the orthopaedist explained the densitometry and the alendronate to the patient with osteoporosis .
+alendronate is often used for fracture and for the bone .
+the hepatologist in the hepatology clinic prescribed ursodiol after the bilirubin .
+a patient with cystitis was treated with furosemide on the nephrology ward .
+a patient with pneumonia was treated with salbutamol on the pulmonology ward .
+a problem of the bone such as fracture needs a dexa and naproxen .
+alendronate is often used for osteoporosis and for the bone .
+the orthopaedics clinic ordered a dexa for fracture .
+the orthopaedist reviewed the bone of the patient with arthritis .
+the cardiology clinic ordered a troponin for infarction .
+the hepatologist in the hepatology clinic prescribed lactulose after the bilirubin .
+the nephrologist explained the creatinine and the sevelamer to the patient with nephritis .
+the neurology clinic ordered a mri for epilepsy .
+a patient with bronchitis was treated with salbutamol on the pulmonology ward .
+a problem of the bone such as fracture needs a densitometry and alendronate .
+the cardiology clinic ordered a troponin for angina .
+the pulmonologist explained the oximetry and the salbutamol to the patient with bronchitis .
+the neurologist explained the eeg and the levetiracetam to the patient with stroke .
+the fibroscan showed signs of hepatitis in the liver .
+a problem of the kidney such as uraemia needs a creatinine and sevelamer .
+the urinalysis showed signs of nephritis in the kidney .
+the spirometry showed signs of bronchitis in the lung .
+the spirometry showed signs of pneumonia in the lung .
+the nephrologist explained the urinalysis and the sevelamer to the patient with cystitis .
+the neurologist explained the mri and the levetiracetam to the patient with stroke .
+the pulmonologist reviewed the lung of the patient with bronchitis .
+a problem of the lung such as asthma needs a spirometry and budesonide .
+naproxen is often used for arthritis and for the bone .
+the nephrologist reviewed the kidney of the patient with nephritis .
+a patient with migraine was treated with levetiracetam on the neurology ward .
+the orthopaedics clinic ordered a dexa for osteoporosis .
+the orthopaedist explained the dexa and the naproxen to the patient with osteoporosis .
+the nephrologist explained the creatinine and the sevelamer to the patient with uraemia .
+the hepatologist in the hepatology clinic prescribed ursodiol after the bilirubin .
+a problem of the bone such as fracture needs a dexa and naproxen .
+the cardiology clinic ordered a ecg for infarction .
+the nephrologist reviewed the kidney of the patient with cystitis .
+a patient with asthma was treated with budesonide on the pulmonology ward .
+a patient with fracture was treated with naproxen on the orthopaedics ward .
+the densitometry showed signs of arthritis in the bone .
+a problem of the bone such as arthritis needs a densitometry and naproxen .
+the orthopaedics clinic ordered a dexa for fracture .
+the spirometry showed signs of asthma in the lung .
+the bilirubin showed signs of jaundice in the liver .
+the cardiology clinic ordered a troponin for infarction .
+the hepatologist reviewed the liver of the patient with jaundice .
+a patient with cirrhosis was treated with ursodiol on the hepatology ward .
+a patient with angina was treated with bisoprolol on the cardiology ward .
+a problem of the liver such as cirrhosis needs a bilirubin and lactulose .
+the neurology clinic ordered a mri for migraine .
+the nephrologist explained the creatinine and the sevelamer to the patient with cystitis .
+the cardiology clinic ordered a ecg for angina .
+naproxen is often used for osteoporosis and for the bone .
+the pulmonology clinic ordered a oximetry for pneumonia .
+a problem of the heart such as infarction needs a ecg and bisoprolol .
+sevelamer is often used for nephritis and for the kidney .
+the pulmonology clinic ordered a oximetry for bronchitis .
+the cardiology clinic ordered a ecg for infarction .
+levetiracetam is often used for stroke and for the brain .
+the nephrologist in the nephrology clinic prescribed furosemide after the urinalysis .
+a problem of the lung such as pneumonia needs a oximetry and budesonide .
+the cardiologist explained the troponin and the ramipril to the patient with arrhythmia .
+a patient with bronchitis was treated with budesonide on the pulmonology ward .
+the neurology clinic ordered a eeg for epilepsy .
+a problem of the bone such as arthritis needs a dexa and alendronate .
+alendronate is often used for fracture and for the bone .
+naproxen is often used for arthritis and for the bone .
+the hepatologist in the hepatology clinic prescribed lactulose after the fibroscan .
+the pulmonologist reviewed the lung of the patient with asthma .
+a problem of the liver such as cirrhosis needs a bilirubin and ursodiol .
+the nephrologist reviewed the kidney of the patient with nephritis .
+a patient with cirrhosis was treated with lactulose on the hepatology ward .
+the cardiologist in the cardiology clinic prescribed bisoprolol after the troponin .
+the hepatology clinic ordered a fibroscan for jaundice .
+ramipril is often used for arrhythmia and for the heart .
+a patient with migraine was treated with sumatriptan on the neurology ward .
+the neurologist in the neurology clinic prescribed levetiracetam after the mri .
+a patient with bronchitis was treated with budesonide on the pulmonology ward .
+a problem of the liver such as jaundice needs a bilirubin and ursodiol .
+the hepatologist in the hepatology clinic prescribed lactulose after the bilirubin .
+a problem of the kidney such as cystitis needs a creatinine and sevelamer .
+furosemide is often used for nephritis and for the kidney .
+the neurology clinic ordered a eeg for migraine .
+a patient with osteoporosis was treated with alendronate on the orthopaedics ward .
+the ecg showed signs of arrhythmia in the heart .
+the hepatology clinic ordered a fibroscan for jaundice .
+the densitometry showed signs of osteoporosis in the bone .
+the cardiologist reviewed the heart of the patient with infarction .
+the neurologist reviewed the brain of the patient with epilepsy .
+the nephrologist in the nephrology clinic prescribed furosemide after the creatinine .
+a problem of the brain such as migraine needs a mri and sumatriptan .
+the cardiology clinic ordered a ecg for arrhythmia .
+the hepatology clinic ordered a fibroscan for jaundice .
+the cardiology clinic ordered a ecg for arrhythmia .
+a patient with cystitis was treated with furosemide on the nephrology ward .
+the orthopaedist reviewed the bone of the patient with fracture .
+the densitometry showed signs of osteoporosis in the bone .
+a patient with hepatitis was treated with lactulose on the hepatology ward .
+a problem of the kidney such as nephritis needs a urinalysis and furosemide .
+the hepatologist in the hepatology clinic prescribed ursodiol after the bilirubin .
+a patient with fracture was treated with alendronate on the orthopaedics ward .
+the ecg showed signs of arrhythmia in the heart .
+levetiracetam is often used for stroke and for the brain .
+the neurology clinic ordered a eeg for stroke .
+the neurologist explained the eeg and the levetiracetam to the patient with epilepsy .
+a problem of the kidney such as cystitis needs a creatinine and furosemide .
+a patient with cirrhosis was treated with ursodiol on the hepatology ward .
+a problem of the liver such as cirrhosis needs a bilirubin and lactulose .
+a patient with migraine was treated with levetiracetam on the neurology ward .
+a patient with jaundice was treated with ursodiol on the hepatology ward .
+the densitometry showed signs of arthritis in the bone .
+the neurologist reviewed the brain of the patient with epilepsy .
+the pulmonology clinic ordered a spirometry for bronchitis .
+the hepatologist in the hepatology clinic prescribed lactulose after the fibroscan .
+the nephrologist in the nephrology clinic prescribed furosemide after the urinalysis .
+the neurologist explained the eeg and the levetiracetam to the patient with migraine .
+lactulose is often used for cirrhosis and for the liver .
+a patient with pneumonia was treated with budesonide on the pulmonology ward .
+the cardiology clinic ordered a troponin for arrhythmia .
+the pulmonologist in the pulmonology clinic prescribed budesonide after the spirometry .
+the nephrologist in the nephrology clinic prescribed sevelamer after the creatinine .
+a patient with epilepsy was treated with sumatriptan on the neurology ward .
+the orthopaedist explained the dexa and the naproxen to the patient with osteoporosis .
+the hepatologist reviewed the liver of the patient with cirrhosis .
+a patient with arrhythmia was treated with bisoprolol on the cardiology ward .
+the spirometry showed signs of asthma in the lung .
+the cardiologist explained the troponin and the bisoprolol to the patient with infarction .
+the nephrology clinic ordered a creatinine for cystitis .
+the cardiologist explained the ecg and the bisoprolol to the patient with arrhythmia .
+the nephrologist reviewed the kidney of the patient with uraemia .
+the neurologist reviewed the brain of the patient with stroke .
+the nephrologist reviewed the kidney of the patient with nephritis .
+a patient with infarction was treated with bisoprolol on the cardiology ward .
+a problem of the lung such as bronchitis needs a spirometry and salbutamol .
+salbutamol is often used for bronchitis and for the lung .
+alendronate is often used for osteoporosis and for the bone .
+a patient with stroke was treated with sumatriptan on the neurology ward .
+the nephrologist reviewed the kidney of the patient with uraemia .
+a patient with osteoporosis was treated with naproxen on the orthopaedics ward .
+a problem of the heart such as infarction needs a troponin and bisoprolol .
+a problem of the liver such as hepatitis needs a bilirubin and ursodiol .
+a problem of the brain such as stroke needs a mri and levetiracetam .
+ursodiol is often used for jaundice and for the liver .
+the cardiologist explained the ecg and the ramipril to the patient with arrhythmia .
+the cardiologist explained the ecg and the bisoprolol to the patient with infarction .
+the urinalysis showed signs of cystitis in the kidney .
+the ecg showed signs of arrhythmia in the heart .
+sumatriptan is often used for migraine and for the brain .
+the neurologist reviewed the brain of the patient with stroke .
+the densitometry showed signs of arthritis in the bone .
+a problem of the kidney such as cystitis needs a creatinine and sevelamer .
+a patient with cirrhosis was treated with ursodiol on the hepatology ward .
+a patient with asthma was treated with budesonide on the pulmonology ward .
+the hepatology clinic ordered a bilirubin for cirrhosis .
+a problem of the kidney such as nephritis needs a urinalysis and sevelamer .
+the orthopaedist in the orthopaedics clinic prescribed naproxen after the densitometry .
+the nephrologist explained the urinalysis and the furosemide to the patient with nephritis .
+a patient with uraemia was treated with furosemide on the nephrology ward .
+a problem of the lung such as asthma needs a oximetry and budesonide .
+the orthopaedist reviewed the bone of the patient with arthritis .
+the oximetry showed signs of pneumonia in the lung .
+a patient with migraine was treated with sumatriptan on the neurology ward .
+the orthopaedist explained the dexa and the naproxen to the patient with arthritis .
+the pulmonologist explained the oximetry and the budesonide to the patient with asthma .
+the orthopaedist reviewed the bone of the patient with arthritis .
+the densitometry showed signs of arthritis in the bone .
+the orthopaedist reviewed the bone of the patient with osteoporosis .
+a problem of the bone such as arthritis needs a densitometry and naproxen .
+the orthopaedist in the orthopaedics clinic prescribed alendronate after the densitometry .
+a patient with infarction was treated with ramipril on the cardiology ward .
+the cardiologist reviewed the heart of the patient with arrhythmia .
+a patient with cirrhosis was treated with lactulose on the hepatology ward .
+the pulmonologist reviewed the lung of the patient with asthma .
+the pulmonologist explained the spirometry and the budesonide to the patient with pneumonia .
+the pulmonology clinic ordered a oximetry for asthma .
+the bilirubin showed signs of jaundice in the liver .
+the cardiologist reviewed the heart of the patient with angina .
+a patient with fracture was treated with naproxen on the orthopaedics ward .
+the orthopaedist explained the densitometry and the alendronate to the patient with osteoporosis .
+the pulmonology clinic ordered a spirometry for asthma .
+the pulmonologist in the pulmonology clinic prescribed salbutamol after the oximetry .
+lactulose is often used for hepatitis and for the liver .
+a problem of the heart such as infarction needs a troponin and ramipril .
+ursodiol is often used for hepatitis and for the liver .
+a patient with asthma was treated with budesonide on the pulmonology ward .
+the orthopaedist in the orthopaedics clinic prescribed naproxen after the densitometry .
+a patient with infarction was treated with ramipril on the cardiology ward .
+the hepatologist explained the fibroscan and the lactulose to the patient with hepatitis .
+a problem of the heart such as angina needs a ecg and bisoprolol .
+lactulose is often used for jaundice and for the liver .
+the orthopaedics clinic ordered a densitometry for fracture .
+the nephrologist explained the urinalysis and the furosemide to the patient with nephritis .
+a problem of the kidney such as nephritis needs a creatinine and sevelamer .
+the cardiologist in the cardiology clinic prescribed bisoprolol after the troponin .
+a problem of the heart such as angina needs a ecg and ramipril .
+the orthopaedist reviewed the bone of the patient with fracture .
+the neurology clinic ordered a eeg for epilepsy .
+the troponin showed signs of arrhythmia in the heart .
+alendronate is often used for fracture and for the bone .
+the hepatology clinic ordered a bilirubin for hepatitis .
+the hepatologist reviewed the liver of the patient with hepatitis .
+the nephrologist explained the creatinine and the furosemide to the patient with nephritis .
+bisoprolol is often used for infarction and for the heart .
+a problem of the bone such as arthritis needs a densitometry and naproxen .
+the pulmonologist in the pulmonology clinic prescribed budesonide after the oximetry .
+the neurologist explained the mri and the sumatriptan to the patient with migraine .
+the orthopaedist in the orthopaedics clinic prescribed alendronate after the densitometry .
+the cardiologist in the cardiology clinic prescribed ramipril after the ecg .
+the pulmonologist reviewed the lung of the patient with bronchitis .
+the hepatologist explained the fibroscan and the ursodiol to the patient with cirrhosis .
+the pulmonologist explained the spirometry and the budesonide to the patient with asthma .
+the nephrology clinic ordered a creatinine for uraemia .
+ursodiol is often used for jaundice and for the liver .
+the neurologist explained the eeg and the sumatriptan to the patient with migraine .
+the nephrologist reviewed the kidney of the patient with nephritis .
+the ecg showed signs of arrhythmia in the heart .
+the troponin showed signs of arrhythmia in the heart .
+the pulmonologist reviewed the lung of the patient with bronchitis .
+the hepatologist explained the fibroscan and the lactulose to the patient with jaundice .
+the cardiologist explained the troponin and the ramipril to the patient with infarction .
+the hepatologist reviewed the liver of the patient with hepatitis .
+furosemide is often used for nephritis and for the kidney .
+naproxen is often used for osteoporosis and for the bone .
+the hepatology clinic ordered a fibroscan for jaundice .
+the cardiology clinic ordered a troponin for angina .
+the troponin showed signs of infarction in the heart .
+the pulmonologist in the pulmonology clinic prescribed salbutamol after the oximetry .
+the hepatology clinic ordered a bilirubin for cirrhosis .
+the hepatologist in the hepatology clinic prescribed lactulose after the bilirubin .
+the pulmonologist reviewed the lung of the patient with pneumonia .
+a problem of the liver such as hepatitis needs a fibroscan and lactulose .
+a problem of the heart such as infarction needs a troponin and ramipril .
+a problem of the lung such as asthma needs a oximetry and salbutamol .
+ramipril is often used for arrhythmia and for the heart .
+a patient with angina was treated with bisoprolol on the cardiology ward .
+ramipril is often used for infarction and for the heart .
+lactulose is often used for jaundice and for the liver .
+the hepatology clinic ordered a bilirubin for jaundice .
+the orthopaedist explained the dexa and the naproxen to the patient with fracture .
+the cardiologist explained the troponin and the ramipril to the patient with angina .
+the fibroscan showed signs of hepatitis in the liver .
+the hepatology clinic ordered a fibroscan for hepatitis .
+the cardiologist explained the ecg and the bisoprolol to the patient with infarction .
+the hepatologist reviewed the liver of the patient with cirrhosis .
