@@ -1,0 +1,10 @@
+torch threads: 10; one head, 64 numbers per head, no mask, float32
+     n   plain ms   built-in ms   score table (n x n x 4 bytes)   plain time vs previous row
+   128       0.06          0.04             0.1 MB                         -
+   256       0.12          0.05             0.3 MB                      1.9x
+   512       0.16          0.06             1.0 MB                      1.4x
+  1024       0.52          0.26             4.2 MB                      3.3x
+  2048       1.29          0.66            16.8 MB                      2.5x
+  4096       5.30          2.22            67.1 MB                      4.1x
+
+the score table at n = 4,096 holds 16,777,216 numbers; at n = 128 it holds 16,384: 1,024 times more for 32 times more text

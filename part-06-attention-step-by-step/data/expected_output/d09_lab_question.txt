@@ -1,0 +1,6 @@
+query [1.0, 0.0]: scores [1, 0, 1]  weights [0.4011, 0.1978, 0.4011]  output [1.2033, 0.7967]
+query [0.0, 1.0]: scores [0, 1, 1]  weights [0.1978, 0.4011, 0.4011]  output [0.7967, 1.2033]
+
+d = 64, eight keys: raw scores [-10.8, -3.7, 8.7, 15.2, -0.4, -9.8, -4.0, -0.6]
+  softmax of the raw scores:    biggest weight 0.999
+  softmax of scores / sqrt(64):  biggest weight 0.502

@@ -1,0 +1,1 @@
+{"causal_False_block_64":{"max_abs_diff":0.0,"held":65536},"causal_False_block_128":{"max_abs_diff":0.0,"held":131072},"causal_False_block_256":{"max_abs_diff":0.0,"held":262144},"causal_True_block_64":{"max_abs_diff":0.0,"held":65536},"causal_True_block_128":{"max_abs_diff":0.0,"held":131072},"causal_True_block_256":{"max_abs_diff":0.0,"held":262144}}

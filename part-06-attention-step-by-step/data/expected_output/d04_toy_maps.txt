@@ -1,0 +1,10 @@
+map_toy_full: rows listen, columns are listened to
+  token 1: [0.4, 0.2, 0.4]  sum 1.00
+  token 2: [0.2, 0.4, 0.4]  sum 1.00
+  token 3: [0.25, 0.25, 0.5]  sum 1.00
+  picture saved: True
+map_toy_causal: rows listen, columns are listened to
+  token 1: [1.0, 0.0, 0.0]  sum 1.00
+  token 2: [0.33, 0.67, 0.0]  sum 1.00
+  token 3: [0.25, 0.25, 0.5]  sum 1.00
+  picture saved: True

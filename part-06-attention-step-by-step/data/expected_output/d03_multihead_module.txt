@@ -1,0 +1,16 @@
+input (2, 10, 32) -> output (2, 10, 32), weights (2, 4, 10, 10) (batch, heads, tokens, tokens)
+biggest difference from torch.nn.MultiheadAttention: output 1.2e-07, weights 1.2e-07
+same answer within 1e-5: True
+
+parameters for d_model = 32 (four matrices of 32 x 32 plus four bias lists of 32):
+  1 head(s) of 32 numbers each: 4,224 parameters
+  2 head(s) of 16 numbers each: 4,224 parameters
+  4 head(s) of 8 numbers each: 4,224 parameters
+  8 head(s) of 4 numbers each: 4,224 parameters
+  4 x (32 x 32 + 32) = 4,224
+
+the heads look at different things even at the start (random weights): row 10 of each head, first 5 columns:
+  head 1: [0.109, 0.117, 0.082, 0.141, 0.104]
+  head 2: [0.097, 0.071, 0.092, 0.108, 0.068]
+  head 3: [0.107, 0.127, 0.11, 0.09, 0.094]
+  head 4: [0.088, 0.098, 0.126, 0.075, 0.094]

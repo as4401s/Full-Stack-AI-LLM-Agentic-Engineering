@@ -1,0 +1,23 @@
+10 sentences, 12 layers x 12 heads = 144 heads; each number is an average over all tokens after the first
+
+heads that listen most to the previous token:
+  layer 5, head 12: 1.00
+  layer 3, head 3: 0.61
+  layer 4, head 3: 0.49
+  heads with average weight above 0.5 on the previous token: 2 of 144
+
+heads that listen most to the first token:
+  layer 6, head 2: 1.00
+  layer 8, head 3: 0.99
+  layer 7, head 10: 0.98
+  heads with average weight above 0.5 on the first token: 107 of 144
+
+heads that listen most to their own token:
+  layer 1, head 2: 0.94
+  layer 1, head 4: 0.85
+  layer 1, head 6: 0.85
+  heads with average weight above 0.5 on their own token: 4 of 144
+
+all heads together put on average 0.20 of their weight on the previous token, 0.65 on the first token, 0.09 on themselves
+
+the strongest head of each habit, on 'the animal stayed home because it was tired': previous token = layer 5, head 12, first token = layer 6, head 2, own token = layer 1, head 2

@@ -1,0 +1,17 @@
+$ uv run pytest -v --no-header -p no:cacheprovider -p no:warnings
+============================= test session starts ==============================
+collecting ... collected 10 items
+
+tests/test_numpy_attention.py::test_softmax_rows_add_up_to_one_and_survive_large_scores PASSED [ 10%]
+tests/test_numpy_attention.py::test_hand_example_weights_and_output PASSED [ 20%]
+tests/test_numpy_attention.py::test_causal_table_is_lower_triangular_and_rows_add_up_to_one PASSED [ 30%]
+tests/test_numpy_attention.py::test_causal_output_ignores_the_future_and_open_output_does_not PASSED [ 40%]
+tests/test_numpy_attention.py::test_tiled_equals_plain_with_and_without_the_mask PASSED [ 50%]
+tests/test_numpy_attention.py::test_multi_head_shapes_and_two_different_maps PASSED [ 60%]
+tests/test_numpy_attention.py::test_worked_examples_print_the_video_numbers PASSED [ 70%]
+tests/test_torch_attention.py::test_matches_the_built_in_kernel_with_and_without_the_mask PASSED [ 80%]
+tests/test_torch_attention.py::test_causal_weights_are_zero_above_the_diagonal PASSED [ 90%]
+tests/test_torch_attention.py::test_multihead_matches_torch_module_and_parameter_count_is_head_independent PASSED [100%]
+
+============================== 10 passed in 0.59s ==============================
+[exit 0]

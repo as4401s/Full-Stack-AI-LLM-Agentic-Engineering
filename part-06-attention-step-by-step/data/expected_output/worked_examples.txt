@@ -1,0 +1,68 @@
+$ uv run python worked_examples.py
+== 1. Where query, key and value come from (x times three tables)
+  token vector x = [1, 2]
+  query = x times table W_q = [1*1 + 2*1, 1*0 + 2*1] = [3, 2]
+  key   = x times table W_k = [1*0 + 2*1, 1*1 + 2*0] = [2, 1]
+  value = x times table W_v = [1*2 + 2*0, 1*0 + 2*2] = [2, 4]
+  three tables of 2 x 2 = 12 learned numbers; GPT-2 small uses 768 x 768 per table = 589,824 numbers each
+== 2. One question, three labels (d = 2)
+  query q = [1, 0]; keys k1 = [1, 0], k2 = [0, 1], k3 = [1, 1]; values v1 = [2, 0], v2 = [0, 2], v3 = [1, 1]
+  scores q.k = [1*1 + 0*0, 1*0 + 0*1, 1*1 + 0*1] = [1, 0, 1]
+  divide by sqrt(2) = 1.4142: [0.7071, 0.0, 0.7071]
+  exp of each: [2.0281, 1.0, 2.0281]   sum = 5.0562
+  weights = exp / sum = [0.4011, 0.1978, 0.4011]  -> [40, 20, 40] percent, total 100 percent
+  weighted sum = 0.4011*[2, 0] + 0.1978*[0, 2] + 0.4011*[1, 1] = [1.2033, 0.7967]
+  with the rounded weights 0.40, 0.20, 0.40: [1.2, 0.8]   (the same to two decimals: [1.2, 0.8])
+
+== 3. Why divide by the square root of d
+  random vectors with ordinary-sized numbers (mean 0, spread 1), 20,000 pairs per row:
+      d   spread of q.k   after dividing
+      4            2.00             1.00
+     16            4.01             1.00
+     64            7.96             1.00
+    256           16.06             1.00
+  d = 64, eight keys, 10,000 random rows: the biggest weight in a row averages 0.87 without the division and 0.36 with it
+  rows whose biggest weight is above 0.95: 53 percent without the division, 0 percent with it
+  one example row, raw scores [5.4, 15.9, -4.0, 6.1, 4.9, 0.7, 7.7, -7.1]
+    softmax of the raw scores    : biggest weight 1.000
+    softmax after / sqrt(64) = 8 : biggest weight 0.405   scaled scores [0.68, 1.98, -0.5, 0.77, 0.61, 0.09, 0.96, -0.88]
+
+== 4. Every token asks: the full 3 x 3 table (queries = keys = [[1, 0], [0, 1], [1, 1]])
+  scores q.k: [[1, 0, 1], [0, 1, 1], [1, 1, 2]]
+  row 1: weights [0.4011, 0.1978, 0.4011]  = [40, 20, 40] percent  (sum 1.00)
+  row 2: weights [0.1978, 0.4011, 0.4011]  = [20, 40, 40] percent  (sum 1.00)
+  row 3: weights [0.2483, 0.2483, 0.5035]  = [25, 25, 50] percent  (sum 1.00)
+  outputs: [[1.203, 0.797], [0.797, 1.203], [1.0, 1.0]]
+
+== 5. The causal mask (the upper triangle is switched off, then every row is shared out again)
+  switched off (True = future): [[0, 1, 1], [0, 0, 1], [0, 0, 0]]
+  row 1 sees token 1 only: weights [1.0, 0.0, 0.0]
+  row 2 sees tokens 1 and 2: exp [1.0, 2.0281], sum 3.0281, weights [0.3302, 0.6698]
+  row 3 sees all three: weights [0.2483, 0.2483, 0.5035]  (nothing to switch off)
+  all rows add up to 1: True
+  replace token 3 by [9, 9] and look at the outputs of tokens 1 and 2:
+    with the mask    : tokens 1 and 2 keep their outputs: True
+    without the mask : token 1 changes from [1.203, 0.797] to [8.96, 8.957]  (it peeked at the future)
+
+== 6. Two heads (3 tokens, d_model = 4, each head works on 2 numbers)
+  x = [[1, 0, 1, 0], [0, 1, 0, 1], [1, 1, 0, 0]]   (rows are tokens)
+  head 1 reads columns 1-2, head 2 reads columns 3-4; the weight matrices here are the identity so the split is easy to see
+  head 1 weights: [[0.4, 0.2, 0.4], [0.2, 0.4, 0.4], [0.25, 0.25, 0.5]]
+  head 2 weights: [[0.5, 0.25, 0.25], [0.25, 0.5, 0.25], [0.33, 0.33, 0.33]]
+  head 1 row 3 = [0.25, 0.25, 0.5]  versus head 2 row 3 = [0.33, 0.33, 0.33]  (different readers, different focus)
+  glued together and mixed by w_o: output shape (3, 4), first row [0.802, 0.599, 0.503, 0.248]
+  parameters: four weight matrices of 4 x 4 = 64; the same for one head or many heads (the split costs nothing extra)
+
+== 7. The n x n score table
+  n =   1,000: 1,000 x 1,000 = 1,000,000 scores per head per layer; at 2 bytes each that is 2 MB
+  n = 100,000: 100,000 x 100,000 = 10,000,000,000 scores per head per layer; at 2 bytes each that is 20 GB
+  ratio: 10,000 times more entries for 100 times more text
+  with 32 heads in one layer at n = 100,000 and 2 bytes: 640 GB
+
+== 8. The running softmax (what the tiled version does for one row)
+  scores [1.0, 0.0, 1.0, 2.0], values [2.0, 0.0, 1.0, 3.0]
+  all at once: weights [0.1966, 0.0723, 0.1966, 0.5344], output 2.1932
+  block 1: scores [1.0, 0.0]  new maximum m = 1  nothing to shrink yet  running sum l = 1.3679  running weighted sum = 2.0000
+  block 2: scores [1.0, 2.0]  new maximum m = 2  shrink the old totals by exp(1 - 2) = 0.3679  running sum l = 1.8711  running weighted sum = 4.1036
+  at the end: output = weighted sum / l = 4.1036 / 1.8711 = 2.1932  (the same as all at once)
+[exit 0]

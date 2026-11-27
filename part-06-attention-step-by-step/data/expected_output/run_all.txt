@@ -1,0 +1,149 @@
+$ uv run python run_all.py
+one query [1, 0]: weights [0.4011, 0.1978, 0.4011]  output [1.2033, 0.7967]
+  same numbers as NumPy: True
+
+full table (every token asks):
+  row 1: [0.4011, 0.1978, 0.4011]  sum 1.0000
+  row 2: [0.1978, 0.4011, 0.4011]  sum 1.0000
+  row 3: [0.2483, 0.2483, 0.5035]  sum 1.0000
+
+causal table (the future is switched off):
+  row 1: [1.0, 0.0, 0.0]  sum 1.0000
+  row 2: [0.3302, 0.6698, 0.0]  sum 1.0000
+  row 3: [0.2483, 0.2483, 0.5035]  sum 1.0000
+
+largest weight above the diagonal in the causal table: 0.0
+largest distance from 1 of any row sum: 0.0e+00
+-- d01_attention_from_scratch finished in 0.0 s
+
+causal=False: biggest difference from the built-in kernel 3.6e-07   rows add up to 1 within 1.2e-07   largest weight above the diagonal 0.8
+             same answer within 1e-5: True
+causal=True : biggest difference from the built-in kernel 2.4e-07   rows add up to 1 within 1.2e-07   largest weight above the diagonal 0.0
+             same answer within 1e-5: True
+
+shapes: q (2, 4, 16, 8) -> output (2, 4, 16, 8), weights (2, 4, 16, 16)
+-- d02_check_builtin finished in 0.0 s
+
+input (2, 10, 32) -> output (2, 10, 32), weights (2, 4, 10, 10) (batch, heads, tokens, tokens)
+biggest difference from torch.nn.MultiheadAttention: output 1.2e-07, weights 1.2e-07
+same answer within 1e-5: True
+
+parameters for d_model = 32 (four matrices of 32 x 32 plus four bias lists of 32):
+  1 head(s) of 32 numbers each: 4,224 parameters
+  2 head(s) of 16 numbers each: 4,224 parameters
+  4 head(s) of 8 numbers each: 4,224 parameters
+  8 head(s) of 4 numbers each: 4,224 parameters
+  4 x (32 x 32 + 32) = 4,224
+
+the heads look at different things even at the start (random weights): row 10 of each head, first 5 columns:
+  head 1: [0.109, 0.117, 0.082, 0.141, 0.104]
+  head 2: [0.097, 0.071, 0.092, 0.108, 0.068]
+  head 3: [0.107, 0.127, 0.11, 0.09, 0.094]
+  head 4: [0.088, 0.098, 0.126, 0.075, 0.094]
+-- d03_multihead_module finished in 0.0 s
+
+Matplotlib is building the font cache; this may take a moment.
+map_toy_full: rows listen, columns are listened to
+  token 1: [0.4, 0.2, 0.4]  sum 1.00
+  token 2: [0.2, 0.4, 0.4]  sum 1.00
+  token 3: [0.25, 0.25, 0.5]  sum 1.00
+  picture saved: True
+map_toy_causal: rows listen, columns are listened to
+  token 1: [1.0, 0.0, 0.0]  sum 1.00
+  token 2: [0.33, 0.67, 0.0]  sum 1.00
+  token 3: [0.25, 0.25, 0.5]  sum 1.00
+  picture saved: True
+-- d04_toy_maps finished in 10.7 s
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+sentence: 'the animal stayed home because it was tired'
+tokens (8): ['the', 'animal', 'stayed', 'home', 'because', 'it', 'was', 'tired']
+weights tensor: 12 layers x 12 heads x 8 x 8 = 9,216 numbers
+largest weight above the diagonal in any head: 0.0
+largest distance from 1 of any row sum: 2.4e-07
+
+the row of 'it' (position 6) listening to 'animal' (position 2), over all 144 heads:
+  average weight 0.049; heads with weight above 0.20: 8; above 0.10: 14
+  the five heads that listen most to 'animal' (layer, head: weight):
+    layer 5, head 4: 0.696
+    layer 6, head 11: 0.562
+    layer 10, head 1: 0.357
+    layer 1, head 7: 0.324
+    layer 2, head 7: 0.294
+  for comparison, the row of 'it' on the first token 'the': average 0.603; heads with weight above 0.5: 92 of 144
+
+row of 'it' in the best head (layer 5, head 4):
+       the 0.230
+    animal 0.696
+    stayed 0.023
+      home 0.021
+   because 0.010
+        it 0.020
+  biggest weight on a word other than the first token: animal (0.696)
+
+row of 'it' averaged over all 144 heads:
+       the 0.603
+    animal 0.049
+    stayed 0.067
+      home 0.044
+   because 0.140
+        it 0.097
+
+pictures saved: True
+-- d05_gpt2_map finished in 48.6 s
+
+10 sentences, 12 layers x 12 heads = 144 heads; each number is an average over all tokens after the first
+
+heads that listen most to the previous token:
+  layer 5, head 12: 1.00
+  layer 3, head 3: 0.61
+  layer 4, head 3: 0.49
+  heads with average weight above 0.5 on the previous token: 2 of 144
+
+heads that listen most to the first token:
+  layer 6, head 2: 1.00
+  layer 8, head 3: 0.99
+  layer 7, head 10: 0.98
+  heads with average weight above 0.5 on the first token: 107 of 144
+
+heads that listen most to their own token:
+  layer 1, head 2: 0.94
+  layer 1, head 4: 0.85
+  layer 1, head 6: 0.85
+  heads with average weight above 0.5 on their own token: 4 of 144
+
+all heads together put on average 0.20 of their weight on the previous token, 0.65 on the first token, 0.09 on themselves
+
+the strongest head of each habit, on 'the animal stayed home because it was tired': previous token = layer 5, head 12, first token = layer 6, head 2, own token = layer 1, head 2
+-- d06_head_roles finished in 0.2 s
+
+torch threads: 10; one head, 64 numbers per head, no mask, float32
+     n   plain ms   built-in ms   score table (n x n x 4 bytes)   plain time vs previous row
+   128       0.06          0.04             0.1 MB                         -
+   256       0.12          0.05             0.3 MB                      1.9x
+   512       0.16          0.06             1.0 MB                      1.4x
+  1024       0.52          0.26             4.2 MB                      3.3x
+  2048       1.29          0.66            16.8 MB                      2.5x
+  4096       5.30          2.22            67.1 MB                      4.1x
+
+the score table at n = 4,096 holds 16,777,216 numbers; at n = 128 it holds 16,384: 1,024 times more for 32 times more text
+-- d07_cost_curve finished in 0.1 s
+
+n = 1024 tokens, 64 numbers per head; plain attention holds 1,048,576 scores at once
+  causal=False block  64: biggest difference 8.6e-16   largest piece held 65,536 scores (6.2 percent of the full table)
+  causal=False block 128: biggest difference 7.8e-16   largest piece held 131,072 scores (12.5 percent of the full table)
+  causal=False block 256: biggest difference 8.0e-16   largest piece held 262,144 scores (25.0 percent of the full table)
+  causal=True  block  64: biggest difference 7.2e-16   largest piece held 65,536 scores (6.2 percent of the full table)
+  causal=True  block 128: biggest difference 8.3e-16   largest piece held 131,072 scores (12.5 percent of the full table)
+  causal=True  block 256: biggest difference 8.3e-16   largest piece held 262,144 scores (25.0 percent of the full table)
+-- d08_tiled_check finished in 0.0 s
+
+query [1.0, 0.0]: scores [1, 0, 1]  weights [0.4011, 0.1978, 0.4011]  output [1.2033, 0.7967]
+query [0.0, 1.0]: scores [0, 1, 1]  weights [0.1978, 0.4011, 0.4011]  output [0.7967, 1.2033]
+
+d = 64, eight keys: raw scores [-10.8, -3.7, 8.7, 15.2, -0.4, -9.8, -4.0, -0.6]
+  softmax of the raw scores:    biggest weight 0.999
+  softmax of scores / sqrt(64):  biggest weight 0.502
+-- d09_lab_question finished in 0.0 s
+
+[exit 0]

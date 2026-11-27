@@ -1,0 +1,15 @@
+one query [1, 0]: weights [0.4011, 0.1978, 0.4011]  output [1.2033, 0.7967]
+  same numbers as NumPy: True
+
+full table (every token asks):
+  row 1: [0.4011, 0.1978, 0.4011]  sum 1.0000
+  row 2: [0.1978, 0.4011, 0.4011]  sum 1.0000
+  row 3: [0.2483, 0.2483, 0.5035]  sum 1.0000
+
+causal table (the future is switched off):
+  row 1: [1.0, 0.0, 0.0]  sum 1.0000
+  row 2: [0.3302, 0.6698, 0.0]  sum 1.0000
+  row 3: [0.2483, 0.2483, 0.5035]  sum 1.0000
+
+largest weight above the diagonal in the causal table: 0.0
+largest distance from 1 of any row sum: 0.0e+00

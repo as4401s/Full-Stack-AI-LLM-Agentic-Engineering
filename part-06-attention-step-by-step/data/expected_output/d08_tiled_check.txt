@@ -1,0 +1,7 @@
+n = 1024 tokens, 64 numbers per head; plain attention holds 1,048,576 scores at once
+  causal=False block  64: biggest difference 8.6e-16   largest piece held 65,536 scores (6.2 percent of the full table)
+  causal=False block 128: biggest difference 7.8e-16   largest piece held 131,072 scores (12.5 percent of the full table)
+  causal=False block 256: biggest difference 8.0e-16   largest piece held 262,144 scores (25.0 percent of the full table)
+  causal=True  block  64: biggest difference 7.2e-16   largest piece held 65,536 scores (6.2 percent of the full table)
+  causal=True  block 128: biggest difference 8.3e-16   largest piece held 131,072 scores (12.5 percent of the full table)
+  causal=True  block 256: biggest difference 8.3e-16   largest piece held 262,144 scores (25.0 percent of the full table)

@@ -1,0 +1,34 @@
+sentence: 'the animal stayed home because it was tired'
+tokens (8): ['the', 'animal', 'stayed', 'home', 'because', 'it', 'was', 'tired']
+weights tensor: 12 layers x 12 heads x 8 x 8 = 9,216 numbers
+largest weight above the diagonal in any head: 0.0
+largest distance from 1 of any row sum: 2.4e-07
+
+the row of 'it' (position 6) listening to 'animal' (position 2), over all 144 heads:
+  average weight 0.049; heads with weight above 0.20: 8; above 0.10: 14
+  the five heads that listen most to 'animal' (layer, head: weight):
+    layer 5, head 4: 0.696
+    layer 6, head 11: 0.562
+    layer 10, head 1: 0.357
+    layer 1, head 7: 0.324
+    layer 2, head 7: 0.294
+  for comparison, the row of 'it' on the first token 'the': average 0.603; heads with weight above 0.5: 92 of 144
+
+row of 'it' in the best head (layer 5, head 4):
+       the 0.230
+    animal 0.696
+    stayed 0.023
+      home 0.021
+   because 0.010
+        it 0.020
+  biggest weight on a word other than the first token: animal (0.696)
+
+row of 'it' averaged over all 144 heads:
+       the 0.603
+    animal 0.049
+    stayed 0.067
+      home 0.044
+   because 0.140
+        it 0.097
+
+pictures saved: True

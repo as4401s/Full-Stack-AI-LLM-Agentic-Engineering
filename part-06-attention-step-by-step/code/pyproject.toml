@@ -1,0 +1,24 @@
+[project]
+name = "attention-lab"
+version = "0.1.0"
+description = "Lesson 6: attention step by step - scores, softmax, the weighted sum, the causal mask, several heads, the cost of long inputs and the tiled (FlashAttention-style) rewrite"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",              # the by-hand calculations and the tiled attention
+    "torch>=2.5",              # attention.py, multihead.py and the check against PyTorch's built-in kernel
+    "transformers>=4.46",      # runs the small public model GPT-2 so we can read real attention maps
+    "huggingface_hub>=0.26",   # downloads the model files
+    "matplotlib>=3.9",         # draws the attention-map PNGs (optional: the demos carry on without it)
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",               # test runner
+]
+
+[tool.uv]
+package = false               # an application, not a library: run it from this folder
+
+[tool.pytest.ini_options]
+pythonpath = ["."]            # lets the tests import the attention_lab package from this folder
+testpaths = ["tests"]
