@@ -15,7 +15,7 @@ Only code lives here: no slides, animations, images or videos.
 | # | Video | Code | Article |
 |---|---|---|---|
 | 1 | [Python engineering for AI](https://youtu.be/lRv88z2V2A8) | [part-01-python-engineering-for-ai](part-01-python-engineering-for-ai) | [Medium article](https://arjun-sarkar786.medium.com/1-full-stack-ai-llm-agentic-engineering-python-engineering-for-ai-662ed14f7f79) |
-| 2 | Deep learning refresher with PyTorch | [part-02-deep-learning-refresher](part-02-deep-learning-refresher) | Medium article: link added when published |
+| 2 | [Deep learning refresher with PyTorch](https://youtu.be/e0mwSxGs-Zs) | [part-02-deep-learning-refresher](part-02-deep-learning-refresher) | [Medium article](https://arjun-sarkar786.medium.com/2-full-stack-ai-llm-agentic-engineering-deep-learning-refresher-with-pytorch-a0062204d29f) |
 | 3 | Language modelling basics | [part-03-language-modelling-basics](part-03-language-modelling-basics) | Medium article: link added when published |
 | 4 | Tokenization | [part-04-tokenization](part-04-tokenization) | Medium article: link added when published |
 | 5 | Embeddings and positions | [part-05-embeddings-and-positions](part-05-embeddings-and-positions) | Medium article: link added when published |

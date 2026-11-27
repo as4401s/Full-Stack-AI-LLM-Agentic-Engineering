@@ -1,6 +1,8 @@
 # Video 2 - Deep learning refresher with PyTorch
 
-Video: [VIDEO LINK, to be added when the video is published]
+Video: https://youtu.be/e0mwSxGs-Zs
+
+Article: https://arjun-sarkar786.medium.com/2-full-stack-ai-llm-agentic-engineering-deep-learning-refresher-with-pytorch-a0062204d29f
 
 **Learning goal:** train a small neural network by hand and explain every line of the training loop. Every language model in this course is a neural network, so this lesson opens the box: what the parameters are (the adjustable numbers inside a network), how a score for the mistakes (the loss) guides them, how PyTorch works out every slope, and how to keep a network honest while it learns. We write the network twice on the same data: first with plain tensors, so every line of the learning loop is visible, then with PyTorch's building blocks (`nn.Module` and an optimizer), so we see what they save us.
 
